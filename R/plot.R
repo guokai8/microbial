@@ -180,7 +180,7 @@ plotdiff<-function(sigtab,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=
     x <- sort(x, TRUE)
     sigtab[,level] <- factor(as.character(sigtab[,level]), levels=names(x))
     p <- ggplot(sigtab, aes_string(x=level, y="log2FoldChange", color="Phylum"))+
-        geom_point(size=3) +theme_light()
+        geom_point(size=3) +theme_light()+
         theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5,size=fontsize.x),
               axis.text.y = element_text(size=fontsize.y))+
         scale_color_manual(values=color)
