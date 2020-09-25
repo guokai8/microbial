@@ -6,8 +6,8 @@
 \usage{
 plotalpha(
   physeq,
-  method = c("Simpson", "Shannon"),
   group,
+  method = c("Simpson", "Shannon"),
   pvalue = 0.05,
   padj = NULL,
   wilcox = FALSE
@@ -18,10 +18,10 @@ plotalpha(
 taxonomic assignment, sample data including the measured variables and categorical information
 of the samples, and / or phylogenetic tree if available.}
 
+\item{group}{group (Required). A character string specifying the name of a categorical variable containing  grouping information.}
+
 \item{method}{A list of character strings specifying \code{method} to be used to calculate for alpha diversity
 in the data. Available methods are: "Observed","Chao1","ACE","Richness", "Fisher", "Simpson", "Shannon", "Evenness","InvSimpson".}
-
-\item{group}{group (Required). A character string specifying the name of a categorical variable containing  grouping information.}
 
 \item{pvalue}{pvalue threshold for significant dispersion results}
 
