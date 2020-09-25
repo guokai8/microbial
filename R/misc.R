@@ -66,3 +66,7 @@ do_wilcox<-function(x,group,ref=NULL,...){
     res<-d%>%group_by(type)%>%wilcox_test(val~group,ref.group = ref,...)
     return(res)
 }
+#'
+gm_mean = function(x, na.rm=TRUE){
+    exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
+}

@@ -5,7 +5,6 @@
 #' @importFrom ggplot2 scale_color_manual
 #' @importFrom ggplot2 xlab ylab stat_ellipse
 #' @importFrom ggplot2 theme_light
-#' @importFrom phyloseq as
 #' @importFrom phyloseq taxa_are_rows
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
@@ -17,7 +16,7 @@
 #'                       "morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".
 #' @param group (Required). Character string specifying name of a categorical variable that is preferred for grouping the information.
 #'        information.
-#' @param color
+#' @param color user defined color for group
 #' @param size the point size
 #' @param ellipse draw ellipse or not
 plotbeta<-function(physeq,group,distance="bray",method="PCoA",color=NULL,size=3,ellipse=FALSE){
@@ -47,7 +46,6 @@ plotbeta<-function(physeq,group,distance="bray",method="PCoA",color=NULL,size=3,
 #' @importFrom ggpubr stat_pvalue_manual
 #' @importFrom ggpubr facet
 #' @importFrom ggplot2 xlab ylab scale_color_manual theme
-#' @importFrom ggplot2
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
 #'        of the samples, and / or phylogenetic tree if available.
@@ -108,7 +106,7 @@ plotalpha<-function(physeq,method=c("Simpson", "Shannon"),group,
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
 #'        of the samples, and / or phylogenetic tree if available.
-#' @param level the level to
+#' @param level the level to plot
 #' @param color A vector of character use specifying the color
 #' @param fontsize.x the size of x axis label
 #' @param fontsize.y the size of y axis label
@@ -134,3 +132,53 @@ plotbar<-function(physeq,level="Phylum",color=NULL,fontsize.x = 5, fontsize.y = 
         xlab("")+ylab("")
     p
 }
+
+#' @title plot differential results
+#' @importFrom ggplot2 ggplot theme geom_point element_text
+#' @importFrom ggplot2 aes_string scale_color_manual theme_light
+#' @param sigtab
+#' @param level the level to plot
+#' @param color A vector of character use specifying the color
+#' @param pvalue pvalue threshold for significant  results
+#' @param padj adjust p value threshold for significant  results
+#' @param log2FC log2 Fold Change threshold
+#' @param size size for the point
+#' @param fontsize.x the size of x axis label
+#' @param fontsize.y the size of y axis label
+#' @param horiz horizontal or not (TRUE/FALSE)
+#' @return ggplot object
+#' @author Kai Guo
+#' @export
+plotdiff<-function(sigtab,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=0,size=3,fontsize.x=5,fontsize.y=10,horiz=TRUE){
+    if(!is.null(padj)){
+        pval<-padj
+        sigtab <- subset(res,padj<pval&abs(log2FoldChange)>log2FC)
+    }else{
+        pval<-pvalue
+        sigtab <- subset(res,pvalue<pval&abs(log2FoldChange)>log2FC)
+    }
+    x <- tapply(sigtab$log2FoldChange, sigtab$Phylum, function(x) max(x))
+    x <- sort(x, TRUE)
+    sigtab$Phylum <- factor(as.character(sigtab$Phylum), levels=names(x))
+    if(is.null(color)){
+        len<-length(unique(sigtab$Phylum))
+        color<-lightcolor[1:len]
+    }
+    # Genus order
+    x <- tapply(sigtab$log2FoldChange, sigtab[,level], function(x) max(x))
+    x <- sort(x, TRUE)
+    sigtab[,level] <- factor(as.character(sigtab[,level]), levels=names(x))
+    p <- ggplot(sigtab, aes_string(x=level, y="log2FoldChange", color="Phylum"))+
+        geom_point(size=3) +theme_light()
+        theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5,size=fontsize.x),
+              axis.text.y = element_text(size=fontsize.y))+
+        scale_color_manual(values=color)
+    if(isTRUE(horiz)){
+        p<-p+coord_flip()
+    }
+    p
+}
+
+
+
+
