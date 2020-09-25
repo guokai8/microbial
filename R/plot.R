@@ -56,7 +56,8 @@ plotbeta<-function(physeq,group,distance="bray",method="PCoA",color=NULL,size=3,
 #' @importFrom ggpubr stat_pvalue_manual
 #' @importFrom ggpubr facet
 #' @importFrom ggplot2 xlab ylab scale_color_manual theme
-#' @importFrom dplyr spread summarise gather group_by
+#' @importFrom dplyr summarise group_by
+#' @importFrom tidyr gather spread
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
 #'        of the samples, and / or phylogenetic tree if available.
