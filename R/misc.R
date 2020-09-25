@@ -55,9 +55,9 @@ do_aov<-function(x,group,...){
 #' @param ref reference group
 #' @examples
 #'  \dontrun{
-#' data("ToothGrowth")
-#' do_ttest(ToothGrowth,group="dose")
-#' do_ttest(ToothGrowth,group="dose",ref="0.5")
+#' data("mtcars")
+#' do_ttest(mtcars,group="vs")
+#' do_ttest(ToothGrowth,group="gear",ref="3")
 #' }
 #' @export
 #' @author Kai Guo
@@ -79,9 +79,9 @@ do_ttest<-function(x,group,ref=NULL,...){
 #' @param ref reference group
 #' @examples
 #'  \dontrun{
-#' data("ToothGrowth")
-#' do_wilcox(ToothGrowth,group="dose")
-#' do_wilcox(ToothGrowth,group="dose",ref="0.5")
+#' data("mtcars")
+#' do_wilcox(mtcars,group="vs")
+#' do_wilcox(ToothGrowth,group="gear",ref="3")
 #' }
 #' @export
 #' @author Kai Guo
