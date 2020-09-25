@@ -20,7 +20,7 @@ do t.test
  \dontrun{
 data("mtcars")
 do_ttest(mtcars,group="vs")
-do_ttest(ToothGrowth,group="gear",ref="3")
+do_ttest(mtcars,group="gear",ref="3")
 }
 }
 \author{

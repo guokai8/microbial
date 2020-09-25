@@ -20,7 +20,7 @@ do wilcox test
  \dontrun{
 data("mtcars")
 do_wilcox(mtcars,group="vs")
-do_wilcox(ToothGrowth,group="gear",ref="3")
+do_wilcox(mtcars,group="gear",ref="3")
 }
 }
 \author{
