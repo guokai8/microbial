@@ -97,7 +97,7 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),
 #' @importFrom ggplot2 theme
 #' @importFrom ggplot2 element_text
 #' @importFrom ggplot2 aes_string
-#' @importFrom ggplot2 element_blank
+#' @importFrom ggplot2 element_blank scale_y_continuous
 #' @importFrom dplyr group_by_at
 #' @importFrom dplyr vars
 #' @importFrom dplyr one_of
