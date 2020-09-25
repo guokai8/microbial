@@ -8,11 +8,10 @@ Description: Do alpha, beta diversity analysis and make figures.
 License: GPL-3
 Imports:
     dplyr,
+    tidyr,
     magrittr,
     phyloseq,
     vegan,
-    rlang,
-    tools,
     ggplot2,
     ggpubr,
     DESeq2,
