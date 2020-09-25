@@ -12,6 +12,7 @@ Imports:
     magrittr,
     phyloseq,
     vegan,
+    rlang,
     ggplot2,
     ggpubr,
     DESeq2,
