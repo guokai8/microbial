@@ -9,16 +9,19 @@
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
 #'        of the samples, and / or phylogenetic tree if available.
+#' @param group (Required). Character string specifying name of a categorical variable that is preferred for grouping the information.
+#'        information.
 #' @param method. A character string specifying ordination method. All methods available to the \code{ordinate} function
 #'        of \code{phyloseq} are acceptable here as well.
 #' @param distance. A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
 #'                       "unifrac","wunifrac","manhattan", "euclidean", "canberra", "bray", "kulczynski", "jaccard", "gower", "altGower",
 #'                       "morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".
-#' @param group (Required). Character string specifying name of a categorical variable that is preferred for grouping the information.
-#'        information.
 #' @param color user defined color for group
 #' @param size the point size
 #' @param ellipse draw ellipse or not
+#' @return ggplot2 object
+#' @author Kai Guo
+#' @export
 plotbeta<-function(physeq,group,distance="bray",method="PCoA",color=NULL,size=3,ellipse=FALSE){
     if(!taxa_are_rows(physeq)){
         physeq <- t(physeq)
