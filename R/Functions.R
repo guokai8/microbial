@@ -69,7 +69,7 @@ richness<-function(physeq,method){
 #' @return PERMANOVA test result
 #' @export
 #' @author Kai Guo
-beta.test<-function(physeq,group,distance){
+beta_test<-function(physeq,group,distance="bray"){
     cat("Do PERMANOVA for: ",group,"\n")
     dist<-distance(physeq,method = distance)
     tab <- as(sample_data(physeq),"data.frame")
