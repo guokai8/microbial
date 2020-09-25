@@ -6,6 +6,13 @@
 \usage{
 do_aov(x, group, ...)
 }
+\arguments{
+\item{x}{data.frame with sample id as the column name, genes or otu as rownames}
+
+\item{group}{group factor used for comparison}
+
+\item{ref}{reference group}
+}
 \description{
 do anova test and return results as data.frame
 }

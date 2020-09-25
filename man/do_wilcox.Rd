@@ -6,6 +6,13 @@
 \usage{
 do_wilcox(x, group, ref = NULL, ...)
 }
+\arguments{
+\item{x}{data.frame with sample id as the column name, genes or otu as rownames}
+
+\item{group}{group factor used for comparison}
+
+\item{ref}{reference group}
+}
 \description{
 do wilcox test
 }
