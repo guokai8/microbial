@@ -35,6 +35,12 @@ of \code{phyloseq} are acceptable here as well.}
 "unifrac","wunifrac","manhattan", "euclidean", "canberra", "bray", "kulczynski", "jaccard", "gower", "altGower",
 "morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".}
 }
+\value{
+ggplot2 object
+}
 \description{
 plot beta diversity
+}
+\author{
+Kai Guo
 }
