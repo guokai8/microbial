@@ -17,7 +17,7 @@ plotbar(
 taxonomic assignment, sample data including the measured variables and categorical information
 of the samples, and / or phylogenetic tree if available.}
 
-\item{level}{the level to}
+\item{level}{the level to plot}
 
 \item{color}{A vector of character use specifying the color}
 

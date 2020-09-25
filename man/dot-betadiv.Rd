@@ -7,6 +7,10 @@
 .betadiv(physeq, distance = "bray", method = "PCoA")
 }
 \arguments{
+\item{physeq}{A \code{phyloseq} object containing merged information of abundance,
+taxonomic assignment, sample data including the measured variables and categorical information
+of the samples, and / or phylogenetic tree if available.}
+
 \item{method.}{A character string specifying ordination method. All methods available to the \code{ordinate} function
 of \code{phyloseq} are acceptable here as well.}
 

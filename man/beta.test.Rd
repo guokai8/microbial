@@ -2,7 +2,7 @@
 % Please edit documentation in R/Functions.R
 \name{beta.test}
 \alias{beta.test}
-\title{PERMANOVA for phyloseq}
+\title{PERMANOVA test for phyloseq}
 \usage{
 beta.test(physeq, group, distance)
 }
@@ -18,8 +18,11 @@ information.}
 "unifrac","wunifrac","manhattan", "euclidean", "canberra", "bray", "kulczynski", "jaccard", "gower", "altGower",
 "morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".}
 }
+\value{
+PERMANOVA test result
+}
 \description{
-PERMANOVA for phyloseq
+PERMANOVA test for phyloseq
 }
 \author{
 Kai Guo
