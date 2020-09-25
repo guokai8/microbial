@@ -108,9 +108,14 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),geom="boxplot",
     }else{
         stop("Please specify one type of boxplot,violin,dotplot")
     }
-    p<-facet(p,facet.by = "type",scales = "free_y",ncol = length(method))+
-        stat_pvalue_manual(res,label = "p",y.position = pos+mpos/(nrow(res)/2))+
-        xlab("")+ylab("")+
+    res$p.signif<-sapply(res$p,function(x).getstar(x))
+    p<-facet(p,facet.by = "type",scales = "free_y",ncol = length(method))
+    if(!is.null(padj)){
+        p<-p+stat_pvalue_manual(res,label = "p.adj.signif",y.position = pos+2*mpos/nrow(res))
+    }else{
+        p<-p+stat_pvalue_manual(res,label = "p.signif",y.position = pos+2*mpos/nrow(res))
+    }
+        p<-p+xlab("")+ylab("")+
         theme(legend.position = "none",axis.text.x=element_text(angle=90,vjust=0.5, hjust=1))+
         scale_color_manual(values=lightcolor[unique(rich$group)])
     p

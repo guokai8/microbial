@@ -96,3 +96,16 @@ do_wilcox<-function(x,group,ref=NULL,...){
 gm_mean = function(x, na.rm=TRUE){
     exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
 }
+
+#'
+.getstar<-function(x){
+    if(x>=0.05){
+        return("ns")
+    }else if(x>=0.01 & x<0.05){
+        return("*")
+    }else if(x<0.01){
+        return("**")
+    }else{
+        return("***")
+    }
+}
