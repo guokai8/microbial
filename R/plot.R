@@ -108,6 +108,7 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),
 #'        of the samples, and / or phylogenetic tree if available.
 #' @param level the level to plot
 #' @param color A vector of character use specifying the color
+#' @param top the number of most abundance bacteria to display
 #' @param fontsize.x the size of x axis label
 #' @param fontsize.y the size of y axis label
 #' @return Returns a ggplot object. This can further be manipulated as preferred by user.
