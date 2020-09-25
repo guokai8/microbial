@@ -113,20 +113,24 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),
 #' @return Returns a ggplot object. This can further be manipulated as preferred by user.
 #' @author Kai Guo
 #' @export
-plotbar<-function(physeq,level="Phylum",color=NULL,fontsize.x = 5, fontsize.y = 12){
+plotbar<-function(physeq,level="Phylum",color=NULL,top=5,fontsize.x = 5, fontsize.y = 12){
     pm <- psmelt(physeq)
     if(is.null(color)){
         len<-length(unique(pm[,level]))
         color<-lightcolor[1:len]
     }
     group_var<-c("Sample",level)
-        d<-pm%>%group_by_at(vars(one_of(group_var)))%>%summarise(su=sum(Abundance))
-        d[,level][is.na(d[,level])]<-"NA"
-        p<-ggplot(d,aes_string("Sample","su",fill=level))+
-        geom_bar(stat = "identity",position = "fill")+scale_fill_manual(values=color)+
-        theme_light()+
-        scale_y_continuous(expand = c(0, 0.001)) +
-        theme(axis.text.x=element_text(angle=90,size=fontsize.x, vjust=0.5, hjust=1),
+    d<-pm%>%group_by_at(vars(one_of(group_var)))%>%summarise(su=sum(Abundance))
+    d[,level][is.na(d[,level])]<-"NA"
+    dx <- pm%>%group_by_at(vars(one_of(level)))%>%summarise(su=sum(Abundance))
+    dx <- dx[order(su,decreasing = T),]
+    sel <- dx[1:top,level]
+    d <- d[d[,level]%in%sel,]
+    p<-ggplot(d,aes_string("Sample","su",fill=level))+
+    geom_bar(stat = "identity",position = "fill")+scale_fill_manual(values=color)+
+    theme_light()+
+    scale_y_continuous(expand = c(0, 0.001)) +
+    theme(axis.text.x=element_text(angle=90,size=fontsize.x, vjust=0.5, hjust=1),
               axis.text.y=element_text(size=fontsize.y),
               panel.background = element_blank(),axis.ticks.x = element_blank())+
         xlab("")+ylab("")
