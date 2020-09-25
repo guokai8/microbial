@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{plotbar}
 \alias{plotbar}
-\title{plot bar}
+\title{plot bar for relative abundance for bacteria}
 \usage{
 plotbar(
   physeq,
@@ -32,7 +32,7 @@ of the samples, and / or phylogenetic tree if available.}
 Returns a ggplot object. This can further be manipulated as preferred by user.
 }
 \description{
-plot bar
+plot bar for relative abundance for bacteria
 }
 \examples{
  \dontrun{
