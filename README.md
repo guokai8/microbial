@@ -23,7 +23,7 @@ plotalpha(phyloseq,method=c("Simpson", "Shannon"),group)
 phy <- normalize(phyloseq)
 plotbar(phy,level="Phylum")
 # plot beta diversity(PCoA)
-plotbeta(phy,distance="bray",method="PCoA")
+plotbeta(phy,group,distance="bray",method="PCoA")
 # perform PERMANOVA test
 beta_test(phy,group,distance="bray")
 # do differential analysis with DESeq2
