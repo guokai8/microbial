@@ -146,7 +146,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,top=5,fontsize.x = 5, fontsiz
 
 #' @title plot differential results
 #' @importFrom ggplot2 ggplot theme geom_point element_text
-#' @importFrom ggplot2 aes_string scale_color_manual theme_light
+#' @importFrom ggplot2 aes_string scale_color_manual theme_light coord_flip
 #' @param sigtab
 #' @param level the level to plot
 #' @param color A vector of character use specifying the color
