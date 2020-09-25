@@ -16,6 +16,13 @@ do_wilcox(x, group, ref = NULL, ...)
 \description{
 do wilcox test
 }
+\examples{
+ \dontrun{
+data("ToothGrowth")
+do_wilcox(ToothGrowth,group="dose")
+do_wilcox(ToothGrowth,group="dose",ref="0.5")
+}
+}
 \author{
 Kai Guo
 }

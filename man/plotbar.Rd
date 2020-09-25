@@ -34,6 +34,14 @@ Returns a ggplot object. This can further be manipulated as preferred by user.
 \description{
 plot bar
 }
+\examples{
+ \dontrun{
+data("GlobalPatterns",package="phyloseq")
+physeq <- GlobalPatterns
+phy<-normalize(physeq)
+plotbar(phy,level="Phylum")
+}
+}
 \author{
 Kai Guo
 }

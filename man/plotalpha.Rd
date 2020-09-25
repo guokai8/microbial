@@ -35,6 +35,13 @@ Returns a ggplot object. This can further be manipulated as preferred by user.
 \description{
 plot alpha diversity
 }
+\examples{
+ \dontrun{
+data("GlobalPatterns",package="phyloseq")
+physeq <- GlobalPatterns
+plotalpha(physeq,group="SampleType")
+}
+}
 \author{
 Kai Guo
 }

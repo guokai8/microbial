@@ -16,6 +16,12 @@ do_aov(x, group, ...)
 \description{
 do anova test and return results as data.frame
 }
+\examples{
+ \dontrun{
+data("ToothGrowth")
+do_aov(ToothGrowth,group="supp")
+}
+}
 \author{
 Kai Guo
 }

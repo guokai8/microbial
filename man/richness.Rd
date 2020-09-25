@@ -4,7 +4,7 @@
 \alias{richness}
 \title{calculat the richness for the phyloseq object}
 \usage{
-richness(physeq, method)
+richness(physeq, method = c("Simpson", "Shannon"))
 }
 \arguments{
 \item{physeq}{phyloseq object}
@@ -17,6 +17,13 @@ data.frame of alpha diversity
 }
 \description{
 calculat the richness for the phyloseq object
+}
+\examples{
+ \dontrun{
+data("GlobalPatterns",package="phyloseq")
+physeq <- GlobalPatterns
+rich <-richness(physeq,method=c("Simpson", "Shannon"))
+}
 }
 \author{
 Kai Guo

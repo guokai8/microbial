@@ -18,6 +18,8 @@ plotdiff(
 )
 }
 \arguments{
+\item{sigtab}{differential test results from diff_test}
+
 \item{level}{the level to plot}
 
 \item{color}{A vector of character use specifying the color}
@@ -41,6 +43,17 @@ ggplot object
 }
 \description{
 plot differential results
+}
+\examples{
+ \dontrun{
+data("GlobalPatterns",package="phyloseq")
+require(phyloseq)
+samdf<-as(sample_data(physeq),"data.frame")
+samdf$group<-c(rep("A",14),rep("B",12))
+sample_data(physeq)<-samdf
+res <- diff_test(physeq,group="group")
+plotdiff(res,level="Genus",padj=0.001)
+}
 }
 \author{
 Kai Guo

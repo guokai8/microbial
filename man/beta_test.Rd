@@ -24,6 +24,14 @@ PERMANOVA test result
 \description{
 PERMANOVA test for phyloseq
 }
+\examples{
+ \dontrun{
+data("GlobalPatterns",package="phyloseq")
+physeq <- GlobalPatterns
+phy<-normalize(physeq)
+beta <-beta_test(phy,group="SampleType")
+}
+}
 \author{
 Kai Guo
 }

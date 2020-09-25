@@ -16,6 +16,13 @@ do_ttest(x, group, ref = NULL, ...)
 \description{
 do t.test
 }
+\examples{
+ \dontrun{
+data("ToothGrowth")
+do_ttest(ToothGrowth,group="dose")
+do_ttest(ToothGrowth,group="dose",ref="0.5")
+}
+}
 \author{
 Kai Guo
 }

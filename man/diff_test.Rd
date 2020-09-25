@@ -37,6 +37,16 @@ datafame with differential test with DESeq2
 \description{
 Calculate differential bacteria with DESeq2
 }
+\examples{
+ \dontrun{
+data("GlobalPatterns",package="phyloseq")
+require(phyloseq)
+samdf<-as(sample_data(physeq),"data.frame")
+samdf$group<-c(rep("A",14),rep("B",12))
+sample_data(physeq)<-samdf
+res <- diff_test(physeq,group="group")
+}
+}
 \author{
 Kai Guo
 }

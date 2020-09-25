@@ -22,6 +22,13 @@ phyloseq object with normalized data
 \description{
 Normalize the phyloseq object with different methods
 }
+\examples{
+ \dontrun{
+data("GlobalPatterns",package="phyloseq")
+physeq <- GlobalPatterns
+phy<-normalize(physeq)
+}
+}
 \author{
 Kai Guo
 }

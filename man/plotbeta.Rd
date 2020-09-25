@@ -41,6 +41,14 @@ ggplot2 object
 \description{
 plot beta diversity
 }
+\examples{
+ \dontrun{
+data("GlobalPatterns",package="phyloseq")
+physeq <- GlobalPatterns
+phy<-normalize(physeq)
+plotbeta(phy,group="SampleType")
+}
+}
 \author{
 Kai Guo
 }
