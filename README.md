@@ -14,8 +14,25 @@ library(microbial)
 ```   
 ## Functions
 ```
-
-
+# calcuate the alpha diversity 
+richness(phyloseq,method=c("Simpson", "Shannon"))
+# plot alpha diversity
+plotalpha(phyloseq,method=c("Simpson", "Shannon"))
+# make barplot for relative abundance
+phy <- normalize(phyloseq)
+plotbar(phy,level="Phylum")
+# plot beta diversity(PCoA)
+plotbeta(phy,distance="bray",method="PCoA")
+# perform PERMANOVA test
+beta_test(phy,group,distance="bray")
+# do differential analysis with DESeq2
+res <- diff_test(phyloseq,group)
+# plot the differential results
+plotdiff(res,level="Genus")
+# do some test
+?do_ttest
+?do_wilcox
+?do_aov
 ```
 ## Note
 The _microbial_ package was bulit based on the phyloseq. The package is still under development. New functions will be provided soon.
