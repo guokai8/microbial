@@ -57,7 +57,7 @@ do_aov<-function(x,group,...){
 #'  \dontrun{
 #' data("mtcars")
 #' do_ttest(mtcars,group="vs")
-#' do_ttest(mtcars,group="gear",ref="3")
+#' do_ttest(mtcars,group="cyl",ref="4")
 #' }
 #' @export
 #' @author Kai Guo
@@ -81,7 +81,7 @@ do_ttest<-function(x,group,ref=NULL,...){
 #'  \dontrun{
 #' data("mtcars")
 #' do_wilcox(mtcars,group="vs")
-#' do_wilcox(mtcars,group="gear",ref="3")
+#' do_wilcox(mtcars,group="cyl",ref="4")
 #' }
 #' @export
 #' @author Kai Guo
