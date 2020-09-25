@@ -18,9 +18,9 @@ do wilcox test
 }
 \examples{
  \dontrun{
-data("ToothGrowth")
-do_wilcox(ToothGrowth,group="dose")
-do_wilcox(ToothGrowth,group="dose",ref="0.5")
+data("mtcars")
+do_wilcox(mtcars,group="vs")
+do_wilcox(ToothGrowth,group="gear",ref="3")
 }
 }
 \author{

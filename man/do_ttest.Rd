@@ -18,9 +18,9 @@ do t.test
 }
 \examples{
  \dontrun{
-data("ToothGrowth")
-do_ttest(ToothGrowth,group="dose")
-do_ttest(ToothGrowth,group="dose",ref="0.5")
+data("mtcars")
+do_ttest(mtcars,group="vs")
+do_ttest(ToothGrowth,group="gear",ref="3")
 }
 }
 \author{
