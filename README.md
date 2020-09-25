@@ -16,18 +16,24 @@ library(microbial)
 ## Functions
 ```
 # calcuate the alpha diversity 
-richness(phyloseq,method=c("Simpson", "Shannon"))
+data("GlobalPatterns",package="phyloseq")
+physeq <- GlobalPatterns
+richness(physeq,method=c("Simpson", "Shannon"))
 # plot alpha diversity
-plotalpha(phyloseq,method=c("Simpson", "Shannon"),group)
+plotalpha(physeq,method=c("Simpson", "Shannon"),group="SampleType")
 # make barplot for relative abundance
-phy <- normalize(phyloseq)
+phy <- normalize(physeq)
 plotbar(phy,level="Phylum")
 # plot beta diversity(PCoA)
-plotbeta(phy,group,distance="bray",method="PCoA")
+plotbeta(phy,group="SampleType",distance="bray",method="PCoA")
 # perform PERMANOVA test
-beta_test(phy,group,distance="bray")
+beta_test(phy,group="SampleType",distance="bray")
 # do differential analysis with DESeq2
-res <- diff_test(phyloseq,group)
+require(phyloseq)
+samdf<-as(sample_data(physeq),"data.frame")
+samdf$group<-c(rep("A",14),rep("B",12))
+sample_data(physeq)<-samdf
+res <- diff_test(physeq,group="group")
 # plot the differential results
 plotdiff(res,level="Genus")
 # do some test
