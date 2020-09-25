@@ -19,6 +19,13 @@
 #' @param color user defined color for group
 #' @param size the point size
 #' @param ellipse draw ellipse or not
+#' @examples
+#'  \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' physeq <- GlobalPatterns
+#' phy<-normalize(physeq)
+#' plotbeta(phy,group="SampleType")
+#' }
 #' @return ggplot2 object
 #' @author Kai Guo
 #' @export
@@ -58,6 +65,12 @@ plotbeta<-function(physeq,group,distance="bray",method="PCoA",color=NULL,size=3,
 #' @param pvalue pvalue threshold for significant dispersion results
 #' @param padj adjust p value threshold for significant dispersion results
 #' @param wilcox use wilcoxon test or not
+#' @examples
+#'  \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' physeq <- GlobalPatterns
+#' plotalpha(physeq,group="SampleType")
+#' }
 #' @return Returns a ggplot object. This can further be manipulated as preferred by user.
 #' @author Kai Guo
 #' @export
@@ -116,6 +129,13 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),
 #' @param top the number of most abundance bacteria to display
 #' @param fontsize.x the size of x axis label
 #' @param fontsize.y the size of y axis label
+#' @examples
+#'  \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' physeq <- GlobalPatterns
+#' phy<-normalize(physeq)
+#' plotbar(phy,level="Phylum")
+#' }
 #' @return Returns a ggplot object. This can further be manipulated as preferred by user.
 #' @author Kai Guo
 #' @export
@@ -147,7 +167,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,top=5,fontsize.x = 5, fontsiz
 #' @title plot differential results
 #' @importFrom ggplot2 ggplot theme geom_point element_text
 #' @importFrom ggplot2 aes_string scale_color_manual theme_light coord_flip
-#' @param sigtab
+#' @param sigtab differential test results from diff_test
 #' @param level the level to plot
 #' @param color A vector of character use specifying the color
 #' @param pvalue pvalue threshold for significant  results
@@ -157,6 +177,16 @@ plotbar<-function(physeq,level="Phylum",color=NULL,top=5,fontsize.x = 5, fontsiz
 #' @param fontsize.x the size of x axis label
 #' @param fontsize.y the size of y axis label
 #' @param horiz horizontal or not (TRUE/FALSE)
+#' @examples
+#'  \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' require(phyloseq)
+#' samdf<-as(sample_data(physeq),"data.frame")
+#' samdf$group<-c(rep("A",14),rep("B",12))
+#' sample_data(physeq)<-samdf
+#' res <- diff_test(physeq,group="group")
+#' plotdiff(res,level="Genus",padj=0.001)
+#' }
 #' @return ggplot object
 #' @author Kai Guo
 #' @export

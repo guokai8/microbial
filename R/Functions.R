@@ -7,10 +7,16 @@
 #' @param physeq phyloseq object
 #' @param method A list of character strings specifying \code{method} to be used to calculate for alpha diversity
 #'        in the data. Available methods are: "Observed","Chao1","ACE","Richness", "Fisher", "Simpson", "Shannon", "Evenness","InvSimpson".
+#' @examples
+#'  \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' physeq <- GlobalPatterns
+#' rich <-richness(physeq,method=c("Simpson", "Shannon"))
+#' }
 #' @return data.frame of alpha diversity
 #' @export
 #' @author Kai Guo
-richness<-function(physeq,method){
+richness<-function(physeq,method=c("Simpson", "Shannon")){
     method<-as.character(sapply(method,function(x)simpleCap(x),simplify = T))
     method<- match.arg(method,c("Observed","Chao1","ACE","Richness", "Fisher", "Simpson", "Shannon", "Evenness","InvSimpson"), several.ok = TRUE)
     df <- estimate_richness(physeq)
@@ -66,6 +72,13 @@ richness<-function(physeq,method){
 #'                       "morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".
 #' @param group (Required). Character string specifying name of a categorical variable that is preferred for grouping the information.
 #'        information.
+#' @examples
+#'  \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' physeq <- GlobalPatterns
+#' phy<-normalize(physeq)
+#' beta <-beta_test(phy,group="SampleType")
+#' }
 #' @return PERMANOVA test result
 #' @export
 #' @author Kai Guo
@@ -98,6 +111,12 @@ beta_test<-function(physeq,group,distance="bray"){
 #' @param method A list of character strings specifying \code{method} to be used to normalize the phyloseq object
 #'      Available methods are: "relative","TMM","vst","log2".
 #' @param group group (DESeq2). A character string specifying the name of a categorical variable containing  grouping information.
+#' @examples
+#'  \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' physeq <- GlobalPatterns
+#' phy<-normalize(physeq)
+#' }
 #' @return phyloseq object with normalized data
 #' @author Kai Guo
 #' @export
@@ -153,6 +172,15 @@ normalize<-function(physeq,group,method="relative"){
 #' @param log2FC log2 Fold Change threshold
 #' @param gm_mean TRUE/FALSE calculate geometric means prior to estimate size factors
 #' @param fitType either "parametric", "local", or "mean" for the type of fitting of dispersions to the mean intensity.
+#' @examples
+#'  \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' require(phyloseq)
+#' samdf<-as(sample_data(physeq),"data.frame")
+#' samdf$group<-c(rep("A",14),rep("B",12))
+#' sample_data(physeq)<-samdf
+#' res <- diff_test(physeq,group="group")
+#' }
 #' @return datafame with differential test with DESeq2
 #' @author Kai Guo
 #' @export

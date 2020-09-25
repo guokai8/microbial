@@ -30,6 +30,11 @@ distcolor<-c('#e6194b', '#3cb44b', '#ffe119', '#4363d8',
 #' @param x data.frame with sample id as the column name, genes or otu as rownames
 #' @param group group factor used for comparison
 #' @param ref reference group
+#' @examples
+#'  \dontrun{
+#' data("ToothGrowth")
+#' do_aov(ToothGrowth,group="supp")
+#' }
 #' @export
 #' @author Kai Guo
 do_aov<-function(x,group,...){
@@ -48,6 +53,12 @@ do_aov<-function(x,group,...){
 #' @param x data.frame with sample id as the column name, genes or otu as rownames
 #' @param group group factor used for comparison
 #' @param ref reference group
+#' @examples
+#'  \dontrun{
+#' data("ToothGrowth")
+#' do_ttest(ToothGrowth,group="dose")
+#' do_ttest(ToothGrowth,group="dose",ref="0.5")
+#' }
 #' @export
 #' @author Kai Guo
 do_ttest<-function(x,group,ref=NULL,...){
@@ -66,6 +77,12 @@ do_ttest<-function(x,group,ref=NULL,...){
 #' @param x data.frame with sample id as the column name, genes or otu as rownames
 #' @param group group factor used for comparison
 #' @param ref reference group
+#' @examples
+#'  \dontrun{
+#' data("ToothGrowth")
+#' do_wilcox(ToothGrowth,group="dose")
+#' do_wilcox(ToothGrowth,group="dose",ref="0.5")
+#' }
 #' @export
 #' @author Kai Guo
 do_wilcox<-function(x,group,ref=NULL,...){
