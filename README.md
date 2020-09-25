@@ -9,10 +9,14 @@ library(devtools)
 install_github("guokai8/microbial")
 ``` 
 ## Quick tour
-```{r}
-set.seed(123)   
-library(microbial)   
+```{r} 
+library(microbial)
 ```   
+## Functions
+```
+
+
+```
 ## Note
 The _microbial_ package was bulit based on the phyloseq. The package is still under development. New functions will be provided soon.
 
