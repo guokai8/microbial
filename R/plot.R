@@ -49,16 +49,16 @@ plotbeta<-function(physeq,group,distance="bray",method="PCoA",color=NULL,size=3,
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
 #'        of the samples, and / or phylogenetic tree if available.
+#' @param group group (Required). A character string specifying the name of a categorical variable containing  grouping information.
 #' @param method A list of character strings specifying \code{method} to be used to calculate for alpha diversity
 #'        in the data. Available methods are: "Observed","Chao1","ACE","Richness", "Fisher", "Simpson", "Shannon", "Evenness","InvSimpson".
-#' @param group group (Required). A character string specifying the name of a categorical variable containing  grouping information.
 #' @param pvalue pvalue threshold for significant dispersion results
 #' @param padj adjust p value threshold for significant dispersion results
 #' @param wilcox use wilcoxon test or not
 #' @return Returns a ggplot object. This can further be manipulated as preferred by user.
 #' @author Kai Guo
 #' @export
-plotalpha<-function(physeq,method=c("Simpson", "Shannon"),group,
+plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),
                     pvalue=0.05,padj=NULL,wilcox=FALSE){
     if (!taxa_are_rows(physeq)) {
         physeq <- t(physeq)
