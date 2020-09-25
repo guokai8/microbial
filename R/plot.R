@@ -124,7 +124,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,top=5,fontsize.x = 5, fontsiz
     d<-pm%>%group_by_at(vars(one_of(group_var)))%>%summarise(su=sum(Abundance))
     d[,level][is.na(d[,level])]<-"NA"
     dx <- pm%>%group_by_at(vars(one_of(level)))%>%summarise(su=sum(Abundance))
-    dx <- dx[order(su,decreasing = T),]
+    dx <- dx[order(dx$su,decreasing = T),]
     sel <- dx[1:top,level]
     d <- d[d[,level]%in%sel,]
     p<-ggplot(d,aes_string("Sample","su",fill=level))+
