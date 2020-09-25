@@ -27,6 +27,9 @@ distcolor<-c('#e6194b', '#3cb44b', '#ffe119', '#4363d8',
 #' @importFrom tidyr gather
 #' @importFrom magrittr %>%
 #' @importFrom dplyr group_by
+#' @param x data.frame with sample id as the column name, genes or otu as rownames
+#' @param group group factor used for comparison
+#' @param ref reference group
 #' @export
 #' @author Kai Guo
 do_aov<-function(x,group,...){
@@ -42,6 +45,9 @@ do_aov<-function(x,group,...){
 #' @importFrom tidyr gather
 #' @importFrom magrittr %>%
 #' @importFrom dplyr group_by
+#' @param x data.frame with sample id as the column name, genes or otu as rownames
+#' @param group group factor used for comparison
+#' @param ref reference group
 #' @export
 #' @author Kai Guo
 do_ttest<-function(x,group,ref=NULL,...){
@@ -57,6 +63,9 @@ do_ttest<-function(x,group,ref=NULL,...){
 #' @importFrom tidyr gather
 #' @importFrom magrittr %>%
 #' @importFrom dplyr group_by
+#' @param x data.frame with sample id as the column name, genes or otu as rownames
+#' @param group group factor used for comparison
+#' @param ref reference group
 #' @export
 #' @author Kai Guo
 do_wilcox<-function(x,group,ref=NULL,...){
