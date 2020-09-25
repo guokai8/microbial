@@ -62,6 +62,7 @@ plotbeta<-function(physeq,group,distance="bray",method="PCoA",color=NULL,size=3,
 #' @param group group (Required). A character string specifying the name of a categorical variable containing  grouping information.
 #' @param method A list of character strings specifying \code{method} to be used to calculate for alpha diversity
 #'        in the data. Available methods are: "Observed","Chao1","ACE","Richness", "Fisher", "Simpson", "Shannon", "Evenness","InvSimpson".
+#' @param geom different geom to display("boxplot","violin","dotplot")
 #' @param pvalue pvalue threshold for significant dispersion results
 #' @param padj adjust p value threshold for significant dispersion results
 #' @param wilcox use wilcoxon test or not
@@ -74,7 +75,7 @@ plotbeta<-function(physeq,group,distance="bray",method="PCoA",color=NULL,size=3,
 #' @return Returns a ggplot object. This can further be manipulated as preferred by user.
 #' @author Kai Guo
 #' @export
-plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),
+plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),geom="boxplot",
                     pvalue=0.05,padj=NULL,wilcox=FALSE){
     if (!taxa_are_rows(physeq)) {
         physeq <- t(physeq)
@@ -95,7 +96,16 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),
     vals<-rich%>%gather(type,val,-group)%>%group_by(type,group)%>%summarise(ma=max(val))%>%spread(group,ma)
     pos <- apply(res, 1, function(x)max(vals[vals$type==x[1],x[3:4]]))
     mpos <- apply(res, 1, function(x)min(vals[vals$type==x[1],x[3:4]]))
-    p<-rich%>%gather(type,val,-group)%>%ggboxplot(x="group",y="val",color="group")
+
+    if(geom=="boxplot"){
+        p<-rich%>%gather(type,val,-group)%>%ggboxplot(x="group",y="val",color="group")
+    }else if(geom=="violin"){
+        p<-rich%>%gather(type,val,-group)%>%ggviolin(x="group",y="val",color="group")
+    }else if(geom=="dotplot"){
+        p<-rich%>%gather(type,val,-group)%>%ggdotplot(x="group",y="val",color="group")
+    }else{
+        stop("Please specify one type of boxplot,violin,dotplot")
+    }
     p<-facet(p,facet.by = "type",scales = "free_y",ncol = length(method))+
         stat_pvalue_manual(res,label = "p",y.position = pos+mpos/5)+
         xlab("")+ylab("")+
