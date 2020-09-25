@@ -111,7 +111,7 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),geom="boxplot",
     res$p.signif<-sapply(res$p,function(x).getstar(x))
     p<-facet(p,facet.by = "type",scales = "free_y",ncol = length(method))
     if(!is.null(padj)){
-        p<-p+stat_pvalue_manual(res,label = "p.adj.signif",y.position = pos+mpos/nrow(res))
+        p<-p+stat_pvalue_manual(res,label = "p.adj.signif",y.position = pos+2*mpos/nrow(res))
     }else{
         p<-p+stat_pvalue_manual(res,label = "p.signif",y.position = pos+mpos/nrow(res))
     }
@@ -122,7 +122,7 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),geom="boxplot",
 }
 
 
-#' plot bar
+#' plot bar for relative abundance for bacteria
 #' @importFrom phyloseq psmelt
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 geom_bar
