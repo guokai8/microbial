@@ -103,6 +103,8 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),
 #' @importFrom dplyr one_of
 #' @importFrom dplyr summarise
 #' @importFrom dplyr mutate
+#' @importFrom dplyr select
+#' @importFrom rlang `!!`
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
 #'        of the samples, and / or phylogenetic tree if available.
@@ -122,10 +124,11 @@ plotbar<-function(physeq,level="Phylum",color=NULL,top=5,fontsize.x = 5, fontsiz
     }
     group_var<-c("Sample",level)
     d<-pm%>%group_by_at(vars(one_of(group_var)))%>%summarise(su=sum(Abundance))
+    d <- as.data.frame(d)
     d[,level][is.na(d[,level])]<-"NA"
     dx <- pm%>%group_by_at(vars(one_of(level)))%>%summarise(su=sum(Abundance))
     dx <- dx[order(dx$su,decreasing = T),]
-    sel <- dx[1:top,level]
+    sel <- dx%>%head(top)%>%select(!!level)%>%pull(1)
     d <- d[d[,level]%in%sel,]
     p<-ggplot(d,aes_string("Sample","su",fill=level))+
     geom_bar(stat = "identity",position = "fill")+scale_fill_manual(values=color)+
