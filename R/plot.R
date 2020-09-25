@@ -1,6 +1,6 @@
 #' plot beta diversity
 #'
-#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 ggplot aes
 #' @importFrom ggplot2 geom_point
 #' @importFrom ggplot2 scale_color_manual
 #' @importFrom ggplot2 xlab ylab stat_ellipse
