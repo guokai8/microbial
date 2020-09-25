@@ -18,7 +18,7 @@ library(microbial)
 # calcuate the alpha diversity 
 richness(phyloseq,method=c("Simpson", "Shannon"))
 # plot alpha diversity
-plotalpha(phyloseq,method=c("Simpson", "Shannon"))
+plotalpha(phyloseq,method=c("Simpson", "Shannon"),group)
 # make barplot for relative abundance
 phy <- normalize(phyloseq)
 plotbar(phy,level="Phylum")
