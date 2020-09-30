@@ -92,7 +92,7 @@ prefilter<-function(physeq,min=10,perc=0.05){
 }
 
 #' @title calculat the richness for the phyloseq object
-#' @importFrom phyloseq estimate_richness
+#' @importFrom phyloseq estimate_richness otu_table
 #' @importFrom vegan rarefy
 #' @importFrom vegan diversity
 #' @importFrom vegan specnumber
@@ -120,6 +120,7 @@ richness<-function(physeq,method=c("Simpson", "Shannon")){
     }else{
         tab<-otu_table(physeq)
     }
+    rownames(df)<-colnames(tab)
     if("Evenness"%in%method){
         H<-diversity(tab)
         S <- specnumber(tab)
