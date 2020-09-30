@@ -68,7 +68,7 @@ preRef<-function(ref_db,path="."){
 
 prefilter<-function(physeq,min=10,perc=0.05){
     ##remove "" in phylum level
-    ps <- subset_taxa(ps, !is.na(Phylum) & !Phylum %in% c("", "uncharacterized"))
+    ps <- subset_taxa(physeq, !is.na(Phylum) & !Phylum %in% c("", "uncharacterized"))
                       # Compute prevalence of each feature, store as data.frame
     prevdf = apply(X = otu_table(ps),
                MARGIN = ifelse(taxa_are_rows(ps), yes = 1, no = 2),
