@@ -9,6 +9,8 @@
 #' @param trimRight (Optional). Default 0. The number of nucleotides to remove from the end of each read.
 #'        If both truncLen and trimRight are provided, truncation will be performed after trimRight is enforced.
 #' @param sample_info (Optional).sample information for the sequence
+#' @param minLen (Optional). Default 20. Remove reads with length less than minLen. minLen is enforced after trimming and truncation.
+#' @param maxLen Optional). Default Inf (no maximum). Remove reads with length greater than maxLen. maxLen is enforced before trimming and truncation.
 #' @param train_data (Required).training database
 #' @param train_species (Required). species database
 #' @param buildTtree build phylogenetic tree or not(default: FALSE)
@@ -19,6 +21,8 @@ processSeq <- function(path=".",
                        truncLen = c(240, 160),
                        trimLeft=0,
                        trimRight=0,
+                       minLen=20,
+                       maxLen=Inf,
                        sample_info=NULL,
                        train_data="silva_nr99_v138_train_set.fa.gz",
                        train_species="silva_species_assignment_v138.fa.gz",
@@ -38,7 +42,7 @@ processSeq <- function(path=".",
     filtFs <- file.path(path, "filtered", paste0(sample.names, "_F_filt.fastq.gz"))
     filtRs <- file.path(path, "filtered", paste0(sample.names, "_R_filt.fastq.gz"))
     out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=truncLen,trimLeft=trimLeft,trimRight=trimRight,
-                         maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,
+                         maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,minLen=minLen,maxLen = maxLen,
                          compress=TRUE, multithread=multithread) # On Windows set multithread=FALSE
     cat("Learning error......\n")
     errF <- learnErrors(filtFs, multithread=multithread)
