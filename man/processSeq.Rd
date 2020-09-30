@@ -9,6 +9,8 @@ processSeq(
   truncLen = c(240, 160),
   trimLeft = 0,
   trimRight = 0,
+  minLen = 20,
+  maxLen = Inf,
   sample_info = NULL,
   train_data = "silva_nr99_v138_train_set.fa.gz",
   train_species = "silva_species_assignment_v138.fa.gz",
@@ -24,6 +26,10 @@ processSeq(
 
 \item{trimRight}{(Optional). Default 0. The number of nucleotides to remove from the end of each read.
 If both truncLen and trimRight are provided, truncation will be performed after trimRight is enforced.}
+
+\item{minLen}{(Optional). Default 20. Remove reads with length less than minLen. minLen is enforced after trimming and truncation.}
+
+\item{maxLen}{Optional). Default Inf (no maximum). Remove reads with length greater than maxLen. maxLen is enforced before trimming and truncation.}
 
 \item{sample_info}{(Optional).sample information for the sequence}
 
