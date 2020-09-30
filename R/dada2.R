@@ -48,8 +48,8 @@ processSeq <- function(path=".",
     errF <- learnErrors(filtFs, multithread=multithread)
     errR <- learnErrors(filtRs, multithread=multithread)
     cat("Dereplicating ......\n")
-    derepFs <- derepFastq(filtFs, verbose=TRUE)
-    derepRs <- derepFastq(filtRs, verbose=TRUE)
+    derepFs <- derepFastq(filtFs, verbose=FALSE)
+    derepRs <- derepFastq(filtRs, verbose=FALSE)
     # Name the derep-class objects by the sample names
     names(derepFs) <- sample.names
     names(derepRs) <- sample.names
@@ -57,11 +57,11 @@ processSeq <- function(path=".",
     dadaFs <- dada(derepFs, err=errF, multithread=TRUE)
     dadaRs <- dada(derepRs, err=errR, multithread=TRUE)
     cat("Mergering......\n")
-    mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=TRUE)
+    mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=FALSE)
     cat("Making table .......\n")
     seqtab <- makeSequenceTable(mergers)
     cat("remove chimeras......\n");
-    seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE, verbose=TRUE)
+    seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE, verbose=FALSE)
     asv_seqs <- colnames(seqtab.nochim)
     asv_headers <- vector(dim(seqtab.nochim)[2], mode="character")
     for (i in 1:dim(seqtab.nochim)[2]) {
