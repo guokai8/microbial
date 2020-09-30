@@ -36,6 +36,12 @@ sample_data(physeq)<-samdf
 res <- diff_test(physeq,group="group")
 # plot the differential results
 plotdiff(res,level="Genus")
+# do LEfse analysis
+res <- ldamarker(physeq,group="group")
+# plot LEfse results
+plotLDA(res,group=c("A","B"),lda=5,pvalue=0.05)
+# use RandomForest to select markers
+res <- biomarker(physeq,group="group")
 # do some test
 ?do_ttest
 ?do_wilcox
