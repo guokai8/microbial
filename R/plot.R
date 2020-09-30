@@ -117,7 +117,7 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),geom="boxplot",
     }
         p<-p+xlab("")+ylab("")+
         theme(legend.position = "none",axis.text.x=element_text(angle=90,vjust=0.5, hjust=1))+
-        scale_color_manual(values=lightcolor[unique(rich$group)])
+        scale_color_manual(values=lightcolor[1:length(unique(rich$group))])
     p
 }
 
