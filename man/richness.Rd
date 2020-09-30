@@ -7,7 +7,9 @@
 richness(physeq, method = c("Simpson", "Shannon"))
 }
 \arguments{
-\item{physeq}{phyloseq object}
+\item{physeq}{A \code{phyloseq} object containing merged information of abundance,
+taxonomic assignment, sample data including the measured variables and categorical information
+of the samples, and / or phylogenetic tree if available.}
 
 \item{method}{A list of character strings specifying \code{method} to be used to calculate for alpha diversity
 in the data. Available methods are: "Observed","Chao1","ACE","Richness", "Fisher", "Simpson", "Shannon", "Evenness","InvSimpson".}
