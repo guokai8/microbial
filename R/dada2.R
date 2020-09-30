@@ -99,14 +99,19 @@ processSeq <- function(path=".",
     }
     cat("creating phyloseq object......\n")
     if(!is.null(sample_info)){
-        ext<-.checkfile(sample_info)
-        if(ext=="txt"){
-            sampdf<-read.delim(sample_info,sep="\t",header = TRUE,row.names = 1)
+        if(is.character(sample_info)){
+            ext<-.checkfile(sample_info)
+            if(ext=="txt"){
+                sampdf<-read.delim(sample_info,sep="\t",header = TRUE,row.names = 1)
+                }
+            if(ext=="csv"){
+                sampdf<-read.delim(sample_info,sep=",",header = TRUE,row.names = 1)
+                }
+            sampdf<-sampdf[rownames(seqtab.nochim),]
+            }else{
+                sampdf<-sample_info
+                sampdf<-sampdf[rownames(seqtab.nochim),]
         }
-        if(ext=="csv"){
-            sampdf<-read.delim(sample_info,sep=",",header = TRUE,row.names = 1)
-        }
-        sampdf<-sampdf[rownames(seqtab.nochim),]
     }else{
         sampdf<-data.frame(ID=colnames(asv_count))
         rownames(sampdf)<-colnames(asv_count)
