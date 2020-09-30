@@ -237,6 +237,50 @@ plotdiff<-function(sigtab,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=
     p
 }
 
-
+#' plot LFfse results from ldamarker function
+#' @importFrom ggplot2 ggplot geom_bar coord_flip theme_light element_text
+#' @importFrom ggplot2 scale_fill_manual xlab
+#' @importFrom dplyr mutate
+#' @importFrom magrittr %>%
+#' @param x LEfse results from ldamarker
+#' @param group a vector include two character to show the group comparsion
+#' @param lda LDA threshold for significant biomarker
+#' @param pvalue pvalue threshold for significant  results
+#' @param padj adjust p value threshold for significant  results
+#' @param color A vector of character use specifying the color
+#' @param fontsize.x the size of x axis label
+#' @param fontsize.y the size of y axis label
+#' @examples
+#' \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' require(phyloseq)
+#' samdf<-as(sample_data(physeq),"data.frame")
+#' samdf$group<-c(rep("A",14),rep("B",12))
+#' sample_data(physeq)<-samdf
+#' res <- ldamarker(physeq,group="group")
+#' plotLDA(res,group=c("A","B"),lda=5,pvalue=0.05)
+#' }
+#' @return ggplot2 object
+#' @author Kai Guo
+#' @export
+plotLDA<-function(x,group,lda=2,pvalue=0.05,padj=NULL,color=NULL,fontsize.x=4,fontsize.y=5){
+    x <- subset(x,LDAscore>lda)
+    if(!is.null(padj)){
+        x <- subset(x,p.adj<padj)
+    }else{
+        x <- subset(x,p.value<pvalue)
+    }
+    x <- subset(x,direction%in%group)
+    x<-x %>%mutate(LDA=ifelse(direction==group[1],LDAscore,-LDAscore))
+    p<-ggplot(x,aes(x=reorder(tax,LDA),y=LDA,fill=direction))+
+        geom_bar(stat="identity",color="white")+coord_flip()+
+        theme_light()+theme(axis.text.x = element_text(size=fontsize.x),
+                            axis.text.y = element_text(size=fontsize.y))
+    if(is.null(color)){
+        color <- lightcolor[1:2]
+    }
+    p<-p+scale_fill_manual(values=color)+xlab("")
+    p
+}
 
 

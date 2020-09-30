@@ -1,10 +1,103 @@
+#' Download the reference database
+#' @param ref_db the reference database
+#' @param path path for the  database
+#' @return the path of the database
+#' @author Kai Guo
+#' @export
+preRef<-function(ref_db,path="."){
+    if (ref_db == "rdp"){
+        ifelse(!file.exists(paste0(path,"/rdp_train_set_16.fa.gz")),
+        download.file(url = "https://zenodo.org/record/801828/files/rdp_train_set_16.fa.gz?download=1",
+                     destfile = file.path(paste0(path, "/rdp_train_set_16.fa.gz")),
+                     method = "auto"),
+       FALSE);
+       ifelse(!file.exists(paste0(path,"/rdp_species_assignment_16.fa.gz")),
+       download.file(url = "https://zenodo.org/record/801828/files/rdp_species_assignment_16.fa.gz?download=1",
+                     destfile = file.path(paste0(path, "/rdp_species_assignment_16.fa.gz")),
+                     method = "auto"),
+       FALSE);
+        cat("Database:  \n")
+        cat(paste0(path,"/rdp_train_set_16.fa.gz"))
+        cat("\n")
+        cat(paste0(path, "/rdp_species_assignment_16.fa.gz"))
+        cat("\n")
+    } else if (ref_db == "silva"){
+            ifelse(!file.exists(paste0(path,"/silva_nr99_v138_train_set.fa.gz")),
+            download.file(url = "https://zenodo.org/record/3986799/files/silva_nr99_v138_train_set.fa.gz?download=1",
+                         destfile = file.path(paste0(path, "/silva_nr99_v138_train_set.fa.gz")),
+                         method = "auto"),
+           FALSE);
+           ifelse(!file.exists(paste0(path,"/silva_species_assignment_v138.fa.gz?")),
+           download.file(url = 'https://zenodo.org/record/3986799/files/silva_species_assignment_v138.fa.gz?download=1',
+                         destfile = file.path(paste0(path,"/silva_species_assignment_v138.fa.gz")),
+                         method = 'auto'),
+           FALSE);
+          cat("Database:  \n")
+          cat(paste0(path,"/silva_nr99_v138_train_set.fa.gz"))
+          cat("\n")
+          cat(paste0(path, "/silva_species_assignment_v138.fa.gz"))
+          cat("\n")
+    } else {
+           ifelse(!dir.exists(paste0(path,"/gg_13_8_train_set_97.fa.gz")),
+           download.file(url = "https://zenodo.org/record/158955/files/gg_13_8_train_set_97.fa.gz?download=1",
+                         destfile = file.path(paste0(path, "/gg_13_8_train_set_97.fa.gz")),
+                         method = "auto"),
+           FALSE);
+    cat("Database:  \n")
+    cat(paste0(path,"/gg_13_8_train_set_97.fa.gz"))
+    cat("\n")
+}
+}
+
+#' filter the phyloseq
+#' @importFrom phyloseq subset_taxa prune_taxa otu_table taxa_are_rows tax_table
+#' @importFrom plyr ddply
+#' @param physeq A \code{phyloseq} object containing merged information of abundance,
+#'        taxonomic assignment, sample data including the measured variables and categorical information
+#'        of the samples, and / or phylogenetic tree if available.
+#' @param min Numeric, the threshold for mininal Phylum shown in samples
+#' @param perc Numeric, input the percentage of samples for which to filter low counts.
+#' @examples
+#' \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' physeq<-prefilter(GlobalPatterns)
+#' }
+#' @return filter phyloseq object
+#' @author Kai Guo
+#' @export
+
+prefilter<-function(physeq,min=10,perc=0.05){
+    ##remove "" in phylum level
+    ps <- subset_taxa(ps, !is.na(Phylum) & !Phylum %in% c("", "uncharacterized"))
+                      # Compute prevalence of each feature, store as data.frame
+    prevdf = apply(X = otu_table(ps),
+               MARGIN = ifelse(taxa_are_rows(ps), yes = 1, no = 2),
+               FUN = function(x){sum(x > 0)})
+    # Add taxonomy and total read counts to this data.frame
+    prevdf = data.frame(Prevalence = prevdf,
+                    TotalAbundance = taxa_sums(ps),
+                    tax_table(ps))
+    #compute the total and the average prevalences of the features in each phylum
+    prer<-ddply(prevdf, "Phylum", function(df1){cbind(mean(df1$Prevalence),sum(df1$Prevalence))})
+    colnames(prer)[2:3]<-c("average","total")
+    filterPhyla<-prer$Phylum[which(prer$total/prer$average<min)]
+    ps1 = subset_taxa(ps, !Phylum %in% filterPhyla)
+    prevalenceThreshold = perc * nsamples(ps1)
+    cat("prevalence Threshold is: ",prevalenceThreshold,"\n")
+    keepTaxa = rownames(prevdf1)[(prevdf1$Prevalence >= prevalenceThreshold)]
+    prevdfr<-prevdf1[keepTaxa,]
+    psf = prune_taxa(keepTaxa, ps1)
+}
+
 #' @title calculat the richness for the phyloseq object
 #' @importFrom phyloseq estimate_richness
 #' @importFrom vegan rarefy
 #' @importFrom vegan diversity
 #' @importFrom vegan specnumber
 #' @importFrom phyloseq otu_table
-#' @param physeq phyloseq object
+#' @param physeq A \code{phyloseq} object containing merged information of abundance,
+#'        taxonomic assignment, sample data including the measured variables and categorical information
+#'        of the samples, and / or phylogenetic tree if available.
 #' @param method A list of character strings specifying \code{method} to be used to calculate for alpha diversity
 #'        in the data. Available methods are: "Observed","Chao1","ACE","Richness", "Fisher", "Simpson", "Shannon", "Evenness","InvSimpson".
 #' @examples
@@ -77,12 +170,12 @@ richness<-function(physeq,method=c("Simpson", "Shannon")){
 #' data("GlobalPatterns",package="phyloseq")
 #' physeq <- GlobalPatterns
 #' phy<-normalize(physeq)
-#' beta <-beta_test(phy,group="SampleType")
+#' beta <-betatest(phy,group="SampleType")
 #' }
 #' @return PERMANOVA test result
 #' @export
 #' @author Kai Guo
-beta_test<-function(physeq,group,distance="bray"){
+betatest<-function(physeq,group,distance="bray"){
     cat("Do PERMANOVA for: ",group,"\n")
     dist<-distance(physeq,method = distance)
     tab <- as(sample_data(physeq),"data.frame")
@@ -167,8 +260,8 @@ normalize<-function(physeq,group,method="relative"){
 #'      taxonomic assignment, sample data including the measured variables and categorical information
 #'      of the samples, and / or phylogenetic tree if available.
 #' @param group group (DESeq2). A character string specifying the name of a categorical variable containing  grouping information.
-#' @param pvalue pvalue threshold for significant  results
-#' @param padj adjust p value threshold for significant  results
+#' @param pvalue pvalue threshold for significant results
+#' @param padj adjust p value threshold for significant results
 #' @param log2FC log2 Fold Change threshold
 #' @param gm_mean TRUE/FALSE calculate geometric means prior to estimate size factors
 #' @param fitType either "parametric", "local", or "mean" for the type of fitting of dispersions to the mean intensity.
@@ -179,13 +272,13 @@ normalize<-function(physeq,group,method="relative"){
 #' samdf<-as(sample_data(physeq),"data.frame")
 #' samdf$group<-c(rep("A",14),rep("B",12))
 #' sample_data(physeq)<-samdf
-#' res <- diff_test(physeq,group="group")
+#' res <- difftest(physeq,group="group")
 #' }
 #' @return datafame with differential test with DESeq2
 #' @author Kai Guo
 #' @export
 #'
-diff_test<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=FALSE,fitType="local"){
+difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=FALSE,fitType="local"){
     if(!taxa_are_rows(physeq)){
         physeq<-t(physeq)
     }
@@ -219,4 +312,125 @@ diff_test<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=FALSE,fi
     return(as.data.frame(res_tax))
 }
 
-
+#' @title Identify biomarker by using randomForest method
+#' @importFrom phyloseq taxa_are_rows otu_table sample_data t
+#' @importFrom randomForest randomForest importance
+#' @importFrom tidyr gather
+#' @importFrom dplyr group_by filter
+#' @importFrom dplyr do
+#' @importFrom magrittr %>%
+#' @importFrom broom tidy
+#' @param physeq A \code{phyloseq} object containing merged information of abundance,
+#'      taxonomic assignment, sample data including the measured variables and categorical information
+#'      of the samples, and / or phylogenetic tree if available.
+#' @param group group. A character string specifying the name of a categorical variable containing  grouping information.
+#' @param ntree Number of trees to grow. This should not be set to too small a number,
+#'  to ensure that every input row gets predicted at least a few times.
+#' @param pvalue pvalue threshold for significant results from kruskal.test
+#' @param normalize to normalize the data before analysis(TRUE/FALSE)
+#' @examples
+#' \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' samdf<-as(sample_data(physeq),"data.frame")
+#' samdf$group<-c(rep("A",14),rep("B",12))
+#' sample_data(physeq)<-samdf
+#' res <- biomarker(physeq,group="group")
+#' }
+#' @return data frame with significant biomarker
+#' @author Kai Guo
+#' @export
+biomarker<-function(physeq,group,ntree=500,pvalue=0.05,normalize=TRUE,method="relative"){
+    if(isTRUE(normalize)){
+        physeq<-normalize(physeq,method = method)
+    }
+    if(taxa_are_rows(physeq)){
+        physeq<-t(physeq)
+    }
+    tax <- as.data.frame(as.matrix(tax_table(physeq)))
+    sam <- as(sample_data(physeq),"data.frame")
+    tab <- as.data.frame(otu_table(physeq))
+    tab$group<-sam[,group]
+    sel<-tab%>%gather(OTU,val,-group)%>%group_by(OTU)%>%do(tidy(kruskal.test(val~group,.)))%>%
+      filter(p.value<0.05)
+    data<-tab[,sel$OTU]
+    #change the colnames in case only have number in the colname
+    colnames(data)<-paste0("X",colnames(data))
+    data$group<-tab$group
+    data$group<-factor(data$group)
+    val<-randomForest(group ~ ., data=data, importance=TRUE, proximity=TRUE,ntree=ntree)
+    imp<- importance(val)
+    res<-data.frame(row.names=NULL,OTU=sub('X','',rownames(imp)),
+                    Value=abs(as.numeric(imp[,"MeanDecreaseAccuracy"])),
+                    Index=rep("Mean Decrease Accuracy",dim(imp)[1]))
+    #Rearrange the features in terms of importance for ggplot2 by changing factor levels
+    res$rank <- rank(res$Value, ties.method = "min")
+    res$rank <- max(res$rank)-res$rank+1
+    res<-cbind(res,tax[res$OTU,])
+    res<-res[order(res$rank),]
+    res
+}
+#' Identify biomarker by using LEfse method
+#' @importFrom phyloseq taxa_are_rows otu_table sample_data
+#' @importFrom phyloseq `otu_table<-`
+#' @importFrom dplyr group_by summarize do left_join
+#' @importFrom dplyr ungroup bind_rows mutate
+#' @importFrom broom tidy
+#' @importFrom magrittr %>%
+#' @param physeq A \code{phyloseq} object containing merged information of abundance,
+#'      taxonomic assignment, sample data including the measured variables and categorical information
+#'      of the samples, and / or phylogenetic tree if available.
+#' @param group group. A character string specifying the name of a categorical variable containing  grouping information.
+#' @param pvalue pvalue threshold for significant results from kruskal.test
+#' @param normalize to normalize the data before analysis(TRUE/FALSE)
+#' @examples
+#' \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' samdf<-as(sample_data(physeq),"data.frame")
+#' samdf$group<-c(rep("A",14),rep("B",12))
+#' sample_data(physeq)<-samdf
+#' res <- ldamarker(physeq,group="group")
+#' }
+#'
+#' @author Kai Guo
+#' @export
+ldamarker<-function(physeq,group,pvalue=0.05,normalize=TRUE,method="relative"){
+    if(isTRUE(normalize)){
+        physeq<-normalize(physeq,method = method)
+        # count per million *10e6 (CPM)
+        otu_table(physeq)<-otu_table(physeq)*10e6
+    }
+    if(!taxa_are_rows(physeq)){
+        physeq<-t(physeq)
+    }
+    tax <- as.data.frame(as.matrix(tax_table(physeq)))
+    sam<-as(sample_data(physeq),"data.frame")
+    level<-colnames(tax)
+    tab<-psmelt(physeq)
+    otul <- lapply(1:length(level),function(i) {
+          lvls <- level[1:i]
+          lvl <- level[i]
+          otu_lev <- tab
+          otu_lev$tax <- do.call(paste,c(lapply(lvls,function(l) tab[[l]]),sep="|"))
+          otu_lev$rank <- lvl
+          otu_lev2 <- otu_lev %>% group_by(Sample,tax,rank) %>%
+              summarize(seqs=sum(Abundance)) %>% ungroup()
+        return(otu_lev2)
+        })
+    otu <- bind_rows(otul) %>%
+            mutate(tax=gsub("\\|","_",tax))
+    ###
+    otu$group<-sam[otu$Sample,group]
+    ###
+    pvalues<-otu%>%group_by(rank,tax)%>%do(tidy(kruskal.test(seqs~group,.)))
+    pvalues$p.adj<-p.adjust(pvalues$p.value, method ="fdr");
+    ##
+    df<-pvalues%>%left_join(otu,by=c("tax"="tax"))
+    dd<-df[df$p.value<pvalue,]
+    dfl<-split(dd,dd$tax)
+    #Linear Discriminant analysis (LDA)
+    ldares <- lapply(dfl, function(x).lda.fun(x))
+    resTable <- do.call(rbind,ldares);
+    resTable$tax <- rownames(resTable)
+    resTable <- pvalues%>%left_join(resTable,by=c("tax"="tax"))
+    return(resTable)
+}

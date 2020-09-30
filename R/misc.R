@@ -97,7 +97,7 @@ gm_mean = function(x, na.rm=TRUE){
     exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
 }
 
-#'
+#' replace p value with star
 .getstar<-function(x){
     if(x>=0.05){
         return("ns")
@@ -108,4 +108,46 @@ gm_mean = function(x, na.rm=TRUE){
     }else{
         return("***")
     }
+}
+#' check file format
+.checkfile <- function(file){
+    ex <- strsplit(basename(file), split="\\.")[[1]]
+    return(ex[-1])
+}
+
+#' LEfse function
+#' @importFrom MASS lda
+
+.lda.fun<-function(df){
+     # modified from https://github.com/xia-lab/MicrobiomeAnalystR/blob/
+    # 0a8d81afeb3b637122c97c2d17146a44fa978c4f/R/general_anal.R
+    ldares <- lda(group~seqs,df);
+    ldamean <- as.data.frame(t(ldares$means));
+    class_no <<- length(unique(df$group));
+    ldamean$max <- apply(ldamean[,1:class_no],1,max);
+    ldamean$min <- apply(ldamean[,1:class_no],1,min);
+    ldamean$LDAscore <- signif(log10(1+abs(ldamean$max-ldamean$min)/2),digits=3);
+    resTable <- ldamean;
+    resTable$direction <- colnames(resTable)[which(resTable[,1:class_no]==resTable$max)]
+    return(resTable)
+}
+
+#' contruction of plylogenetic tree (extreme slow)
+#' @importFrom DECIPHER AlignSeqs
+#' @importFrom Biostrings DNAStringSet
+#' @importFrom phangorn phyDat dist.ml NJ pml optim.pml pml.control
+#' @param seqs DNA sequences
+#' @author Kai Guo
+#' @return tree object
+#' @export
+buildTree<-function(seqs){
+    alignment <- AlignSeqs(DNAStringSet(seqs), anchor=NA,verbose=T)
+    phangAlign <- phyDat(as(alignment, "matrix"), type="DNA")
+    dm <- dist.ml(phangAlign)
+    treeNJ <- NJ(dm) # Note, tip order != sequence order
+    fit = pml(treeNJ, data=phangAlign)
+    fitGTR <- update(fit, k=4, inv=0.2)
+    fitGTR <- optim.pml(fitGTR, model="GTR", optInv=TRUE, optGamma=TRUE,
+                    rearrangement = "stochastic", control = pml.control(trace = 0))
+    return(fitGTR)
 }
