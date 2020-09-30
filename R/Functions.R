@@ -51,6 +51,7 @@ preRef<-function(ref_db,path="."){
 
 #' filter the phyloseq
 #' @importFrom phyloseq subset_taxa prune_taxa otu_table taxa_are_rows tax_table
+#' @importFrom phyloseq taxa_sums
 #' @importFrom plyr ddply
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
