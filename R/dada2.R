@@ -1,7 +1,7 @@
 #' Perform dada2 analysis
 #' @importFrom dada2 filterAndTrim learnErrors derepFastq dada mergePairs
 #' @importFrom dada2 makeSequenceTable removeBimeraDenovo assignTaxonomy
-#' @importFrom dada2 addSpecies getSequences
+#' @importFrom dada2 addSpecies getSequences getUniques
 #' @importFrom phyloseq phyloseq otu_table sample_data tax_table
 #' @param path working dir
 #' @param truncLen (Optional). Default 0 (no truncation). Truncate reads after truncLen bases. Reads shorter than this are discarded.
