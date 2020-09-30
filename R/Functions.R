@@ -51,7 +51,7 @@ preRef<-function(ref_db,path="."){
 
 #' filter the phyloseq
 #' @importFrom phyloseq subset_taxa prune_taxa otu_table taxa_are_rows tax_table
-#' @importFrom phyloseq taxa_sums
+#' @importFrom phyloseq taxa_sums get_taxa_unique
 #' @importFrom plyr ddply
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
@@ -83,6 +83,7 @@ prefilter<-function(physeq,min=10,perc=0.05){
     colnames(prer)[2:3]<-c("average","total")
     filterPhyla<-prer$Phylum[which(prer$total/prer$average<min)]
     ps1 = subset_taxa(ps, !Phylum %in% filterPhyla)
+    prevdf1 = subset(prevdf, Phylum %in% get_taxa_unique(ps1, "Phylum"))
     prevalenceThreshold = perc * nsamples(ps1)
     cat("prevalence Threshold is: ",prevalenceThreshold,"\n")
     keepTaxa = rownames(prevdf1)[(prevdf1$Prevalence >= prevalenceThreshold)]
