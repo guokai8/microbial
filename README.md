@@ -54,7 +54,7 @@ res <- biomarker(physeq,group="group")
 ?do_aov
 ```
 ## Note
-The _microbial_ package was bulit based on the phyloseq. The package is still under development. New functions will be provided soon.
+The _microbial_ package was bulit based on the dada2 and  phyloseq. The package is still under development. New functions will be provided soon.
 
 ## Contact information
 
