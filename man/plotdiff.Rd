@@ -48,6 +48,7 @@ plot differential results
  \dontrun{
 data("GlobalPatterns",package="phyloseq")
 require(phyloseq)
+physeq<-GlobalPatterns
 samdf<-as(sample_data(physeq),"data.frame")
 samdf$group<-c(rep("A",14),rep("B",12))
 sample_data(physeq)<-samdf

@@ -22,9 +22,9 @@ plotLDA(
 
 \item{lda}{LDA threshold for significant biomarker}
 
-\item{pvalue}{pvalue threshold for significant  results}
+\item{pvalue}{pvalue threshold for significant results}
 
-\item{padj}{adjust p value threshold for significant  results}
+\item{padj}{adjust p value threshold for significant results}
 
 \item{color}{A vector of character use specifying the color}
 
@@ -42,6 +42,7 @@ plot LFfse results from ldamarker function
 \dontrun{
 data("GlobalPatterns",package="phyloseq")
 require(phyloseq)
+physeq<-GlobalPatterns
 samdf<-as(sample_data(physeq),"data.frame")
 samdf$group<-c(rep("A",14),rep("B",12))
 sample_data(physeq)<-samdf
