@@ -29,13 +29,13 @@ plotbar(phy,level="Phylum")
 # plot beta diversity(PCoA)
 plotbeta(phy,group="SampleType",distance="bray",method="PCoA")
 # perform PERMANOVA test
-beta_test(phy,group="SampleType",distance="bray")
+betatest(phy,group="SampleType",distance="bray")
 # do differential analysis with DESeq2
 require(phyloseq)
 samdf<-as(sample_data(physeq),"data.frame")
 samdf$group<-c(rep("A",14),rep("B",12))
 sample_data(physeq)<-samdf
-res <- diff_test(physeq,group="group")
+res <- difftest(physeq,group="group")
 # plot the differential results
 plotdiff(res,level="Genus")
 # do LEfse analysis
