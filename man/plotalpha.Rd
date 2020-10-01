@@ -8,6 +8,7 @@ plotalpha(
   physeq,
   group,
   method = c("Simpson", "Shannon"),
+  color = NULL,
   geom = "boxplot",
   pvalue = 0.05,
   padj = NULL,
@@ -23,6 +24,8 @@ of the samples, and / or phylogenetic tree if available.}
 
 \item{method}{A list of character strings specifying \code{method} to be used to calculate for alpha diversity
 in the data. Available methods are: "Observed","Chao1","ACE","Richness", "Fisher", "Simpson", "Shannon", "Evenness","InvSimpson".}
+
+\item{color}{A vector of character use specifying the color}
 
 \item{geom}{different geom to display("boxplot","violin","dotplot")}
 
