@@ -182,7 +182,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,top=5,fontsize.x = 5, fontsiz
 }
 
 #' @title plot differential results
-#' @importFrom ggplot2 ggplot theme geom_point element_text
+#' @importFrom ggplot2 ggplot theme geom_point element_text xlab
 #' @importFrom ggplot2 aes_string scale_color_manual theme_light coord_flip
 #' @param sigtab differential test results from diff_test
 #' @param level the level to plot
@@ -227,13 +227,14 @@ plotdiff<-function(sigtab,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=
     x <- tapply(sigtab$log2FoldChange, sigtab[,level], function(x) max(x))
     x <- sort(x, TRUE)
     sigtab[,level] <- factor(as.character(sigtab[,level]), levels=names(x))
-    p <- ggplot(sigtab, aes_string(x=level, y="log2FoldChange", color="Phylum"))+
-        geom_point(size=3) +theme_light()+
+    sigtab$name<-paste0(sigtab[,level],"(",rownames(sigtab),")")
+    p <- ggplot(sigtab, aes_string(x="name", y="log2FoldChange", color="Phylum"))+
+        geom_point(size=3) +theme_light()+xlab(level)+
         theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5,size=fontsize.x),
               axis.text.y = element_text(size=fontsize.y))+
         scale_color_manual(values=color)
     if(isTRUE(horiz)){
-        p<-p+coord_flip()
+        p<-p+coord_flip()+theme(axis.text.x=element_text(angle=0,size=fontsize.x))
     }
     p
 }
