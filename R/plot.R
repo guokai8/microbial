@@ -202,7 +202,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,top=5,fontsize.x = 5, fontsiz
 #' samdf<-as(sample_data(physeq),"data.frame")
 #' samdf$group<-c(rep("A",14),rep("B",12))
 #' sample_data(physeq)<-samdf
-#' res <- diff_test(physeq,group="group")
+#' res <- difftest(physeq,group="group")
 #' plotdiff(res,level="Genus",padj=0.001)
 #' }
 #' @return ggplot object
@@ -298,6 +298,16 @@ plotLDA<-function(x,group,lda=2,pvalue=0.05,padj=NULL,color=NULL,fontsize.x=4,fo
 #' @param label.size label size
 #' @param label.color label color
 #' @return ggplot2 object
+#' @examples
+#' \dontrun{
+#' data("GlobalPatterns",package="phyloseq")
+#' require(phyloseq)
+#' samdf<-as(sample_data(physeq),"data.frame")
+#' samdf$group<-c(rep("A",14),rep("B",12))
+#' sample_data(physeq)<-samdf
+#' res <- biomarker(physeq,group="group")
+#' plotmarker(res,level="Genus")
+#' }
 #' @export
 #' @author Kai Guo
 plotmarker<-function(x,level="Genus",top=30,rotate=FALSE,dot.size=8,label.color="black",label.size=6){
@@ -315,3 +325,17 @@ plotmarker<-function(x,level="Genus",top=30,rotate=FALSE,dot.size=8,label.color=
     p
 }
 
+#' plot the quality for the fastq file
+#' @importFrom dada2 plotQualityProfile
+#' @param file 	(Required). character. File path(s) to fastq or fastq.gz file(s).
+#' @param n	(Optional). Default 500,000. The number of records to sample from the fastq file.
+#' @param aggregate	(Optional). Default FALSE. If TRUE, compute an aggregate quality profile for all fastq files provided.
+#' @examples
+#' \dontrun{
+#' plotQualityProfile(system.file("extdata", "sam1F.fastq.gz", package="dada2"))
+#' }
+#' @export
+#' @return figure
+plotquality<-function(file,n = 5e+05, aggregate = FALSE){
+    plotQualityProfile(file,n=n,aggregate = aggregate)
+}
