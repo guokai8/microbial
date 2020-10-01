@@ -4,7 +4,9 @@ simpleCap <- function(x) {
           sep="", collapse=" ")
 }
 
-#
+#' light colors for making figures
+#' @author Kai Guo
+#' @export
 lightcolor<-c('#E5D2DD', '#53A85F', '#F1BB72', '#F3B1A0', '#D6E7A3', '#57C3F3', '#476D87',
                 '#E95C59', '#E59CC4', '#AB3282', '#23452F', '#BD956A', '#8C549C', '#585658',
                 '#9FA3A8', '#E0D4CA', '#5F3D69', '#C5DEBA', '#58A4C3', '#E4C755', '#F7F398',
@@ -16,7 +18,9 @@ lightcolor<-c('#E5D2DD', '#53A85F', '#F1BB72', '#F3B1A0', '#D6E7A3', '#57C3F3', 
                 '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075',
                 '#808080'
 )
-#
+#' distinguish colors for making figures
+#' @author Kai Guo
+#' @export
 distcolor<-c('#e6194b', '#3cb44b', '#ffe119', '#4363d8',
          '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c',
          '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8',
