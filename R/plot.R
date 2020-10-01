@@ -288,8 +288,7 @@ plotLDA<-function(x,group,lda=2,pvalue=0.05,padj=NULL,color=NULL,fontsize.x=4,fo
 #'
 #' plot the biomarker from the biomarker function with randomForest
 #' @importFrom ggpubr ggdotchart
-#' @importFrom ggplot2 coord_flip theme_light element_text
-#' @importFrom ggplot2 scale_fill_manual xlab
+#' @importFrom ggplot2 xlab ylab
 #' @param x biomarker results from randomForest
 #' @param level the bacteria level to display
 #' @param top the number of important biomarker to draw
