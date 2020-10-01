@@ -198,6 +198,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,top=5,fontsize.x = 5, fontsiz
 #'  \dontrun{
 #' data("GlobalPatterns",package="phyloseq")
 #' require(phyloseq)
+#' physeq<-GlobalPatterns
 #' samdf<-as(sample_data(physeq),"data.frame")
 #' samdf$group<-c(rep("A",14),rep("B",12))
 #' sample_data(physeq)<-samdf
@@ -245,8 +246,8 @@ plotdiff<-function(sigtab,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=
 #' @param x LEfse results from ldamarker
 #' @param group a vector include two character to show the group comparsion
 #' @param lda LDA threshold for significant biomarker
-#' @param pvalue pvalue threshold for significant  results
-#' @param padj adjust p value threshold for significant  results
+#' @param pvalue pvalue threshold for significant results
+#' @param padj adjust p value threshold for significant results
 #' @param color A vector of character use specifying the color
 #' @param fontsize.x the size of x axis label
 #' @param fontsize.y the size of y axis label
@@ -254,6 +255,7 @@ plotdiff<-function(sigtab,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=
 #' \dontrun{
 #' data("GlobalPatterns",package="phyloseq")
 #' require(phyloseq)
+#' physeq<-GlobalPatterns
 #' samdf<-as(sample_data(physeq),"data.frame")
 #' samdf$group<-c(rep("A",14),rep("B",12))
 #' sample_data(physeq)<-samdf
@@ -283,4 +285,33 @@ plotLDA<-function(x,group,lda=2,pvalue=0.05,padj=NULL,color=NULL,fontsize.x=4,fo
     p
 }
 
+#'
+#' plot the biomarker from the biomarker function with randomForest
+#' @importFrom ggpubr ggdotchart
+#' @importFrom ggplot2 coord_flip theme_light element_text
+#' @importFrom ggplot2 scale_fill_manual xlab
+#' @param x biomarker results from randomForest
+#' @param level the bacteria level to display
+#' @param top the number of important biomarker to draw
+#' @param rotate TRUE/FALSE
+#' @param dot.size size for the dot
+#' @param label.size label size
+#' @param label.color label color
+#' @return ggplot2 object
+#' @export
+#' @author Kai Guo
+plotmarker<-function(x,level="Genus",top=30,rotate=FALSE,dot.size=8,label.color="black",label.size=6){
+    x <- x[1:top,]
+    x <- x[order(x$Value),]
+    x$label<-paste0(x[,level],"(",x$OTU,")")
+    p<-ggdotchart(x,x="label",y="Value",add="segments",color=I("#00AFBB"),rotate=rotate,dot.size=dot.size,sorting="descending",
+                  add.params = list(color = "#00AFBB", size = 1.5),
+               label=round(x$Value,2),font.label = list(color = label.color, size = label.size,vjust=0.2))
+    if(isTRUE(rotate)){
+        p<-p+xlab(level)+ylab("Mean Decrease Accuracy")
+    }else{
+        p<-p+ylab(level)+xlab("Mean Decrease Accuracy")
+    }
+    p
+}
 

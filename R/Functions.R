@@ -289,6 +289,7 @@ difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=FALSE,fit
     tax <- as.data.frame(as.matrix(tax_table(physeq)))
     colData<-as(sample_data(physeq),"data.frame")
     colData$condition<-colData[,group]
+    contrasts<-levels(factor(unique(colData$condition)))
     if(isTRUE(gm_mean)){
         countData<-round(otu, digits = 0)
     }else{
@@ -299,8 +300,8 @@ difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=FALSE,fit
         geoMeans = apply(counts(dds), 1, gm_mean)
         dds = estimateSizeFactors(dds, geoMeans = geoMeans)
     }
-    dds = DESeq(dds, fitType=fitType)
-    res = results(dds, cooksCutoff = FALSE)
+    dds <- DESeq(dds, fitType=fitType)
+    res <- results(dds,contrast=c("condition",contrasts),cooksCutoff = FALSE)
     res_tax = cbind(as.data.frame(res), as.matrix(countData[rownames(res), ]))
     if(!is.null(padj)){
         pval<-padj
@@ -334,6 +335,7 @@ difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=FALSE,fit
 #' @examples
 #' \dontrun{
 #' data("GlobalPatterns",package="phyloseq")
+#' require(phyloseq)
 #' samdf<-as(sample_data(physeq),"data.frame")
 #' samdf$group<-c(rep("A",14),rep("B",12))
 #' sample_data(physeq)<-samdf
@@ -388,6 +390,7 @@ biomarker<-function(physeq,group,ntree=500,pvalue=0.05,normalize=TRUE,method="re
 #' @examples
 #' \dontrun{
 #' data("GlobalPatterns",package="phyloseq")
+#' require(phyloseq)
 #' samdf<-as(sample_data(physeq),"data.frame")
 #' samdf$group<-c(rep("A",14),rep("B",12))
 #' sample_data(physeq)<-samdf
