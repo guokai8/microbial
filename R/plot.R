@@ -332,7 +332,7 @@ plotmarker<-function(x,level="Genus",top=30,rotate=FALSE,dot.size=8,label.color=
 #' @param aggregate	(Optional). Default FALSE. If TRUE, compute an aggregate quality profile for all fastq files provided.
 #' @examples
 #' \dontrun{
-#' plotQualityProfile(system.file("extdata", "sam1F.fastq.gz", package="dada2"))
+#' plotquality(system.file("extdata", "sam1F.fastq.gz", package="dada2"))
 #' }
 #' @export
 #' @return figure
