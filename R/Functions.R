@@ -281,7 +281,7 @@ normalize<-function(physeq,group,method="relative"){
 #' @author Kai Guo
 #' @export
 #'
-difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=FALSE,fitType="local"){
+difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=TRUE,fitType="local"){
     if(!taxa_are_rows(physeq)){
         physeq<-t(physeq)
     }
