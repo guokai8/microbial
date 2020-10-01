@@ -21,6 +21,6 @@ plot the quality for the fastq file
 }
 \examples{
 \dontrun{
-plotQualityProfile(system.file("extdata", "sam1F.fastq.gz", package="dada2"))
+plotquality(system.file("extdata", "sam1F.fastq.gz", package="dada2"))
 }
 }
