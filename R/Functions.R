@@ -255,7 +255,7 @@ normalize<-function(physeq,group,method="relative"){
     return(physeq)
 }
 #' @title Calculate differential bacteria with DESeq2
-#' @importFrom DESeq2 DESeqDataSetFromMatrix
+#' @importFrom DESeq2 DESeqDataSetFromMatrix counts
 #' @importFrom phyloseq otu_table taxa_are_rows
 #' @importFrom phyloseq sample_data
 #' @importFrom DESeq2 results DESeq
