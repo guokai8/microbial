@@ -64,6 +64,7 @@ plotbeta<-function(physeq,group,distance="bray",method="PCoA",color=NULL,size=3,
 #' @param group group (Required). A character string specifying the name of a categorical variable containing  grouping information.
 #' @param method A list of character strings specifying \code{method} to be used to calculate for alpha diversity
 #'        in the data. Available methods are: "Observed","Chao1","ACE","Richness", "Fisher", "Simpson", "Shannon", "Evenness","InvSimpson".
+#' @param color A vector of character use specifying the color
 #' @param geom different geom to display("boxplot","violin","dotplot")
 #' @param pvalue pvalue threshold for significant dispersion results
 #' @param padj adjust p value threshold for significant dispersion results
@@ -77,7 +78,7 @@ plotbeta<-function(physeq,group,distance="bray",method="PCoA",color=NULL,size=3,
 #' @return Returns a ggplot object. This can further be manipulated as preferred by user.
 #' @author Kai Guo
 #' @export
-plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),geom="boxplot",
+plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),color=NULL,geom="boxplot",
                     pvalue=0.05,padj=NULL,wilcox=FALSE){
     if (!taxa_are_rows(physeq)) {
         physeq <- t(physeq)
@@ -109,6 +110,9 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),geom="boxplot",
         stop("Please specify one type of boxplot,violin,dotplot")
     }
     res$p.signif<-sapply(res$p,function(x).getstar(x))
+    if(is.null(color)){
+        color<-lightcolor[1:length(unique(rich$group))]
+    }
     p<-facet(p,facet.by = "type",scales = "free_y",ncol = length(method))
     if(!is.null(padj)){
         p<-p+stat_pvalue_manual(res,label = "p.adj.signif",y.position = pos+2*mpos/nrow(res))
@@ -117,7 +121,7 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),geom="boxplot",
     }
         p<-p+xlab("")+ylab("")+
         theme(legend.position = "none",axis.text.x=element_text(angle=90,vjust=0.5, hjust=1))+
-        scale_color_manual(values=lightcolor[1:length(unique(rich$group))])
+        scale_color_manual(values=color)
     p
 }
 
