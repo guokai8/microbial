@@ -10,7 +10,7 @@ difftest(
   pvalue = 0.05,
   padj = NULL,
   log2FC = 0,
-  gm_mean = FALSE,
+  gm_mean = TRUE,
   fitType = "local"
 )
 }
