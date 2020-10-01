@@ -5,7 +5,7 @@
 \title{plot differential results}
 \usage{
 plotdiff(
-  sigtab,
+  res,
   level = "Genus",
   color = NULL,
   pvalue = 0.05,
@@ -18,8 +18,6 @@ plotdiff(
 )
 }
 \arguments{
-\item{sigtab}{differential test results from diff_test}
-
 \item{level}{the level to plot}
 
 \item{color}{A vector of character use specifying the color}
@@ -37,6 +35,8 @@ plotdiff(
 \item{fontsize.y}{the size of y axis label}
 
 \item{horiz}{horizontal or not (TRUE/FALSE)}
+
+\item{sigtab}{differential test results from diff_test}
 }
 \value{
 ggplot object
