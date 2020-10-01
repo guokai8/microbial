@@ -184,7 +184,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,top=5,fontsize.x = 5, fontsiz
 #' @title plot differential results
 #' @importFrom ggplot2 ggplot theme geom_point element_text xlab
 #' @importFrom ggplot2 aes_string scale_color_manual theme_light coord_flip
-#' @param sigtab differential test results from diff_test
+#' @param res differential test results from diff_test
 #' @param level the level to plot
 #' @param color A vector of character use specifying the color
 #' @param pvalue pvalue threshold for significant  results
@@ -208,7 +208,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,top=5,fontsize.x = 5, fontsiz
 #' @return ggplot object
 #' @author Kai Guo
 #' @export
-plotdiff<-function(sigtab,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=0,size=3,fontsize.x=5,fontsize.y=10,horiz=TRUE){
+plotdiff<-function(res,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=0,size=3,fontsize.x=5,fontsize.y=10,horiz=TRUE){
     if(!is.null(padj)){
         pval<-padj
         sigtab <- subset(res,padj<pval&abs(log2FoldChange)>log2FC)
