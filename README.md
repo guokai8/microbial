@@ -17,6 +17,10 @@ library(microbial)
 ```
 # You can use processSeq function to do analysis start from fastq files
 ?processSeq
+# You may need to first download the reference database
+preRef(ref_db="silva")
+# to check the quality of you reads
+?plotquality
 # calcuate the alpha diversity 
 data("GlobalPatterns",package="phyloseq")
 physeq <- GlobalPatterns
