@@ -8,6 +8,7 @@ plotbar(
   physeq,
   level = "Phylum",
   color = NULL,
+  group = NULL,
   top = 5,
   fontsize.x = 5,
   fontsize.y = 12
@@ -21,6 +22,8 @@ of the samples, and / or phylogenetic tree if available.}
 \item{level}{the level to plot}
 
 \item{color}{A vector of character use specifying the color}
+
+\item{group}{group (Optional). A character string specifying the name of a categorical variable containing  grouping information.}
 
 \item{top}{the number of most abundance bacteria to display}
 
