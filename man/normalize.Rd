@@ -4,7 +4,7 @@
 \alias{normalize}
 \title{Normalize the phyloseq object with different methods}
 \usage{
-normalize(physeq, group, method = "relative")
+normalize(physeq, group, method = "relative", table = FALSE)
 }
 \arguments{
 \item{physeq}{A \code{phyloseq} object containing merged information of abundance,
@@ -15,6 +15,8 @@ of the samples, and / or phylogenetic tree if available.}
 
 \item{method}{A list of character strings specifying \code{method} to be used to normalize the phyloseq object
 Available methods are: "relative","TMM","vst","log2".}
+
+\item{table}{return a data.frame or not}
 }
 \value{
 phyloseq object with normalized data
