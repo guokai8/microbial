@@ -147,6 +147,7 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),color=NULL,geom=
 #'        of the samples, and / or phylogenetic tree if available.
 #' @param level the level to plot
 #' @param color A vector of character use specifying the color
+#' @param group group (Optional). A character string specifying the name of a categorical variable containing  grouping information.
 #' @param top the number of most abundance bacteria to display
 #' @param fontsize.x the size of x axis label
 #' @param fontsize.y the size of y axis label
@@ -160,13 +161,17 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),color=NULL,geom=
 #' @return Returns a ggplot object. This can further be manipulated as preferred by user.
 #' @author Kai Guo
 #' @export
-plotbar<-function(physeq,level="Phylum",color=NULL,top=5,fontsize.x = 5, fontsize.y = 12){
+plotbar<-function(physeq,level="Phylum",color=NULL,group=NULL,top=5,fontsize.x = 5, fontsize.y = 12){
     pm <- psmelt(physeq)
     if(is.null(color)){
         len<-length(unique(pm[,level]))
         color<-lightcolor[1:len]
     }
-    group_var<-c("Sample",level)
+    if(is.null(group)){
+        group_var<-c("Sample",level)
+    }else{
+        group_var<-c(group,level)
+    }
     d<-pm%>%group_by_at(vars(one_of(group_var)))%>%summarise(su=sum(Abundance))
     d <- as.data.frame(d)
     d[,level][is.na(d[,level])]<-"NA"
