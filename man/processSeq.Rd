@@ -14,11 +14,12 @@ processSeq(
   sample_info = NULL,
   train_data = "silva_nr99_v138_train_set.fa.gz",
   train_species = "silva_species_assignment_v138.fa.gz",
+  outpath = NULL,
   buildtree = FALSE
 )
 }
 \arguments{
-\item{path}{working dir}
+\item{path}{working dir for the input reads}
 
 \item{truncLen}{(Optional). Default 0 (no truncation). Truncate reads after truncLen bases. Reads shorter than this are discarded.}
 
@@ -36,6 +37,8 @@ If both truncLen and trimRight are provided, truncation will be performed after 
 \item{train_data}{(Required).training database}
 
 \item{train_species}{(Required). species database}
+
+\item{outpath}{(Optional).the path for the filtered reads and th out table}
 
 \item{buildTtree}{build phylogenetic tree or not(default: FALSE)}
 }
