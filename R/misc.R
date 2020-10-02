@@ -125,7 +125,7 @@ gm_mean = function(x, na.rm=TRUE){
 .lda.fun<-function(df){
      # modified from https://github.com/xia-lab/MicrobiomeAnalystR/blob/
     # 0a8d81afeb3b637122c97c2d17146a44fa978c4f/R/general_anal.R
-    ldares <- lda(group~seqs,df);
+    ldares <- lda(group~seqs,df,tol = 1.0e-10);
     ldamean <- as.data.frame(t(ldares$means));
     class_no <<- length(unique(df$group));
     ldamean$max <- apply(ldamean[,1:class_no],1,max);
