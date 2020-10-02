@@ -179,8 +179,12 @@ plotbar<-function(physeq,level="Phylum",color=NULL,group=NULL,top=5,fontsize.x =
     dx <- dx[order(dx$su,decreasing = T),]
     sel <- dx%>%head(top)%>%select(!!level)%>%pull(1)
     d <- d[d[,level]%in%sel,]
-    p<-ggplot(d,aes_string("Sample","su",fill=level))+
-    geom_bar(stat = "identity",position = "fill")+scale_fill_manual(values=color)+
+    if(is.null(group)){
+        p<-ggplot(d,aes_string("Sample","su",fill=level))
+    }else{
+        p<-ggplot(d,aes_string(group,"su",fill=level))
+    }
+    p<-p+geom_bar(stat = "identity",position = "fill")+scale_fill_manual(values=color)+
     theme_light()+
     scale_y_continuous(expand = c(0, 0.001)) +
     theme(axis.text.x=element_text(angle=90,size=fontsize.x, vjust=0.5, hjust=1),
