@@ -3,7 +3,7 @@
 #' @importFrom dada2 makeSequenceTable removeBimeraDenovo assignTaxonomy
 #' @importFrom dada2 addSpecies getSequences getUniques
 #' @importFrom phyloseq phyloseq otu_table sample_data tax_table
-#' @param path working dir
+#' @param path working dir for the input reads
 #' @param truncLen (Optional). Default 0 (no truncation). Truncate reads after truncLen bases. Reads shorter than this are discarded.
 #' @param trimLeft (Optional). The number of nucleotides to remove from the start of each read.
 #' @param trimRight (Optional). Default 0. The number of nucleotides to remove from the end of each read.
@@ -13,6 +13,7 @@
 #' @param maxLen Optional). Default Inf (no maximum). Remove reads with length greater than maxLen. maxLen is enforced before trimming and truncation.
 #' @param train_data (Required).training database
 #' @param train_species (Required). species database
+#' @param outpath (Optional).the path for the filtered reads and th out table
 #' @param buildTtree build phylogenetic tree or not(default: FALSE)
 #' @author Kai Guo
 #' @return list include count table, summary table, taxonomy information and phyloseq object
@@ -26,6 +27,7 @@ processSeq <- function(path=".",
                        sample_info=NULL,
                        train_data="silva_nr99_v138_train_set.fa.gz",
                        train_species="silva_species_assignment_v138.fa.gz",
+                       outpath=NULL,
                        buildtree=FALSE){
     OS<-.Platform$OS.type
     if(OS=="windows"){
@@ -39,8 +41,11 @@ processSeq <- function(path=".",
     #filter and trim;
     cat("Filtering......\n");
     ifelse(!dir.exists("filtered"),dir.create("filtered"),FALSE);
-    filtFs <- file.path(path, "filtered", paste0(sample.names, "_F_filt.fastq.gz"))
-    filtRs <- file.path(path, "filtered", paste0(sample.names, "_R_filt.fastq.gz"))
+    if(is.null(outpath)){
+        outpath<-path
+    }
+    filtFs <- file.path(outpath, "filtered", paste0(sample.names, "_F_filt.fastq.gz"))
+    filtRs <- file.path(outpath, "filtered", paste0(sample.names, "_R_filt.fastq.gz"))
     out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=truncLen,trimLeft=trimLeft,trimRight=trimRight,
                          maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,minLen=minLen,maxLen = maxLen,
                          compress=TRUE, multithread=multithread) # On Windows set multithread=FALSE
@@ -76,7 +81,7 @@ processSeq <- function(path=".",
     asv_count <- t(seqtab.nochim)
     rownames(asv_count) <- sub(">", "", asv_headers)
     cat("Write out the count table......\n")
-    write.table(asv_count, "ASVs_counts.txt", sep="\t", quote=F)
+    write.table(asv_count,paste0(outpath, "/ASVs_counts.txt"), sep="\t", quote=F)
     cat("assign taxonomy.......\n")
     if(is.null(train_data)|is.null(train_species)){
         stop("Please specify the path for the sliva database......\n ")
@@ -91,11 +96,11 @@ processSeq <- function(path=".",
     cat("write out sequence and taxonomy results\n")
     # fasta:
     asv_fasta <- c(rbind(asv_headers, asv_seqs))
-    write(asv_fasta, "ASVs.fa")
+    write(asv_fasta,paste0(outpath, "/ASVs.fa"))
     # tax table:
     asv_taxa <- taxa
     row.names(asv_taxa) <- sub(">", "", asv_headers)
-    write.table(asv_taxa, "ASVs_taxonomy.txt", sep="\t", quote=F)
+    write.table(asv_taxa, paste0(outpath,"/ASVs_taxonomy.txt"), sep="\t", quote=F)
     }
     cat("creating phyloseq object......\n")
     if(!is.null(sample_info)){
