@@ -195,7 +195,7 @@ betatest<-function(physeq,group,distance="bray"){
 
 #' Normalize the phyloseq object with different methods
 #' @importFrom phyloseq transform_sample_counts sample_data
-#' @importFrom phyloseq taxa_are_rows nsamples otu_table
+#' @importFrom phyloseq taxa_are_rows nsamples otu_table psmelt
 #' @importFrom DESeq2 DESeqDataSetFromMatrix estimateSizeFactors
 #' @importFrom DESeq2 estimateDispersions varianceStabilizingTransformation
 #' @importFrom SummarizedExperiment assay
@@ -207,6 +207,7 @@ betatest<-function(physeq,group,distance="bray"){
 #' @param method A list of character strings specifying \code{method} to be used to normalize the phyloseq object
 #'      Available methods are: "relative","TMM","vst","log2".
 #' @param group group (DESeq2). A character string specifying the name of a categorical variable containing  grouping information.
+#' @param table return a data.frame or not
 #' @examples
 #'  \dontrun{
 #' data("GlobalPatterns",package="phyloseq")
@@ -216,7 +217,7 @@ betatest<-function(physeq,group,distance="bray"){
 #' @return phyloseq object with normalized data
 #' @author Kai Guo
 #' @export
-normalize<-function(physeq,group,method="relative"){
+normalize<-function(physeq,group,method="relative",table=FALSE){
     if(!taxa_are_rows(physeq)){
         physeq<-t(physeq)
     }
@@ -251,6 +252,9 @@ normalize<-function(physeq,group,method="relative"){
     if(method=="log2"){
         cat("Normalization using log2 of the RA method \n")
         physeq<-transform_sample_counts(physeq,function(x)log2(x/sum(x)+1))
+    }
+    if(isTRUE(table)){
+      physeq <- psmelt(physeq)
     }
     return(physeq)
 }
