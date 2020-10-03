@@ -4,13 +4,11 @@
 \alias{phy_tree}
 \title{Retrieve phylogenetic tree (phylo-class) from object.}
 \usage{
-phy_tree(physeq, ...)
+phy_tree(physeq)
 }
 \arguments{
 \item{physeq}{(Required). An instance of phyloseq-class that contains a phylogenetic tree.
 If physeq is a phylogenetic tree (a component data class), then it is returned as-is.}
-
-\item{...}{params to phy_tree(phyloseq function)}
 }
 \description{
 Retrieve phylogenetic tree (phylo-class) from object.

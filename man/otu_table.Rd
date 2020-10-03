@@ -4,12 +4,10 @@
 \alias{otu_table}
 \title{extract otu table}
 \usage{
-otu_table(physeq, ...)
+otu_table(physeq)
 }
 \arguments{
 \item{physeq}{(Required). An integer matrix, otu_table-class, or phyloseq-class.}
-
-\item{...}{params to otu_table(phyloseq function)}
 }
 \description{
 extract otu table
