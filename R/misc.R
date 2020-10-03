@@ -155,3 +155,38 @@ buildTree<-function(seqs){
                     rearrangement = "stochastic", control = pml.control(trace = 0))
     return(fitGTR)
 }
+#' extract otu table
+#' @importFrom phyloseq otu_table
+#' @param physeq (Required). An integer matrix, otu_table-class, or phyloseq-class.
+#' @param ... params to otu_table(phyloseq function)
+#' @export
+otu_table<-function(physeq,...){
+    otu_table(physeq,...)
+}
+#' extract taxonomy table
+#' @importFrom phyloseq tax_table
+#' @param physeq An object among the set of classes defined by the phyloseq package that contain taxonomyTable.
+#' @param ... params to tax_table(phyloseq function)
+#' @export
+tax_table<-function(physeq,...){
+    tax_table(physeq,...)
+}
+#' extract sample information
+#' @importFrom phyloseq sample_data
+#' @param physeq (Required). A data.frame-class, or a phyloseq-class object.
+#' @param ... params to sample_data(phyloseq function)
+#' @export
+sample_data<-function(physeq,...){
+    sample_data(physeq,...)
+}
+
+#' Retrieve phylogenetic tree (phylo-class) from object.
+#' @importFrom phyloseq phy_tree
+#' @param physeq (Required). An instance of phyloseq-class that contains a phylogenetic tree.
+#'        If physeq is a phylogenetic tree (a component data class), then it is returned as-is.
+#' @param ... params to phy_tree(phyloseq function)
+phy_tree<-function(physeq,...){
+    phy_tree(physeq,...)
+}
+
+
