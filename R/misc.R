@@ -158,28 +158,28 @@ buildTree<-function(seqs){
 #' extract otu table
 #' @param physeq (Required). An integer matrix, otu_table-class, or phyloseq-class.
 #' @export
-otu_table<-function(physeq){
-    phyloseq::otu_table(physeq)
+otu_table<-function(physeq,...){
+    phyloseq::otu_table(physeq,...)
 }
 #' extract taxonomy table
 #' @param physeq An object among the set of classes defined by the phyloseq package that contain taxonomyTable.
 #' @export
-tax_table<-function(physeq){
-    phyloseq::tax_table(physeq)
+tax_table<-function(physeq,...){
+    phyloseq::tax_table(physeq,...)
 }
 #' extract sample information
 #' @param physeq (Required). A data.frame-class, or a phyloseq-class object.
 #' @export
-sample_data<-function(physeq){
-    phyloseq::sample_data(physeq)
+sample_data<-function(physeq,...){
+    phyloseq::sample_data(physeq,...)
 }
 
 #' Retrieve phylogenetic tree (phylo-class) from object.
 #' @param physeq (Required). An instance of phyloseq-class that contains a phylogenetic tree.
 #'        If physeq is a phylogenetic tree (a component data class), then it is returned as-is.
 #' @export
-phy_tree<-function(physeq){
-    phyloseq::phy_tree(physeq)
+phy_tree<-function(physeq,...){
+    phyloseq::phy_tree(physeq,...)
 }
 
 #' Subset the phyloseq based on sample
