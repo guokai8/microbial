@@ -182,4 +182,25 @@ phy_tree<-function(physeq){
     phyloseq::phy_tree(physeq)
 }
 
+#' Subset the phyloseq based on sample
+#' @param physeq A sample_data-class, or a phyloseq-class object with a sample_data.
+#' If the sample_data slot is missing in physeq, then physeq will be returned as-is,
+#' and a warning will be printed to screen.
+#' @export
+subset_samples<-function(physeq,...){
+    phyloseq::subset_samples(physeq,...)
+}
+
+#' Subset species by taxonomic expression
+#' @param physeq A sample_data-class, or a phyloseq-class object with a sample_data.
+#' If the sample_data slot is missing in physeq, then physeq will be returned as-is,
+#' and a warning will be printed to screen.
+#' @export
+subset_taxa<-function(physeq,...){
+    phyloseq::subset_taxa(physeq,...)
+}
+
+
+
+
 
