@@ -38,6 +38,7 @@ plotbeta<-function(physeq,group,shape=NULL,distance="bray",method="PCoA",color=N
     df <- as.data.frame(beta$beta)
     PCs <- beta$PCs
     tab <- as(sample_data(physeq),"data.frame")
+    df <- cbind(df[,1:4],tab[rownames(df),])
     df$group<-tab[,group]
     if(is.null(color)){
         color<-lightcolor[1:length(unique(df$group))]
@@ -93,6 +94,7 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),color=NULL,geom=
     rich<-richness(physeq,method = method)
     name<-levels(factor(colnames(rich)))
     tab<-as(sample_data(physeq),"data.frame")
+    rich<-cbind(rich,tab[rownames(rich),])
     rich$group<-tab[rownames(rich),group]
     if(isTRUE(wilcox)){
         res<-do_wilcox(rich,"group")
