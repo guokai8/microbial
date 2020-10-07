@@ -4,7 +4,7 @@
 \alias{phy_tree}
 \title{Retrieve phylogenetic tree (phylo-class) from object.}
 \usage{
-phy_tree(physeq)
+phy_tree(physeq, ...)
 }
 \arguments{
 \item{physeq}{(Required). An instance of phyloseq-class that contains a phylogenetic tree.

@@ -4,7 +4,7 @@
 \alias{tax_table}
 \title{extract taxonomy table}
 \usage{
-tax_table(physeq)
+tax_table(physeq, ...)
 }
 \arguments{
 \item{physeq}{An object among the set of classes defined by the phyloseq package that contain taxonomyTable.}

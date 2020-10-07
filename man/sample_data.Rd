@@ -4,7 +4,7 @@
 \alias{sample_data}
 \title{extract sample information}
 \usage{
-sample_data(physeq)
+sample_data(physeq, ...)
 }
 \arguments{
 \item{physeq}{(Required). A data.frame-class, or a phyloseq-class object.}
