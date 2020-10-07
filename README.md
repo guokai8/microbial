@@ -1,5 +1,5 @@
 # microbial
-## microbial <a href="https://travis-ci.org/guokai8/microbial"><img src="https://travis-ci.org/guokai8/microbial.svg" alt="Build status"></a>  [![Project Status:](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)  [![](https://img.shields.io/badge/devel%20version-0.0.10-green.svg)](https://github.com/guokai8/microbial)  ![Code Size:](https://img.shields.io/github/languages/code-size/guokai8/microbial)
+## microbial <a href="https://travis-ci.org/guokai8/microbial"><img src="https://travis-ci.org/guokai8/microbial.svg" alt="Build status"></a>  [![Project Status:](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)  [![](https://img.shields.io/badge/devel%20version-0.0.11-green.svg)](https://github.com/guokai8/microbial)  ![Code Size:](https://img.shields.io/github/languages/code-size/guokai8/microbial)
 An R package for microbial community analysis with dada2 and phyloseq
 
 This package is developed to enhance the available statistical analysis procedures in R by providing simple functions to analysis and visualize the 16S rRNA data. 
