@@ -146,8 +146,10 @@ richness<-function(physeq,method=c("Simpson", "Shannon")){
 #' @param distance. A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
 #'                       "unifrac","wunifrac","manhattan", "euclidean", "canberra", "bray", "kulczynski", "jaccard", "gower", "altGower",
 #'                       "morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".
+#' @export
 #' @author Kai Guo
-.betadiv<-function(physeq,distance="bray",method="PCoA"){
+#' @return list with beta diversity data.frame and PCs
+betadiv<-function(physeq,distance="bray",method="PCoA"){
     beta<-ordinate(physeq,method = method,distance = distance)
     pcs<-beta$values[,2]
     df<-beta$vectors

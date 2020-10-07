@@ -29,11 +29,11 @@
 #' @return ggplot2 object
 #' @author Kai Guo
 #' @export
-plotbeta<-function(physeq,group,distance="bray",method="PCoA",color=NULL,size=3,ellipse=FALSE){
+plotbeta<-function(physeq,group,shape=NULL,distance="bray",method="PCoA",color=NULL,size=3,ellipse=FALSE){
     if(!taxa_are_rows(physeq)){
         physeq <- t(physeq)
     }
-    beta<-.betadiv(physeq,distance = distance,method=method)
+    beta<-betadiv(physeq,distance = distance,method=method)
     df <- as.data.frame(beta$beta)
     PCs <- beta$PCs
     tab <- as(sample_data(physeq),"data.frame")
