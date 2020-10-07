@@ -52,6 +52,7 @@ preRef<-function(ref_db,path="."){
 #' filter the phyloseq
 #' @importFrom phyloseq subset_taxa prune_taxa otu_table taxa_are_rows tax_table
 #' @importFrom phyloseq taxa_sums get_taxa_unique
+#' @importFrom phyloseq 'tax_table<-'
 #' @importFrom plyr ddply
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
@@ -82,13 +83,16 @@ prefilter<-function(physeq,min=10,perc=0.05){
     prer<-ddply(prevdf, "Phylum", function(df1){cbind(mean(df1$Prevalence),sum(df1$Prevalence))})
     colnames(prer)[2:3]<-c("average","total")
     filterPhyla<-prer$Phylum[which(prer$total/prer$average<min)]
-    ps1 = phyloseq::subset_taxa(ps, !Phylum %in% filterPhyla)
-    prevdf1 = subset(prevdf, Phylum %in% get_taxa_unique(ps1, "Phylum"))
-    prevalenceThreshold = perc * nsamples(ps1)
+    tax<-as.data.frame(as(tax_table(ps),"matrix"))
+    tax<-subset(tax,!Phylum%in%filterPhyla)
+    tax_table(ps)<-tax_table(as(tax,"matrix"))
+   # ps1 = phyloseq::subset_taxa(ps, Phylum %in%filterPhyla)
+    prevdf1 = subset(prevdf, Phylum %in% get_taxa_unique(ps, "Phylum"))
+    prevalenceThreshold = perc * nsamples(ps)
     cat("prevalence Threshold is: ",prevalenceThreshold,"\n")
     keepTaxa = rownames(prevdf1)[(prevdf1$Prevalence >= prevalenceThreshold)]
     prevdfr<-prevdf1[keepTaxa,]
-    psf = prune_taxa(keepTaxa, ps1)
+    psf = prune_taxa(keepTaxa, ps)
 }
 
 #' @title calculat the richness for the phyloseq object
