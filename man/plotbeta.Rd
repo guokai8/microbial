@@ -23,6 +23,8 @@ of the samples, and / or phylogenetic tree if available.}
 \item{group}{(Required). Character string specifying name of a categorical variable that is preferred for grouping the information.
 information.}
 
+\item{shape}{shape(Optional) Character string specifying shape of a categorical variable}
+
 \item{color}{user defined color for group}
 
 \item{size}{the point size}
