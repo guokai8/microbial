@@ -82,7 +82,7 @@ prefilter<-function(physeq,min=10,perc=0.05){
     prer<-ddply(prevdf, "Phylum", function(df1){cbind(mean(df1$Prevalence),sum(df1$Prevalence))})
     colnames(prer)[2:3]<-c("average","total")
     filterPhyla<-prer$Phylum[which(prer$total/prer$average<min)]
-    ps1 = subset_taxa(ps, !Phylum %in% filterPhyla)
+    ps1 = phyloseq::subset_taxa(ps, !Phylum %in% filterPhyla)
     prevdf1 = subset(prevdf, Phylum %in% get_taxa_unique(ps1, "Phylum"))
     prevalenceThreshold = perc * nsamples(ps1)
     cat("prevalence Threshold is: ",prevalenceThreshold,"\n")
