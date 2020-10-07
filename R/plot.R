@@ -11,6 +11,7 @@
 #'        of the samples, and / or phylogenetic tree if available.
 #' @param group (Required). Character string specifying name of a categorical variable that is preferred for grouping the information.
 #'        information.
+#' @param shape shape(Optional) Character string specifying shape of a categorical variable
 #' @param method. A character string specifying ordination method. All methods available to the \code{ordinate} function
 #'        of \code{phyloseq} are acceptable here as well.
 #' @param distance. A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
@@ -41,7 +42,13 @@ plotbeta<-function(physeq,group,shape=NULL,distance="bray",method="PCoA",color=N
     if(is.null(color)){
         color<-lightcolor[1:length(unique(df$group))]
     }
-    p <- ggplot(df,aes(Axis.1,Axis.2,color=group))+geom_point(size=size)+scale_color_manual(values=color)
+    if(!is.null(shape)){
+        df$shape<-tab[,shape]
+        p <- ggplot(df,aes(Axis.1,Axis.2,color=group,shape=shape))
+    }else{
+        p <- ggplot(df,aes(Axis.1,Axis.2,color=group))
+    }
+    p<-p+geom_point(size=size)+scale_color_manual(values=color)
     p <- p+theme_light(base_size=15)+xlab(paste0("Axis1 (",round(PCs[1]*100,2),"%)"))+ylab(paste0("Axis2 (",round(PCs[2]*100,2),"%)"))
     if(isTRUE(ellipse)){
         p <- p + stat_ellipse()
