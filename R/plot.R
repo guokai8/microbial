@@ -94,7 +94,6 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),color=NULL,geom=
     rich<-richness(physeq,method = method)
     name<-levels(factor(colnames(rich)))
     tab<-as(sample_data(physeq),"data.frame")
-    rich<-cbind(rich,tab[rownames(rich),])
     rich$group<-tab[rownames(rich),group]
     if(isTRUE(wilcox)){
         res<-do_wilcox(rich,"group")
