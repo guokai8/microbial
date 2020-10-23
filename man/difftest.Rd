@@ -39,11 +39,7 @@ Calculate differential bacteria with DESeq2
 }
 \examples{
  \dontrun{
-data("GlobalPatterns",package="phyloseq")
-require(phyloseq)
-samdf<-as(sample_data(physeq),"data.frame")
-samdf$group<-c(rep("A",14),rep("B",12))
-sample_data(physeq)<-samdf
+data("Physeq")
 res <- difftest(physeq,group="group")
 }
 }

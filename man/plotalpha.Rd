@@ -7,12 +7,14 @@
 plotalpha(
   physeq,
   group,
-  method = c("Simpson", "Shannon"),
+  method = c("Observed", "Simpson", "Shannon"),
   color = NULL,
   geom = "boxplot",
   pvalue = 0.05,
   padj = NULL,
-  wilcox = FALSE
+  sig.only = TRUE,
+  wilcox = FALSE,
+  show.number = FALSE
 )
 }
 \arguments{
@@ -33,7 +35,11 @@ in the data. Available methods are: "Observed","Chao1","ACE","Richness", "Fisher
 
 \item{padj}{adjust p value threshold for significant dispersion results}
 
+\item{sig.only}{display the significant comparsion only(TRUE/ FALSE)}
+
 \item{wilcox}{use wilcoxon test or not}
+
+\item{show.number}{to show the pvalue instead of significant symbol(TRUE/FALSE)}
 }
 \value{
 Returns a ggplot object. This can further be manipulated as preferred by user.
@@ -43,8 +49,7 @@ plot alpha diversity
 }
 \examples{
  \dontrun{
-data("GlobalPatterns",package="phyloseq")
-physeq <- GlobalPatterns
+data("Physeq")
 plotalpha(physeq,group="SampleType")
 }
 }

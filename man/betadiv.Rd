@@ -24,6 +24,13 @@ list with beta diversity data.frame and PCs
 \description{
 calcaute beta diversity
 }
+\examples{
+\dontrun{
+data("Physeq")
+phy<-normalize(physeq)
+res <- betadiv(phy)
+}
+}
 \author{
 Kai Guo
 }

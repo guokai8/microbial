@@ -46,8 +46,7 @@ plot beta diversity
 }
 \examples{
  \dontrun{
-data("GlobalPatterns",package="phyloseq")
-physeq <- GlobalPatterns
+data("Physeq")
 phy<-normalize(physeq)
 plotbeta(phy,group="SampleType")
 }

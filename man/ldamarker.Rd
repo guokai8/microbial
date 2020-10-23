@@ -2,7 +2,7 @@
 % Please edit documentation in R/Functions.R
 \name{ldamarker}
 \alias{ldamarker}
-\title{Identify biomarker by using LEfse method}
+\title{Identify biomarker by using LEfSe method}
 \usage{
 ldamarker(physeq, group, pvalue = 0.05, normalize = TRUE, method = "relative")
 }
@@ -18,15 +18,11 @@ of the samples, and / or phylogenetic tree if available.}
 \item{normalize}{to normalize the data before analysis(TRUE/FALSE)}
 }
 \description{
-Identify biomarker by using LEfse method
+Identify biomarker by using LEfSe method
 }
 \examples{
 \dontrun{
-data("GlobalPatterns",package="phyloseq")
-require(phyloseq)
-samdf<-as(sample_data(physeq),"data.frame")
-samdf$group<-c(rep("A",14),rep("B",12))
-sample_data(physeq)<-samdf
+data("Physeq")
 res <- ldamarker(physeq,group="group")
 }
 

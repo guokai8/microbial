@@ -23,8 +23,8 @@ filter the phyloseq
 }
 \examples{
 \dontrun{
-data("GlobalPatterns",package="phyloseq")
-physeq<-prefilter(GlobalPatterns)
+data("Physeq")
+physeqs<-prefilter(physeq)
 }
 }
 \author{

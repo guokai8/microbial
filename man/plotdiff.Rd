@@ -18,6 +18,8 @@ plotdiff(
 )
 }
 \arguments{
+\item{res}{differential test results from diff_test}
+
 \item{level}{the level to plot}
 
 \item{color}{A vector of character use specifying the color}
@@ -35,8 +37,6 @@ plotdiff(
 \item{fontsize.y}{the size of y axis label}
 
 \item{horiz}{horizontal or not (TRUE/FALSE)}
-
-\item{sigtab}{differential test results from diff_test}
 }
 \value{
 ggplot object
@@ -46,12 +46,7 @@ plot differential results
 }
 \examples{
  \dontrun{
-data("GlobalPatterns",package="phyloseq")
-require(phyloseq)
-physeq<-GlobalPatterns
-samdf<-as(sample_data(physeq),"data.frame")
-samdf$group<-c(rep("A",14),rep("B",12))
-sample_data(physeq)<-samdf
+data("Physeq")
 res <- difftest(physeq,group="group")
 plotdiff(res,level="Genus",padj=0.001)
 }

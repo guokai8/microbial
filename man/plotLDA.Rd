@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{plotLDA}
 \alias{plotLDA}
-\title{plot LFfse results from ldamarker function}
+\title{plot LEfSe results from ldamarker function}
 \usage{
 plotLDA(
   x,
@@ -36,16 +36,11 @@ plotLDA(
 ggplot2 object
 }
 \description{
-plot LFfse results from ldamarker function
+plot LEfSe results from ldamarker function
 }
 \examples{
 \dontrun{
-data("GlobalPatterns",package="phyloseq")
-require(phyloseq)
-physeq<-GlobalPatterns
-samdf<-as(sample_data(physeq),"data.frame")
-samdf$group<-c(rep("A",14),rep("B",12))
-sample_data(physeq)<-samdf
+data("Physeq")
 res <- ldamarker(physeq,group="group")
 plotLDA(res,group=c("A","B"),lda=5,pvalue=0.05)
 }

@@ -39,8 +39,7 @@ plot bar for relative abundance for bacteria
 }
 \examples{
  \dontrun{
-data("GlobalPatterns",package="phyloseq")
-physeq <- GlobalPatterns
+data("Physeq")
 phy<-normalize(physeq)
 plotbar(phy,level="Phylum")
 }

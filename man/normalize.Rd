@@ -26,8 +26,7 @@ Normalize the phyloseq object with different methods
 }
 \examples{
  \dontrun{
-data("GlobalPatterns",package="phyloseq")
-physeq <- GlobalPatterns
+data("Physeq")
 phy<-normalize(physeq)
 }
 }

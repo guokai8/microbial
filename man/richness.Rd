@@ -4,7 +4,7 @@
 \alias{richness}
 \title{calculat the richness for the phyloseq object}
 \usage{
-richness(physeq, method = c("Simpson", "Shannon"))
+richness(physeq, method = c("Observed", "Simpson", "Shannon"))
 }
 \arguments{
 \item{physeq}{A \code{phyloseq} object containing merged information of abundance,
@@ -22,8 +22,7 @@ calculat the richness for the phyloseq object
 }
 \examples{
  \dontrun{
-data("GlobalPatterns",package="phyloseq")
-physeq <- GlobalPatterns
+data("Physeq")
 rich <-richness(physeq,method=c("Simpson", "Shannon"))
 }
 }

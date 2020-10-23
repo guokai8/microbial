@@ -26,8 +26,7 @@ PERMANOVA test for phyloseq
 }
 \examples{
  \dontrun{
-data("GlobalPatterns",package="phyloseq")
-physeq <- GlobalPatterns
+data("Physeq")
 phy<-normalize(physeq)
 beta <-betatest(phy,group="SampleType")
 }
