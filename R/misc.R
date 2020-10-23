@@ -70,6 +70,7 @@ do_ttest<-function(x,group,ref=NULL,...){
     d$group<-x[,group]
     d<-d%>%gather(type,val,-group)
     res<-d%>%group_by(type)%>%t_test(val~group,ref.group = ref,...)
+    res$p.adj<-p.adjust(res$p,method="BH")
     return(res)
 }
 
@@ -94,6 +95,7 @@ do_wilcox<-function(x,group,ref=NULL,...){
     d$group<-x[,group]
     d<-d%>%gather(type,val,-group)
     res<-d%>%group_by(type)%>%wilcox_test(val~group,ref.group = ref,...)
+    res$p.adj<-p.adjust(res$p,method="BH")
     return(res)
 }
 #'
@@ -110,7 +112,7 @@ gm_mean = function(x, na.rm=TRUE){
     }else if(x<0.01){
         return("**")
     }else{
-        return("***")
+    return("***")
     }
 }
 #' check file format

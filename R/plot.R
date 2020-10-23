@@ -22,8 +22,7 @@
 #' @param ellipse draw ellipse or not
 #' @examples
 #'  \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' physeq <- GlobalPatterns
+#' data("Physeq")
 #' phy<-normalize(physeq)
 #' plotbeta(phy,group="SampleType")
 #' }
@@ -75,19 +74,20 @@ plotbeta<-function(physeq,group,shape=NULL,distance="bray",method="PCoA",color=N
 #' @param color A vector of character use specifying the color
 #' @param geom different geom to display("boxplot","violin","dotplot")
 #' @param pvalue pvalue threshold for significant dispersion results
+#' @param sig.only display the significant comparsion only(TRUE/ FALSE)
 #' @param padj adjust p value threshold for significant dispersion results
 #' @param wilcox use wilcoxon test or not
+#' @param show.number to show the pvalue instead of significant symbol(TRUE/FALSE)
 #' @examples
 #'  \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' physeq <- GlobalPatterns
+#' data("Physeq")
 #' plotalpha(physeq,group="SampleType")
 #' }
 #' @return Returns a ggplot object. This can further be manipulated as preferred by user.
 #' @author Kai Guo
 #' @export
-plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),color=NULL,geom="boxplot",
-                    pvalue=0.05,padj=NULL,wilcox=FALSE){
+plotalpha<-function(physeq,group,method=c("Observed","Simpson", "Shannon"),color=NULL,geom="boxplot",
+                    pvalue=0.05,padj=NULL,sig.only=TRUE, wilcox=FALSE,show.number=FALSE){
     if (!taxa_are_rows(physeq)) {
         physeq <- t(physeq)
     }
@@ -100,14 +100,19 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),color=NULL,geom=
     }else{
         res<-do_ttest(rich,"group")
     }
-    res <- subset(res,p < pvalue)
-    if(!is.null(padj)){
-        res <- subset(res,p.adj < padj)
+    if(sum(res$p<pvalue)<1){
+        Cat("No significant difference between any of the groups")
+        pvalue = 1
+    }
+    if(isTRUE(sig.only)){
+        res <- subset(res,p < pvalue)
+        if(!is.null(padj)){
+            res <- subset(res,p.adj < padj)
+        }
     }
     vals<-rich%>%gather(type,val,-group)%>%group_by(type,group)%>%summarise(ma=max(val))%>%spread(group,ma)
     pos <- apply(res, 1, function(x)max(vals[vals$type==x[1],x[3:4]]))
     mpos <- apply(res, 1, function(x)min(vals[vals$type==x[1],x[3:4]]))
-
     if(geom=="boxplot"){
         p<-rich%>%gather(type,val,-group)%>%ggboxplot(x="group",y="val",color="group")
     }else if(geom=="violin"){
@@ -117,7 +122,13 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),color=NULL,geom=
     }else{
         stop("Please specify one type of boxplot,violin,dotplot")
     }
-    res$p.signif<-sapply(res$p,function(x).getstar(x))
+    if(!isTRUE(show.number)){
+        res$p.signif<-sapply(res$p,function(x).getstar(x))
+        res$p.adj.signif<-sapply(res$p.adj,function(x).getstar(x))
+    }else{
+        res$p.signif<-res$p
+        res$p.adj.signif<-res$p.adj
+    }
     if(is.null(color)){
         color<-lightcolor[1:length(unique(rich$group))]
     }
@@ -161,8 +172,7 @@ plotalpha<-function(physeq,group,method=c("Simpson", "Shannon"),color=NULL,geom=
 #' @param fontsize.y the size of y axis label
 #' @examples
 #'  \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' physeq <- GlobalPatterns
+#' data("Physeq")
 #' phy<-normalize(physeq)
 #' plotbar(phy,level="Phylum")
 #' }
@@ -205,7 +215,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,group=NULL,top=5,fontsize.x =
 #' @title plot differential results
 #' @importFrom ggplot2 ggplot theme geom_point element_text xlab
 #' @importFrom ggplot2 aes_string scale_color_manual theme_light coord_flip
-#' @param sigtab differential test results from diff_test
+#' @param res differential test results from diff_test
 #' @param level the level to plot
 #' @param color A vector of character use specifying the color
 #' @param pvalue pvalue threshold for significant  results
@@ -217,12 +227,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,group=NULL,top=5,fontsize.x =
 #' @param horiz horizontal or not (TRUE/FALSE)
 #' @examples
 #'  \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' require(phyloseq)
-#' physeq<-GlobalPatterns
-#' samdf<-as(sample_data(physeq),"data.frame")
-#' samdf$group<-c(rep("A",14),rep("B",12))
-#' sample_data(physeq)<-samdf
+#' data("Physeq")
 #' res <- difftest(physeq,group="group")
 #' plotdiff(res,level="Genus",padj=0.001)
 #' }
@@ -260,7 +265,7 @@ plotdiff<-function(res,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=0,s
     p
 }
 
-#' plot LFfse results from ldamarker function
+#' plot LEfSe results from ldamarker function
 #' @importFrom ggplot2 ggplot geom_bar coord_flip theme_light element_text
 #' @importFrom ggplot2 scale_fill_manual xlab
 #' @importFrom dplyr mutate
@@ -275,12 +280,7 @@ plotdiff<-function(res,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=0,s
 #' @param fontsize.y the size of y axis label
 #' @examples
 #' \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' require(phyloseq)
-#' physeq<-GlobalPatterns
-#' samdf<-as(sample_data(physeq),"data.frame")
-#' samdf$group<-c(rep("A",14),rep("B",12))
-#' sample_data(physeq)<-samdf
+#' data("Physeq")
 #' res <- ldamarker(physeq,group="group")
 #' plotLDA(res,group=c("A","B"),lda=5,pvalue=0.05)
 #' }
@@ -321,11 +321,7 @@ plotLDA<-function(x,group,lda=2,pvalue=0.05,padj=NULL,color=NULL,fontsize.x=4,fo
 #' @return ggplot2 object
 #' @examples
 #' \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' require(phyloseq)
-#' samdf<-as(sample_data(physeq),"data.frame")
-#' samdf$group<-c(rep("A",14),rep("B",12))
-#' sample_data(physeq)<-samdf
+#' data("Physeq")
 #' res <- biomarker(physeq,group="group")
 #' plotmarker(res,level="Genus")
 #' }

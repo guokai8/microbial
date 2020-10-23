@@ -61,8 +61,8 @@ preRef<-function(ref_db,path="."){
 #' @param perc Numeric, input the percentage of samples for which to filter low counts.
 #' @examples
 #' \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' physeq<-prefilter(GlobalPatterns)
+#' data("Physeq")
+#' physeqs<-prefilter(physeq)
 #' }
 #' @return filter phyloseq object
 #' @author Kai Guo
@@ -108,14 +108,13 @@ prefilter<-function(physeq,min=10,perc=0.05){
 #'        in the data. Available methods are: "Observed","Chao1","ACE","Richness", "Fisher", "Simpson", "Shannon", "Evenness","InvSimpson".
 #' @examples
 #'  \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' physeq <- GlobalPatterns
+#' data("Physeq")
 #' rich <-richness(physeq,method=c("Simpson", "Shannon"))
 #' }
 #' @return data.frame of alpha diversity
 #' @export
 #' @author Kai Guo
-richness<-function(physeq,method=c("Simpson", "Shannon")){
+richness<-function(physeq,method=c("Observed","Simpson", "Shannon")){
     method<-as.character(sapply(method,function(x)simpleCap(x),simplify = T))
     method<- match.arg(method,c("Observed","Chao1","ACE","Richness", "Fisher", "Simpson", "Shannon", "Evenness","InvSimpson"), several.ok = TRUE)
     df <- estimate_richness(physeq)
@@ -126,18 +125,20 @@ richness<-function(physeq,method=c("Simpson", "Shannon")){
     }
     rownames(df)<-colnames(tab)
     if("Evenness"%in%method){
-        H<-diversity(tab)
-        S <- specnumber(tab)
+        ta<-as.data.frame(t(tab))
+        H<-diversity(ta)
+        S <- specnumber(ta)
         J <- H/log(S)
         df_J<-data.frame(Evenness=J)
         df<-cbind(df,df_J)
     }
     if("Richness"%in%method){
-        R<- rarefy(tab,min(rowSums(tab)))
+        ta<-as.data.frame(t(tab))
+        R<- rarefy(ta,min(rowSums(ta)))
         df_R<-data.frame(Richness=R)
         df<-cbind(df,df_R)
     }
-    df<-df[,method]
+    df<-df[,method,drop=FALSE]
     return(df)
 }
 #' @title calcaute beta diversity
@@ -152,6 +153,12 @@ richness<-function(physeq,method=c("Simpson", "Shannon")){
 #'                       "morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".
 #' @export
 #' @author Kai Guo
+#' @examples
+#' \dontrun{
+#' data("Physeq")
+#' phy<-normalize(physeq)
+#' res <- betadiv(phy)
+#' }
 #' @return list with beta diversity data.frame and PCs
 betadiv<-function(physeq,distance="bray",method="PCoA"){
     beta<-ordinate(physeq,method = method,distance = distance)
@@ -176,8 +183,7 @@ betadiv<-function(physeq,distance="bray",method="PCoA"){
 #'        information.
 #' @examples
 #'  \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' physeq <- GlobalPatterns
+#' data("Physeq")
 #' phy<-normalize(physeq)
 #' beta <-betatest(phy,group="SampleType")
 #' }
@@ -216,8 +222,7 @@ betatest<-function(physeq,group,distance="bray"){
 #' @param table return a data.frame or not
 #' @examples
 #'  \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' physeq <- GlobalPatterns
+#' data("Physeq")
 #' phy<-normalize(physeq)
 #' }
 #' @return phyloseq object with normalized data
@@ -280,11 +285,7 @@ normalize<-function(physeq,group,method="relative",table=FALSE){
 #' @param fitType either "parametric", "local", or "mean" for the type of fitting of dispersions to the mean intensity.
 #' @examples
 #'  \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' require(phyloseq)
-#' samdf<-as(sample_data(physeq),"data.frame")
-#' samdf$group<-c(rep("A",14),rep("B",12))
-#' sample_data(physeq)<-samdf
+#' data("Physeq")
 #' res <- difftest(physeq,group="group")
 #' }
 #' @return datafame with differential test with DESeq2
@@ -344,11 +345,7 @@ difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=TRUE,fitT
 #' @param normalize to normalize the data before analysis(TRUE/FALSE)
 #' @examples
 #' \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' require(phyloseq)
-#' samdf<-as(sample_data(physeq),"data.frame")
-#' samdf$group<-c(rep("A",14),rep("B",12))
-#' sample_data(physeq)<-samdf
+#' data("Physeq")
 #' res <- biomarker(physeq,group="group")
 #' }
 #' @return data frame with significant biomarker
@@ -384,7 +381,7 @@ biomarker<-function(physeq,group,ntree=500,pvalue=0.05,normalize=TRUE,method="re
     res<-res[order(res$rank),]
     res
 }
-#' Identify biomarker by using LEfse method
+#' Identify biomarker by using LEfSe method
 #' @importFrom phyloseq taxa_are_rows otu_table sample_data
 #' @importFrom phyloseq `otu_table<-`
 #' @importFrom dplyr group_by summarize do left_join
@@ -399,11 +396,7 @@ biomarker<-function(physeq,group,ntree=500,pvalue=0.05,normalize=TRUE,method="re
 #' @param normalize to normalize the data before analysis(TRUE/FALSE)
 #' @examples
 #' \dontrun{
-#' data("GlobalPatterns",package="phyloseq")
-#' require(phyloseq)
-#' samdf<-as(sample_data(physeq),"data.frame")
-#' samdf$group<-c(rep("A",14),rep("B",12))
-#' sample_data(physeq)<-samdf
+#' data("Physeq")
 #' res <- ldamarker(physeq,group="group")
 #' }
 #'
