@@ -86,7 +86,7 @@ The _plotdiff_ function require the differential test results from diff_test. An
 
 
 ```{r plotdiff, message = FALSE}
-plotdiff(res,level="Genus",padj=0.01)
+plotdiff(res,level="Genus",padj=0.001)
 
 ```
 ### 3.7 Biomarker selection
