@@ -86,9 +86,10 @@ The _plotdiff_ function require the differential test results from diff_test. An
 
 
 ```{r plotdiff, message = FALSE}
-plotdiff(res,level="Genus",padj=0.001)
+plotdiff(res,level="Genus",padj=0.001,log2FC = 7,fontsize.y = 3)
 
 ```
+
 ### 3.7 Biomarker selection
 In addition we implement classification using random forest classifier and LEfSe method to find most import features among the groups.
 Random forests or random decision forests are an ensemble learning method for classification.
