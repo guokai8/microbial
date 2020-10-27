@@ -1,11 +1,12 @@
 Package: microbial
-Type: Do microbiome analysis with dada2 and phyloseq   
+Type: Package  
 Title: Do microbiome analysis and generate figures
 Version: 0.0.13
 Author: Kai Guo, Pan Gao
 Maintainer: Kai Guo <guokai8@gmail.com>
 Description: Do microbiome analysis and generate figures with alpha, beta diversity.
 License: GPL-3
+Depends: R (>= 3.5.0)
 Imports:
     dplyr,
     plyr,
