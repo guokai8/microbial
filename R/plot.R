@@ -101,7 +101,7 @@ plotalpha<-function(physeq,group,method=c("Observed","Simpson", "Shannon"),color
         res<-do_ttest(rich,"group")
     }
     if(sum(res$p<pvalue)<1){
-        Cat("No significant difference between any of the groups")
+        cat("No significant difference between any of the groups")
         pvalue = 1
     }
     if(isTRUE(sig.only)){
