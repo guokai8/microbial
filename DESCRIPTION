@@ -20,11 +20,17 @@ Imports:
     ggpubr,
     DESeq2,
     dada2,
+    SummarizedExperiment,
+    S4Vectors,
+    Biostrings,
+    rstatix,
+    tidyr,
     DECIPHER,
     phangorn,
     MASS,
     randomForest,
-    edgeR
+    edgeR,
+    knitr
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
