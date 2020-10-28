@@ -16,6 +16,9 @@ of the samples, and / or phylogenetic tree if available.}
 \item{pvalue}{pvalue threshold for significant results from kruskal.test}
 
 \item{normalize}{to normalize the data before analysis(TRUE/FALSE)}
+
+\item{method}{A list of character strings specifying \code{method} to be used to normalize the phyloseq object
+Available methods are: "relative","TMM","vst","log2".}
 }
 \description{
 Identify biomarker by using LEfSe method

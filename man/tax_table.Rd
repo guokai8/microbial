@@ -8,6 +8,8 @@ tax_table(physeq, ...)
 }
 \arguments{
 \item{physeq}{An object among the set of classes defined by the phyloseq package that contain taxonomyTable.}
+
+\item{...}{parameters for the tax_table function in phyloseq package}
 }
 \description{
 extract taxonomy table

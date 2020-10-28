@@ -14,7 +14,7 @@ of the samples, and / or phylogenetic tree if available.}
 \item{group}{(Required). Character string specifying name of a categorical variable that is preferred for grouping the information.
 information.}
 
-\item{distance.}{A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
+\item{distance}{A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
 "unifrac","wunifrac","manhattan", "euclidean", "canberra", "bray", "kulczynski", "jaccard", "gower", "altGower",
 "morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".}
 }

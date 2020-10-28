@@ -11,7 +11,7 @@ do_aov(x, group, ...)
 
 \item{group}{group factor used for comparison}
 
-\item{ref}{reference group}
+\item{...}{parameters to anova_test}
 }
 \description{
 do anova test and return results as data.frame

@@ -9,6 +9,8 @@ phy_tree(physeq, ...)
 \arguments{
 \item{physeq}{(Required). An instance of phyloseq-class that contains a phylogenetic tree.
 If physeq is a phylogenetic tree (a component data class), then it is returned as-is.}
+
+\item{...}{parameters for the phy_tree function in phyloseq package}
 }
 \description{
 Retrieve phylogenetic tree (phylo-class) from object.

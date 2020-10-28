@@ -6,6 +6,9 @@
 \usage{
 .checkfile(file)
 }
+\arguments{
+\item{file}{filename}
+}
 \description{
 check file format
 }

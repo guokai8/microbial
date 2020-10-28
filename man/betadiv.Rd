@@ -11,12 +11,12 @@ betadiv(physeq, distance = "bray", method = "PCoA")
 taxonomic assignment, sample data including the measured variables and categorical information
 of the samples, and / or phylogenetic tree if available.}
 
-\item{method.}{A character string specifying ordination method. All methods available to the \code{ordinate} function
-of \code{phyloseq} are acceptable here as well.}
-
-\item{distance.}{A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
+\item{distance}{A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
 "unifrac","wunifrac","manhattan", "euclidean", "canberra", "bray", "kulczynski", "jaccard", "gower", "altGower",
 "morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".}
+
+\item{method}{A character string specifying ordination method. All methods available to the \code{ordinate} function
+of \code{phyloseq} are acceptable here as well.}
 }
 \value{
 list with beta diversity data.frame and PCs

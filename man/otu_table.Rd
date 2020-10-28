@@ -8,6 +8,8 @@ otu_table(physeq, ...)
 }
 \arguments{
 \item{physeq}{(Required). An integer matrix, otu_table-class, or phyloseq-class.}
+
+\item{...}{parameters for the otu_table function in phyloseq package}
 }
 \description{
 extract otu table

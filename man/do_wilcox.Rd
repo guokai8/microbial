@@ -12,6 +12,8 @@ do_wilcox(x, group, ref = NULL, ...)
 \item{group}{group factor used for comparison}
 
 \item{ref}{reference group}
+
+\item{...}{parameters to wilcox_test}
 }
 \description{
 do wilcox test

@@ -40,7 +40,7 @@ If both truncLen and trimRight are provided, truncation will be performed after 
 
 \item{outpath}{(Optional).the path for the filtered reads and th out table}
 
-\item{buildTtree}{build phylogenetic tree or not(default: FALSE)}
+\item{buildtree}{build phylogenetic tree or not(default: FALSE)}
 }
 \value{
 list include count table, summary table, taxonomy information and phyloseq object

@@ -6,6 +6,9 @@
 \usage{
 .getstar(x)
 }
+\arguments{
+\item{x}{a (non-empty) numeric data values}
+}
 \description{
 replace p value with star
 }

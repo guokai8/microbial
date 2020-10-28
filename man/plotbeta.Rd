@@ -25,18 +25,18 @@ information.}
 
 \item{shape}{shape(Optional) Character string specifying shape of a categorical variable}
 
+\item{distance}{A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
+"unifrac","wunifrac","manhattan", "euclidean", "canberra", "bray", "kulczynski", "jaccard", "gower", "altGower",
+"morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".}
+
+\item{method}{A character string specifying ordination method. All methods available to the \code{ordinate} function
+of \code{phyloseq} are acceptable here as well.}
+
 \item{color}{user defined color for group}
 
 \item{size}{the point size}
 
 \item{ellipse}{draw ellipse or not}
-
-\item{method.}{A character string specifying ordination method. All methods available to the \code{ordinate} function
-of \code{phyloseq} are acceptable here as well.}
-
-\item{distance.}{A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
-"unifrac","wunifrac","manhattan", "euclidean", "canberra", "bray", "kulczynski", "jaccard", "gower", "altGower",
-"morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".}
 }
 \value{
 ggplot2 object

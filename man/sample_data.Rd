@@ -8,6 +8,8 @@ sample_data(physeq, ...)
 }
 \arguments{
 \item{physeq}{(Required). A data.frame-class, or a phyloseq-class object.}
+
+\item{...}{parameters for the sample_data function in phyloseq package}
 }
 \description{
 extract sample information

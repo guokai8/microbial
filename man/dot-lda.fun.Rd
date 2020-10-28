@@ -6,6 +6,9 @@
 \usage{
 .lda.fun(df)
 }
+\arguments{
+\item{df}{a dataframe with groups and bacteria abundance}
+}
 \description{
 LEfse function
 }
