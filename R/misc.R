@@ -33,7 +33,7 @@ distcolor<-c('#e6194b', '#3cb44b', '#ffe119', '#4363d8',
 #' @importFrom dplyr group_by
 #' @param x data.frame with sample id as the column name, genes or otu as rownames
 #' @param group group factor used for comparison
-#' @param ref reference group
+#' @param ... parameters to anova_test
 #' @examples
 #'  \dontrun{
 #' data("ToothGrowth")
@@ -57,6 +57,7 @@ do_aov<-function(x,group,...){
 #' @param x data.frame with sample id as the column name, genes or otu as rownames
 #' @param group group factor used for comparison
 #' @param ref reference group
+#' @param ... parameters to t_test
 #' @examples
 #'  \dontrun{
 #' data("mtcars")
@@ -82,6 +83,7 @@ do_ttest<-function(x,group,ref=NULL,...){
 #' @param x data.frame with sample id as the column name, genes or otu as rownames
 #' @param group group factor used for comparison
 #' @param ref reference group
+#' @param ... parameters to wilcox_test
 #' @examples
 #'  \dontrun{
 #' data("mtcars")
@@ -104,6 +106,7 @@ gm_mean = function(x, na.rm=TRUE){
 }
 
 #' replace p value with star
+#' @param x a (non-empty) numeric data values
 .getstar<-function(x){
     if(x>=0.05){
         return("ns")
@@ -116,6 +119,7 @@ gm_mean = function(x, na.rm=TRUE){
     }
 }
 #' check file format
+#' @param file filename
 .checkfile <- function(file){
     ex <- strsplit(basename(file), split="\\.")[[1]]
     return(ex[-1])
@@ -123,13 +127,13 @@ gm_mean = function(x, na.rm=TRUE){
 
 #' LEfse function
 #' @importFrom MASS lda
-
+#' @param df a dataframe with groups and bacteria abundance
 .lda.fun<-function(df){
      # modified from https://github.com/xia-lab/MicrobiomeAnalystR/blob/
     # 0a8d81afeb3b637122c97c2d17146a44fa978c4f/R/general_anal.R
     ldares <- lda(group~seqs,df,tol = 1.0e-10);
     ldamean <- as.data.frame(t(ldares$means));
-    class_no <<- length(unique(df$group));
+    class_no <- length(unique(df$group));
     ldamean$max <- apply(ldamean[,1:class_no],1,max);
     ldamean$min <- apply(ldamean[,1:class_no],1,min);
     ldamean$LDAscore <- signif(log10(1+abs(ldamean$max-ldamean$min)/2),digits=3);
@@ -142,6 +146,7 @@ gm_mean = function(x, na.rm=TRUE){
 #' @importFrom DECIPHER AlignSeqs
 #' @importFrom Biostrings DNAStringSet
 #' @importFrom phangorn phyDat dist.ml NJ pml optim.pml pml.control
+#' @importFrom stats update
 #' @param seqs DNA sequences
 #' @author Kai Guo
 #' @return tree object
@@ -159,18 +164,21 @@ buildTree<-function(seqs){
 }
 #' extract otu table
 #' @param physeq (Required). An integer matrix, otu_table-class, or phyloseq-class.
+#' @param ... parameters for the otu_table function in phyloseq package
 #' @export
 otu_table<-function(physeq,...){
     phyloseq::otu_table(physeq,...)
 }
 #' extract taxonomy table
 #' @param physeq An object among the set of classes defined by the phyloseq package that contain taxonomyTable.
+#' @param ... parameters for the tax_table function in phyloseq package
 #' @export
 tax_table<-function(physeq,...){
     phyloseq::tax_table(physeq,...)
 }
 #' extract sample information
 #' @param physeq (Required). A data.frame-class, or a phyloseq-class object.
+#' @param ... parameters for the sample_data function in phyloseq package
 #' @export
 sample_data<-function(physeq,...){
     phyloseq::sample_data(physeq,...)
@@ -179,6 +187,7 @@ sample_data<-function(physeq,...){
 #' Retrieve phylogenetic tree (phylo-class) from object.
 #' @param physeq (Required). An instance of phyloseq-class that contains a phylogenetic tree.
 #'        If physeq is a phylogenetic tree (a component data class), then it is returned as-is.
+#' @param ... parameters for the phy_tree function in phyloseq package
 #' @export
 phy_tree<-function(physeq,...){
     phyloseq::phy_tree(physeq,...)
@@ -188,6 +197,7 @@ phy_tree<-function(physeq,...){
 #' @param physeq A sample_data-class, or a phyloseq-class object with a sample_data.
 #' If the sample_data slot is missing in physeq, then physeq will be returned as-is,
 #' and a warning will be printed to screen.
+#' @param ... parameters for the subset_samples function in phyloseq package
 #' @export
 subset_samples<-function(physeq,...){
     phyloseq::subset_samples(physeq,...)
@@ -197,6 +207,7 @@ subset_samples<-function(physeq,...){
 #' @param physeq A sample_data-class, or a phyloseq-class object with a sample_data.
 #' If the sample_data slot is missing in physeq, then physeq will be returned as-is,
 #' and a warning will be printed to screen.
+#' @param ... parameters for the subset_taxa function in phyloseq package
 #' @export
 subset_taxa<-function(physeq,...){
     phyloseq::subset_taxa(physeq,...)

@@ -14,12 +14,11 @@
 #' PNAS, 108, 4516-4522.
 #' PMCID: PMC3063599
 #'
-#' @name data-Physeq
-#' @aliases Physeq
+#' @name data-physeq
+#' @aliases physeq
 #' @docType data
 #' @keywords data
 #' @examples
 #' data(Physeq)
-#' plot_richness(physeq, x="SampleType", measures=c("Observed", "Shannon"))
 ################################################################################
 NA

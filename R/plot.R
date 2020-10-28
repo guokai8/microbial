@@ -1,6 +1,6 @@
 #' plot beta diversity
 #'
-#' @importFrom ggplot2 ggplot aes
+#' @importFrom ggplot2 ggplot aes_string
 #' @importFrom ggplot2 geom_point
 #' @importFrom ggplot2 scale_color_manual
 #' @importFrom ggplot2 xlab ylab stat_ellipse
@@ -12,9 +12,9 @@
 #' @param group (Required). Character string specifying name of a categorical variable that is preferred for grouping the information.
 #'        information.
 #' @param shape shape(Optional) Character string specifying shape of a categorical variable
-#' @param method. A character string specifying ordination method. All methods available to the \code{ordinate} function
+#' @param method A character string specifying ordination method. All methods available to the \code{ordinate} function
 #'        of \code{phyloseq} are acceptable here as well.
-#' @param distance. A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
+#' @param distance A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
 #'                       "unifrac","wunifrac","manhattan", "euclidean", "canberra", "bray", "kulczynski", "jaccard", "gower", "altGower",
 #'                       "morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".
 #' @param color user defined color for group
@@ -44,9 +44,9 @@ plotbeta<-function(physeq,group,shape=NULL,distance="bray",method="PCoA",color=N
     }
     if(!is.null(shape)){
         df$shape<-tab[,shape]
-        p <- ggplot(df,aes(Axis.1,Axis.2,color=group,shape=shape))
+        p <- ggplot(df,aes_string("Axis.1","Axis.2",color="group",shape="shape"))
     }else{
-        p <- ggplot(df,aes(Axis.1,Axis.2,color=group))
+        p <- ggplot(df,aes_string("Axis.1","Axis.2",color="group"))
     }
     p<-p+geom_point(size=size)+scale_color_manual(values=color)
     p <- p+theme_light(base_size=15)+xlab(paste0("Axis1 (",round(PCs[1]*100,2),"%)"))+ylab(paste0("Axis2 (",round(PCs[2]*100,2),"%)"))
@@ -60,6 +60,8 @@ plotbeta<-function(physeq,group,shape=NULL,distance="bray",method="PCoA",color=N
 #' @importFrom rstatix t_test
 #' @importFrom rstatix wilcox_test
 #' @importFrom ggpubr ggboxplot
+#' @importFrom ggpubr ggviolin
+#' @importFrom ggpubr ggdotplot
 #' @importFrom ggpubr stat_pvalue_manual
 #' @importFrom ggpubr facet
 #' @importFrom ggplot2 xlab ylab scale_color_manual theme
@@ -107,7 +109,7 @@ plotalpha<-function(physeq,group,method=c("Observed","Simpson", "Shannon"),color
     if(isTRUE(sig.only)){
         res <- subset(res,p < pvalue)
         if(!is.null(padj)){
-            res <- subset(res,p.adj < padj)
+            res <- res[res$p.adj < padj,]
         }
     }
     vals<-rich%>%gather(type,val,-group)%>%group_by(type,group)%>%summarise(ma=max(val))%>%spread(group,ma)
@@ -161,6 +163,7 @@ plotalpha<-function(physeq,group,method=c("Observed","Simpson", "Shannon"),color
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select
 #' @importFrom rlang `!!`
+#' @importFrom utils head
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
 #'        of the samples, and / or phylogenetic tree if available.
@@ -268,8 +271,10 @@ plotdiff<-function(res,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=0,s
 #' plot LEfSe results from ldamarker function
 #' @importFrom ggplot2 ggplot geom_bar coord_flip theme_light element_text
 #' @importFrom ggplot2 scale_fill_manual xlab
+#' @importFrom ggplot2 aes
 #' @importFrom dplyr mutate
 #' @importFrom magrittr %>%
+#' @importFrom stats reorder
 #' @param x LEfse results from ldamarker
 #' @param group a vector include two character to show the group comparsion
 #' @param lda LDA threshold for significant biomarker

@@ -3,6 +3,7 @@
 #' @importFrom dada2 makeSequenceTable removeBimeraDenovo assignTaxonomy
 #' @importFrom dada2 addSpecies getSequences getUniques
 #' @importFrom phyloseq phyloseq otu_table sample_data tax_table
+#' @importFrom utils read.delim write.table
 #' @param path working dir for the input reads
 #' @param truncLen (Optional). Default 0 (no truncation). Truncate reads after truncLen bases. Reads shorter than this are discarded.
 #' @param trimLeft (Optional). The number of nucleotides to remove from the start of each read.
@@ -14,7 +15,7 @@
 #' @param train_data (Required).training database
 #' @param train_species (Required). species database
 #' @param outpath (Optional).the path for the filtered reads and th out table
-#' @param buildTtree build phylogenetic tree or not(default: FALSE)
+#' @param buildtree build phylogenetic tree or not(default: FALSE)
 #' @author Kai Guo
 #' @return list include count table, summary table, taxonomy information and phyloseq object
 #' @export

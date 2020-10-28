@@ -1,4 +1,5 @@
 #' Download the reference database
+#' @importFrom utils download.file
 #' @param ref_db the reference database
 #' @param path path for the  database
 #' @return the path of the database
@@ -146,9 +147,9 @@ richness<-function(physeq,method=c("Observed","Simpson", "Shannon")){
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
 #'        of the samples, and / or phylogenetic tree if available.
-#' @param method. A character string specifying ordination method. All methods available to the \code{ordinate} function
+#' @param method A character string specifying ordination method. All methods available to the \code{ordinate} function
 #'        of \code{phyloseq} are acceptable here as well.
-#' @param distance. A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
+#' @param distance A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
 #'                       "unifrac","wunifrac","manhattan", "euclidean", "canberra", "bray", "kulczynski", "jaccard", "gower", "altGower",
 #'                       "morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".
 #' @export
@@ -176,7 +177,7 @@ betadiv<-function(physeq,distance="bray",method="PCoA"){
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'        taxonomic assignment, sample data including the measured variables and categorical information
 #'        of the samples, and / or phylogenetic tree if available.
-#' @param distance. A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
+#' @param distance A string character specifying dissimilarity index to be used in calculating pairwise distances (Default index is "bray".).
 #'                       "unifrac","wunifrac","manhattan", "euclidean", "canberra", "bray", "kulczynski", "jaccard", "gower", "altGower",
 #'                       "morisita", "horn", "mountford", "raup" , "binomial", "chao", "cao" or "mahalanobis".
 #' @param group (Required). Character string specifying name of a categorical variable that is preferred for grouping the information.
@@ -274,6 +275,7 @@ normalize<-function(physeq,group,method="relative",table=FALSE){
 #' @importFrom phyloseq otu_table taxa_are_rows
 #' @importFrom phyloseq sample_data
 #' @importFrom DESeq2 results DESeq
+#' @importFrom stats as.formula
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'      taxonomic assignment, sample data including the measured variables and categorical information
 #'      of the samples, and / or phylogenetic tree if available.
@@ -335,6 +337,7 @@ difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=TRUE,fitT
 #' @importFrom dplyr do
 #' @importFrom magrittr %>%
 #' @importFrom broom tidy
+#' @importFrom stats kruskal.test
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'      taxonomic assignment, sample data including the measured variables and categorical information
 #'      of the samples, and / or phylogenetic tree if available.
@@ -343,6 +346,8 @@ difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=TRUE,fitT
 #'  to ensure that every input row gets predicted at least a few times.
 #' @param pvalue pvalue threshold for significant results from kruskal.test
 #' @param normalize to normalize the data before analysis(TRUE/FALSE)
+#' @param method A list of character strings specifying \code{method} to be used to normalize the phyloseq object
+#'      Available methods are: "relative","TMM","vst","log2".
 #' @examples
 #' \dontrun{
 #' data("Physeq")
@@ -388,12 +393,16 @@ biomarker<-function(physeq,group,ntree=500,pvalue=0.05,normalize=TRUE,method="re
 #' @importFrom dplyr ungroup bind_rows mutate
 #' @importFrom broom tidy
 #' @importFrom magrittr %>%
+#' @importFrom stats p.adjust
+#'
 #' @param physeq A \code{phyloseq} object containing merged information of abundance,
 #'      taxonomic assignment, sample data including the measured variables and categorical information
 #'      of the samples, and / or phylogenetic tree if available.
 #' @param group group. A character string specifying the name of a categorical variable containing  grouping information.
 #' @param pvalue pvalue threshold for significant results from kruskal.test
 #' @param normalize to normalize the data before analysis(TRUE/FALSE)
+#' @param method A list of character strings specifying \code{method} to be used to normalize the phyloseq object
+#'      Available methods are: "relative","TMM","vst","log2".
 #' @examples
 #' \dontrun{
 #' data("Physeq")
