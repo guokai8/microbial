@@ -1,9 +1,8 @@
 ---
-title: "The microbial package"
+title: "The microbial package for microbial community analysis"
 author:
-- name: Kai Guo
-  affiliation:
-  - University of Michigan
+- Kai Guo, University of Michigan
+- Pan Gao, University of North Dakota
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -38,7 +37,18 @@ Install the package with its dependencies and load it for usage in R.
 library(devtools) # Load the devtools package
 install_github("guokai8/microbial") # Install the package
 ```
-### 3.2 Data normalisation
+### 3.2 Start from fastq files
+To start with the raw _fastq_ files, the users need first have the reference database ready. The _preRef_ function provides easy way to download the references. The _ref_db_ parameter is a character to choose which database to download: _silva_, _rdp_ and Greengenes. The _path_ parameter show the location to store the database.
+```{r download, eval=FALSE}
+preRef(ref_db = "silva", path=".")
+```
+
+Then users can use the _plotquality_ function to show the quality of the reads which will help the users to specify _processSeq_ to perform the analysis with _dada2_ package. The parameters included in this function were same as the _dada2_ function. The _path_ is the working path for the input reads. The _truncLen_ is an optional parameter with the default 0 (no truncation): Truncate reads after truncLen bases. Reads shorter than this are discarded. The _trimLeft_ and _trimRight_ are the number of nucleotides to remove from the start and end of each read.
+```{r processSeq, eval=FALSE}
+?processSeq
+```
+
+### 3.3 Data normalisation
 Microbial community data is mainly OTU abundance (counts) with different design data.It is usually necessary that data is transformed by a suitable normalisation method.
 We provided different methods including; “relative”, “TMM”,variance stabilisation "vst" and "log2" for normalisation of taxa abundance. The function takes a phyloseq object physeq and returns a similar object whose otu-table component is normalised by a selected method as shown in the following examples.
 ``` {r quick, message=FALSE}
@@ -47,7 +57,7 @@ data("Physeq")
 #default normalize method is relative
 phy <- normalize(physeq, method = "relative")
 ```
-### 3.3 relative abundance among all samples or groups
+### 3.4 Relative abundance among all samples or groups
 We first use relative normalised bacteria abundance to obtain the proportion of per sample. Then we generate the figure to show the proportion among all samples based on "Phylum" level. The _group_ parameter is provided to show the proportion based on group level. 
 ```{r plotbar, message=FALSE}
 plotbar(phy,level="Phylum")
@@ -56,7 +66,7 @@ plotbar(phy,level="Phylum", group="group")
 
 ```
 
-### 3.4 Alpha diversity with wilcoxon test or t-test
+### 3.5 Alpha diversity with wilcoxon test or t-test
 The _richness_ calculate the alpha diversity of provided community data using selected indices/method(s). Alpha diversity refers to the diversity within a particular area or ecosystem, and is usually expressed by the number of species. The _plotalpha_ function performs pair-wise wilcoxon test or t-test of diversity measures between groups and outputs a plot for each of the selected methods(indices) annotated with significance labels.
 
 The _method_ in the _richness_ function include: "Observed", "Chao1", "ACE", "Richness", "Fisher", "Simpson", "Shannon", "Evenness" and "InvSimpson". The _group_ paramater in the _plotalpha_ function is a categorical variable for which the grouping should be based on during the analysi, the _group_ should be one of the _sample_data_ column. _pvalue_ specifies the p-value threshold for significance in wilcoxon, default is set to 0.05. User can also choose to use the _padj_ paramter instead of _pvalue_. The _plotalpha_ function return a _ggplot2_ object which will easy to modified by user.
@@ -64,7 +74,7 @@ The _method_ in the _richness_ function include: "Observed", "Chao1", "ACE", "Ri
 plotalpha(physeq, group = "group")
 ```
 
-### 3.5 Beta diversity
+### 3.6 Beta diversity
 Beta diversity is a comparison of of diversity between groups, usually measured as the amount of species change between the groups. In the example provided below, we first normalize the taxa abundance to relative abundance to obtain the proportion of most abundant taxa per sample. 
 The arguments in the _plotbeta_ function include: _physeq_ which a required phyloseq object, the _distance_ which is a dissimilarity distance measure with otions of “bray” (default), "unifrac","wunifrac","manhattan", "euclidean", "canberra", "bray", "kulczynski", "jaccard" and other distance methods, the _group_ is a character string specifying a variable whose levels are the groups in the data, the _method_ paramater is a character string specifying ordination method. All methods available to the ordinate function of phyloseq are acceptable here as well. The _plotbeta_ function will return _ggplot2_ object.
 ```{r plotbeta, message = FALSE}
@@ -76,7 +86,7 @@ We also provide _betatest_ function by doing permutation analysis of variance (P
 beta <-betatest(phy,group="SampleType")
 ```
 
-### 3.6 Differentail expression
+### 3.7 Differentail expression
 Here we provide _difftest_ function to find features that are up or down regulated in the compared groups using DESeq2 package. The _plotdiff_ function produce figure of the top most features annotated with corresponding adjusted p-values and abundance distribution. The _difftest_ require a _phyloseq_ object containing merged information of abundance, taxonomic assignment, sample data including the measured variables and categorical information of the samples. Raw count values are preferred for this function. The _group_ paramater is a character string specifying the name of a categorical variable containing grouping information. The _pvalue_ and _log2FC_ are thresholds for p values and log2 fold change. Adjusted p value cutoff is also supported by specify the _padj_ paramater. 
 ```{r difftest, message = FALSE}
 res <- difftest(physeq,group="group")
@@ -90,7 +100,7 @@ plotdiff(res,level="Genus",padj=0.001,log2FC = 7,fontsize.y = 3)
 
 ```
 
-### 3.7 Biomarker selection
+### 3.8 Biomarker selection
 In addition we implement classification using random forest classifier and LEfSe method to find most import features among the groups.
 Random forests or random decision forests are an ensemble learning method for classification.
 And the random forest classifier is used to determine the importance of differentially expressed bacteria/taxa to the microbial community. Typically,  we will use the Mean Descrease in Accuracy to measure the importance for each bacteria/taxa. The _biomarker_ function do the random forest classification and return the sigificant table include the importance values. Raw count values are preferred for this function, and user can specify the normalize method with the _method_ parameter.
