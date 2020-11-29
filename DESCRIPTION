@@ -1,16 +1,15 @@
 Package: microbial
 Type: Package  
-Title: Do microbiome analysis and generate figures
-Version: 0.0.13
-Authors@R: c(person(given = "Kai",
-           family = "Guo",
-           role = c("aut", "cre"),
-           email = "guokai8@gmail.com",
+Title: Do 16s Data Analysis and Generate Figures
+Version: 0.0.16
+Authors@R: c(person("Kai","Guo",email = "guokai8@gmail.com",
+           role = c("aut", "cre")
           ),
-          person(given = "Pan",
-           family = "Gao",
-           role = "aut"))
-Description: Do microbiome analysis and generate figures with alpha, beta diversity.
+          person("Pan","Gao",role = "aut"))
+Description: Provided functions to enhance the available 
+            statistical analysis procedures in R by providing simple functions to 
+            analysis and visualize the 16S rRNA data.Here we present a tutorial 
+            with minimum working examples to demonstrate usage and dependencies. 
 License: GPL-3
 Depends: R (>= 3.5.0)
 Imports:
@@ -39,7 +38,7 @@ Imports:
     knitr
 Encoding: UTF-8
 LazyData: true
-Suggests: knitr, markdown, rmarkdown
+Suggests: markdown, rmarkdown
 VignetteBuilder: knitr
 biocViews: Software,GraphAndNetwork
 RoxygenNote: 7.1.1
