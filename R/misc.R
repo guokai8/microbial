@@ -35,7 +35,7 @@ distcolor<-c('#e6194b', '#3cb44b', '#ffe119', '#4363d8',
 #' @param group group factor used for comparison
 #' @param ... parameters to anova_test
 #' @examples
-#'  \dontrun{
+#' {
 #' data("ToothGrowth")
 #' do_aov(ToothGrowth,group="supp")
 #' }
@@ -59,7 +59,7 @@ do_aov<-function(x,group,...){
 #' @param ref reference group
 #' @param ... parameters to t_test
 #' @examples
-#'  \dontrun{
+#' {
 #' data("mtcars")
 #' do_ttest(mtcars,group="vs")
 #' do_ttest(mtcars,group="cyl",ref="4")
@@ -85,7 +85,7 @@ do_ttest<-function(x,group,ref=NULL,...){
 #' @param ref reference group
 #' @param ... parameters to wilcox_test
 #' @examples
-#'  \dontrun{
+#' {
 #' data("mtcars")
 #' do_wilcox(mtcars,group="vs")
 #' do_wilcox(mtcars,group="cyl",ref="4")

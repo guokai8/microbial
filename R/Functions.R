@@ -4,6 +4,10 @@
 #' @param path path for the  database
 #' @return the path of the database
 #' @author Kai Guo
+#' @examples
+#' \donttest{
+#' preRef(ref_db="silva",path=tempdir())
+#' }
 #' @export
 preRef<-function(ref_db,path="."){
     if (ref_db == "rdp"){
@@ -61,7 +65,7 @@ preRef<-function(ref_db,path="."){
 #' @param min Numeric, the threshold for mininal Phylum shown in samples
 #' @param perc Numeric, input the percentage of samples for which to filter low counts.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data("Physeq")
 #' physeqs<-prefilter(physeq)
 #' }
@@ -108,7 +112,7 @@ prefilter<-function(physeq,min=10,perc=0.05){
 #' @param method A list of character strings specifying \code{method} to be used to calculate for alpha diversity
 #'        in the data. Available methods are: "Observed","Chao1","ACE","Richness", "Fisher", "Simpson", "Shannon", "Evenness","InvSimpson".
 #' @examples
-#'  \dontrun{
+#' {
 #' data("Physeq")
 #' rich <-richness(physeq,method=c("Simpson", "Shannon"))
 #' }
@@ -155,7 +159,7 @@ richness<-function(physeq,method=c("Observed","Simpson", "Shannon")){
 #' @export
 #' @author Kai Guo
 #' @examples
-#' \dontrun{
+#' {
 #' data("Physeq")
 #' phy<-normalize(physeq)
 #' res <- betadiv(phy)
@@ -183,7 +187,7 @@ betadiv<-function(physeq,distance="bray",method="PCoA"){
 #' @param group (Required). Character string specifying name of a categorical variable that is preferred for grouping the information.
 #'        information.
 #' @examples
-#'  \dontrun{
+#'{
 #' data("Physeq")
 #' phy<-normalize(physeq)
 #' beta <-betatest(phy,group="SampleType")
@@ -222,7 +226,7 @@ betatest<-function(physeq,group,distance="bray"){
 #' @param group group (DESeq2). A character string specifying the name of a categorical variable containing  grouping information.
 #' @param table return a data.frame or not
 #' @examples
-#'  \dontrun{
+#' {
 #' data("Physeq")
 #' phy<-normalize(physeq)
 #' }
@@ -286,7 +290,7 @@ normalize<-function(physeq,group,method="relative",table=FALSE){
 #' @param gm_mean TRUE/FALSE calculate geometric means prior to estimate size factors
 #' @param fitType either "parametric", "local", or "mean" for the type of fitting of dispersions to the mean intensity.
 #' @examples
-#'  \dontrun{
+#'  \donttest{
 #' data("Physeq")
 #' res <- difftest(physeq,group="group")
 #' }
@@ -349,7 +353,7 @@ difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=TRUE,fitT
 #' @param method A list of character strings specifying \code{method} to be used to normalize the phyloseq object
 #'      Available methods are: "relative","TMM","vst","log2".
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data("Physeq")
 #' res <- biomarker(physeq,group="group")
 #' }
@@ -404,7 +408,7 @@ biomarker<-function(physeq,group,ntree=500,pvalue=0.05,normalize=TRUE,method="re
 #' @param method A list of character strings specifying \code{method} to be used to normalize the phyloseq object
 #'      Available methods are: "relative","TMM","vst","log2".
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data("Physeq")
 #' res <- ldamarker(physeq,group="group")
 #' }

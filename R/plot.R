@@ -21,7 +21,7 @@
 #' @param size the point size
 #' @param ellipse draw ellipse or not
 #' @examples
-#'  \dontrun{
+#' {
 #' data("Physeq")
 #' phy<-normalize(physeq)
 #' plotbeta(phy,group="SampleType")
@@ -81,7 +81,7 @@ plotbeta<-function(physeq,group,shape=NULL,distance="bray",method="PCoA",color=N
 #' @param wilcox use wilcoxon test or not
 #' @param show.number to show the pvalue instead of significant symbol(TRUE/FALSE)
 #' @examples
-#'  \dontrun{
+#' {
 #' data("Physeq")
 #' plotalpha(physeq,group="SampleType")
 #' }
@@ -103,7 +103,7 @@ plotalpha<-function(physeq,group,method=c("Observed","Simpson", "Shannon"),color
         res<-do_ttest(rich,"group")
     }
     if(sum(res$p<pvalue)<1){
-        cat("No significant difference between any of the groups")
+        message("No significant difference between any of the groups")
         pvalue = 1
     }
     if(isTRUE(sig.only)){
@@ -174,7 +174,7 @@ plotalpha<-function(physeq,group,method=c("Observed","Simpson", "Shannon"),color
 #' @param fontsize.x the size of x axis label
 #' @param fontsize.y the size of y axis label
 #' @examples
-#'  \dontrun{
+#' \donttest{
 #' data("Physeq")
 #' phy<-normalize(physeq)
 #' plotbar(phy,level="Phylum")
@@ -229,7 +229,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,group=NULL,top=5,fontsize.x =
 #' @param fontsize.y the size of y axis label
 #' @param horiz horizontal or not (TRUE/FALSE)
 #' @examples
-#'  \dontrun{
+#'  \donttest{
 #' data("Physeq")
 #' res <- difftest(physeq,group="group")
 #' plotdiff(res,level="Genus",padj=0.001)
@@ -284,7 +284,7 @@ plotdiff<-function(res,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=0,s
 #' @param fontsize.x the size of x axis label
 #' @param fontsize.y the size of y axis label
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data("Physeq")
 #' res <- ldamarker(physeq,group="group")
 #' plotLDA(res,group=c("A","B"),lda=5,pvalue=0.05)
@@ -325,7 +325,7 @@ plotLDA<-function(x,group,lda=2,pvalue=0.05,padj=NULL,color=NULL,fontsize.x=4,fo
 #' @param label.color label color
 #' @return ggplot2 object
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data("Physeq")
 #' res <- biomarker(physeq,group="group")
 #' plotmarker(res,level="Genus")
@@ -353,7 +353,7 @@ plotmarker<-function(x,level="Genus",top=30,rotate=FALSE,dot.size=8,label.color=
 #' @param n	(Optional). Default 500,000. The number of records to sample from the fastq file.
 #' @param aggregate	(Optional). Default FALSE. If TRUE, compute an aggregate quality profile for all fastq files provided.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' plotquality(system.file("extdata", "sam1F.fastq.gz", package="dada2"))
 #' }
 #' @export
