@@ -38,7 +38,7 @@ datafame with differential test with DESeq2
 Calculate differential bacteria with DESeq2
 }
 \examples{
- \dontrun{
+ \donttest{
 data("Physeq")
 res <- difftest(physeq,group="group")
 }

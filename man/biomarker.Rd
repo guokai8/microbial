@@ -37,7 +37,7 @@ data frame with significant biomarker
 Identify biomarker by using randomForest method
 }
 \examples{
-\dontrun{
+\donttest{
 data("Physeq")
 res <- biomarker(physeq,group="group")
 }

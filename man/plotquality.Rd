@@ -20,7 +20,7 @@ figure
 plot the quality for the fastq file
 }
 \examples{
-\dontrun{
+\donttest{
 plotquality(system.file("extdata", "sam1F.fastq.gz", package="dada2"))
 }
 }

@@ -19,7 +19,7 @@ do_ttest(x, group, ref = NULL, ...)
 do t.test
 }
 \examples{
- \dontrun{
+{
 data("mtcars")
 do_ttest(mtcars,group="vs")
 do_ttest(mtcars,group="cyl",ref="4")

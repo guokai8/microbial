@@ -45,7 +45,7 @@ ggplot object
 plot differential results
 }
 \examples{
- \dontrun{
+ \donttest{
 data("Physeq")
 res <- difftest(physeq,group="group")
 plotdiff(res,level="Genus",padj=0.001)

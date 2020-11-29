@@ -25,7 +25,7 @@ list with beta diversity data.frame and PCs
 calcaute beta diversity
 }
 \examples{
-\dontrun{
+{
 data("Physeq")
 phy<-normalize(physeq)
 res <- betadiv(phy)

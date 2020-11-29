@@ -45,7 +45,7 @@ ggplot2 object
 plot beta diversity
 }
 \examples{
- \dontrun{
+{
 data("Physeq")
 phy<-normalize(physeq)
 plotbeta(phy,group="SampleType")

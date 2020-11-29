@@ -25,7 +25,7 @@ phyloseq object with normalized data
 Normalize the phyloseq object with different methods
 }
 \examples{
- \dontrun{
+{
 data("Physeq")
 phy<-normalize(physeq)
 }

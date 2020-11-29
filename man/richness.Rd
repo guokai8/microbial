@@ -21,7 +21,7 @@ data.frame of alpha diversity
 calculat the richness for the phyloseq object
 }
 \examples{
- \dontrun{
+{
 data("Physeq")
 rich <-richness(physeq,method=c("Simpson", "Shannon"))
 }

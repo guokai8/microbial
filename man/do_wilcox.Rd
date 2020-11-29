@@ -19,7 +19,7 @@ do_wilcox(x, group, ref = NULL, ...)
 do wilcox test
 }
 \examples{
- \dontrun{
+{
 data("mtcars")
 do_wilcox(mtcars,group="vs")
 do_wilcox(mtcars,group="cyl",ref="4")

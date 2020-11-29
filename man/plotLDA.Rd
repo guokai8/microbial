@@ -39,7 +39,7 @@ ggplot2 object
 plot LEfSe results from ldamarker function
 }
 \examples{
-\dontrun{
+\donttest{
 data("Physeq")
 res <- ldamarker(physeq,group="group")
 plotLDA(res,group=c("A","B"),lda=5,pvalue=0.05)

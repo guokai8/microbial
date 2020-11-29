@@ -38,7 +38,7 @@ Returns a ggplot object. This can further be manipulated as preferred by user.
 plot bar for relative abundance for bacteria
 }
 \examples{
- \dontrun{
+\donttest{
 data("Physeq")
 phy<-normalize(physeq)
 plotbar(phy,level="Phylum")

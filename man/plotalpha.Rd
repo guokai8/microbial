@@ -48,7 +48,7 @@ Returns a ggplot object. This can further be manipulated as preferred by user.
 plot alpha diversity
 }
 \examples{
- \dontrun{
+{
 data("Physeq")
 plotalpha(physeq,group="SampleType")
 }

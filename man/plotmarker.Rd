@@ -36,7 +36,7 @@ ggplot2 object
 plot the biomarker from the biomarker function with randomForest
 }
 \examples{
-\dontrun{
+\donttest{
 data("Physeq")
 res <- biomarker(physeq,group="group")
 plotmarker(res,level="Genus")

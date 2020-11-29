@@ -22,7 +22,7 @@ filter phyloseq object
 filter the phyloseq
 }
 \examples{
-\dontrun{
+\donttest{
 data("Physeq")
 physeqs<-prefilter(physeq)
 }

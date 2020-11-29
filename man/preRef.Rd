@@ -17,6 +17,11 @@ the path of the database
 \description{
 Download the reference database
 }
+\examples{
+\donttest{
+preRef(ref_db="silva",path=tempdir())
+}
+}
 \author{
 Kai Guo
 }

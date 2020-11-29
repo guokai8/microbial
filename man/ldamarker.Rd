@@ -24,7 +24,7 @@ Available methods are: "relative","TMM","vst","log2".}
 Identify biomarker by using LEfSe method
 }
 \examples{
-\dontrun{
+\donttest{
 data("Physeq")
 res <- ldamarker(physeq,group="group")
 }
