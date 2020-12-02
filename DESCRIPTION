@@ -1,12 +1,12 @@
 Package: microbial
 Type: Package  
 Title: Do 16s Data Analysis and Generate Figures
-Version: 0.0.16
+Version: 0.0.17
 Authors@R: c(person("Kai","Guo",email = "guokai8@gmail.com",
            role = c("aut", "cre")
           ),
           person("Pan","Gao",role = "aut"))
-Description: Provided functions to enhance the available 
+Description: Provides functions to enhance the available 
             statistical analysis procedures in R by providing simple functions to 
             analysis and visualize the 16S rRNA data.Here we present a tutorial 
             with minimum working examples to demonstrate usage and dependencies. 
