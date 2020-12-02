@@ -11,7 +11,8 @@ difftest(
   padj = NULL,
   log2FC = 0,
   gm_mean = TRUE,
-  fitType = "local"
+  fitType = "local",
+  quiet = FALSE
 )
 }
 \arguments{
@@ -30,6 +31,8 @@ of the samples, and / or phylogenetic tree if available.}
 \item{gm_mean}{TRUE/FALSE calculate geometric means prior to estimate size factors}
 
 \item{fitType}{either "parametric", "local", or "mean" for the type of fitting of dispersions to the mean intensity.}
+
+\item{quiet}{whether to print messages at each step}
 }
 \value{
 datafame with differential test with DESeq2

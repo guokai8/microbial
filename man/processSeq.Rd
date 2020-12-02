@@ -15,7 +15,8 @@ processSeq(
   train_data = "silva_nr99_v138_train_set.fa.gz",
   train_species = "silva_species_assignment_v138.fa.gz",
   outpath = NULL,
-  buildtree = FALSE
+  buildtree = FALSE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -41,6 +42,8 @@ If both truncLen and trimRight are provided, truncation will be performed after 
 \item{outpath}{(Optional).the path for the filtered reads and th out table}
 
 \item{buildtree}{build phylogenetic tree or not(default: FALSE)}
+
+\item{verbose}{(Optional). Default TRUE. Print verbose text output.}
 }
 \value{
 list include count table, summary table, taxonomy information and phyloseq object
