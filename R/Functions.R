@@ -21,11 +21,9 @@ preRef<-function(ref_db,path="."){
                      destfile = file.path(paste0(path, "/rdp_species_assignment_16.fa.gz")),
                      method = "auto"),
        FALSE);
-        cat("Database:  \n")
-        cat(paste0(path,"/rdp_train_set_16.fa.gz"))
-        cat("\n")
-        cat(paste0(path, "/rdp_species_assignment_16.fa.gz"))
-        cat("\n")
+        message("Database: ")
+        message(paste0(path,"/rdp_train_set_16.fa.gz"))
+        message(paste0(path, "/rdp_species_assignment_16.fa.gz"))
     } else if (ref_db == "silva"){
             ifelse(!file.exists(paste0(path,"/silva_nr99_v138_train_set.fa.gz")),
             download.file(url = "https://zenodo.org/record/3986799/files/silva_nr99_v138_train_set.fa.gz?download=1",
@@ -37,20 +35,17 @@ preRef<-function(ref_db,path="."){
                          destfile = file.path(paste0(path,"/silva_species_assignment_v138.fa.gz")),
                          method = 'auto'),
            FALSE);
-          cat("Database:  \n")
-          cat(paste0(path,"/silva_nr99_v138_train_set.fa.gz"))
-          cat("\n")
-          cat(paste0(path, "/silva_species_assignment_v138.fa.gz"))
-          cat("\n")
+          message("Database: ")
+          message(paste0(path,"/silva_nr99_v138_train_set.fa.gz"))
+          message(paste0(path, "/silva_species_assignment_v138.fa.gz"))
     } else {
            ifelse(!dir.exists(paste0(path,"/gg_13_8_train_set_97.fa.gz")),
            download.file(url = "https://zenodo.org/record/158955/files/gg_13_8_train_set_97.fa.gz?download=1",
                          destfile = file.path(paste0(path, "/gg_13_8_train_set_97.fa.gz")),
                          method = "auto"),
            FALSE);
-    cat("Database:  \n")
-    cat(paste0(path,"/gg_13_8_train_set_97.fa.gz"))
-    cat("\n")
+    message("Database:  ")
+    message(paste0(path,"/gg_13_8_train_set_97.fa.gz"))
 }
 }
 
@@ -94,7 +89,7 @@ prefilter<-function(physeq,min=10,perc=0.05){
    # ps1 = phyloseq::subset_taxa(ps, Phylum %in%filterPhyla)
     prevdf1 = subset(prevdf, Phylum %in% get_taxa_unique(ps, "Phylum"))
     prevalenceThreshold = perc * nsamples(ps)
-    cat("prevalence Threshold is: ",prevalenceThreshold,"\n")
+    message("prevalence Threshold is: ",prevalenceThreshold)
     keepTaxa = rownames(prevdf1)[(prevdf1$Prevalence >= prevalenceThreshold)]
     prevdfr<-prevdf1[keepTaxa,]
     psf = prune_taxa(keepTaxa, ps)
@@ -196,7 +191,7 @@ betadiv<-function(physeq,distance="bray",method="PCoA"){
 #' @export
 #' @author Kai Guo
 betatest<-function(physeq,group,distance="bray"){
-    cat("Do PERMANOVA for: ",group,"\n")
+    message("Do PERMANOVA for: ",group)
     dist<-distance(physeq,method = distance)
     tab <- as(sample_data(physeq),"data.frame")
     tab<-tab[,group,drop=F]
@@ -241,7 +236,7 @@ normalize<-function(physeq,group,method="relative",table=FALSE){
     tab<-as(sample_data(physeq),"data.frame")
     group<-tab[,group]
     if(method=="vst"){
-        cat("Normalization using DESeq2 varianceStabilizingTransformation method \n")
+        message("Normalization using DESeq2 varianceStabilizingTransformation method")
         otu <- otu+1
         condition=group
         dds = DESeqDataSetFromMatrix(otu, DataFrame(condition), ~ condition)
@@ -251,12 +246,12 @@ normalize<-function(physeq,group,method="relative",table=FALSE){
         otu_table(physeq) <- otu_table(assay(vst), taxa_are_rows=TRUE)
     }
     if(method=="relative"){
-        cat("Normalization using relative method \n")
+        message("Normalization using relative method ")
         physeq<-transform_sample_counts(physeq,function(x)x/sum(x))
     }
     if(method=="TMM"){
         # modified from https://github.com/aametwally/MetaLonDA/blob/master/R/Normalization.
-        cat("Normalization using TMM method \n")
+        message("Normalization using TMM method ")
         otu = otu + 1
         # Check `group` argument
         factors = calcNormFactors(otu, method="TMM")
@@ -266,7 +261,7 @@ normalize<-function(physeq,group,method="relative",table=FALSE){
         otu_table(physeq) <- otu_table(count, taxa_are_rows=TRUE)
     }
     if(method=="log2"){
-        cat("Normalization using log2 of the RA method \n")
+        message("Normalization using log2 of the RA method ")
         physeq<-transform_sample_counts(physeq,function(x)log2(x/sum(x)+1))
     }
     if(isTRUE(table)){
@@ -289,7 +284,8 @@ normalize<-function(physeq,group,method="relative",table=FALSE){
 #' @param log2FC log2 Fold Change threshold
 #' @param gm_mean TRUE/FALSE calculate geometric means prior to estimate size factors
 #' @param fitType either "parametric", "local", or "mean" for the type of fitting of dispersions to the mean intensity.
-#' @examples
+#' @param quiet whether to print messages at each step
+#' @examples 
 #'  \donttest{
 #' data("Physeq")
 #' res <- difftest(physeq,group="group")
@@ -298,7 +294,7 @@ normalize<-function(physeq,group,method="relative",table=FALSE){
 #' @author Kai Guo
 #' @export
 #'
-difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=TRUE,fitType="local"){
+difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=TRUE,fitType="local",quiet=FALSE){
     if(!taxa_are_rows(physeq)){
         physeq<-t(physeq)
     }

@@ -16,6 +16,7 @@
 #' @param train_species (Required). species database
 #' @param outpath (Optional).the path for the filtered reads and th out table
 #' @param buildtree build phylogenetic tree or not(default: FALSE)
+#' @param verbose (Optional). Default TRUE. Print verbose text output.
 #' @author Kai Guo
 #' @return list include count table, summary table, taxonomy information and phyloseq object
 #' @export
@@ -29,7 +30,8 @@ processSeq <- function(path=".",
                        train_data="silva_nr99_v138_train_set.fa.gz",
                        train_species="silva_species_assignment_v138.fa.gz",
                        outpath=NULL,
-                       buildtree=FALSE){
+                       buildtree=FALSE,
+                       verbose=TRUE){
     OS<-.Platform$OS.type
     if(OS=="windows"){
         multithread<-FALSE
@@ -40,7 +42,9 @@ processSeq <- function(path=".",
     fnRs <- sort(list.files(path, pattern="_R2_001.fastq", full.names = TRUE))
     sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
     #filter and trim;
-    cat("Filtering......\n");
+    if(isTRUE(verbose)){
+    message("Filtering......");
+    }
     ifelse(!dir.exists("filtered"),dir.create("filtered"),FALSE);
     if(is.null(outpath)){
         outpath<-path
@@ -50,23 +54,35 @@ processSeq <- function(path=".",
     out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=truncLen,trimLeft=trimLeft,trimRight=trimRight,
                          maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,minLen=minLen,maxLen = maxLen,
                          compress=TRUE, multithread=multithread) # On Windows set multithread=FALSE
-    cat("Learning error......\n")
+    if(isTRUE(verbose)){
+        message("Learning error......")
+    }
     errF <- learnErrors(filtFs, multithread=multithread)
     errR <- learnErrors(filtRs, multithread=multithread)
-    cat("Dereplicating ......\n")
+    if(isTRUE(verbose)){
+        message("Dereplicating......")
+    }
     derepFs <- derepFastq(filtFs, verbose=FALSE)
     derepRs <- derepFastq(filtRs, verbose=FALSE)
     # Name the derep-class objects by the sample names
     names(derepFs) <- sample.names
     names(derepRs) <- sample.names
-    cat("Error correction......\n")
+    if(isTRUE(verbose)){
+        message("Error correction......")
+    }
     dadaFs <- dada(derepFs, err=errF, multithread=TRUE)
     dadaRs <- dada(derepRs, err=errR, multithread=TRUE)
-    cat("Mergering......\n")
+    if(isTRUE(verbose)){
+        message("Mergering.......")
+    }
     mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=FALSE)
-    cat("Making table .......\n")
+    if(isTRUE(verbose)){
+        message("Making table.......")
+    }
     seqtab <- makeSequenceTable(mergers)
-    cat("remove chimeras......\n");
+    if(isTRUE(verbose)){
+        message("Remove chimeras.......")
+    }
     seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE, verbose=FALSE)
     asv_seqs <- colnames(seqtab.nochim)
     asv_headers <- vector(dim(seqtab.nochim)[2], mode="character")
@@ -81,9 +97,13 @@ processSeq <- function(path=".",
     # count table:
     asv_count <- t(seqtab.nochim)
     rownames(asv_count) <- sub(">", "", asv_headers)
-    cat("Write out the count table......\n")
+    if(isTRUE(verbose)){
+        message("Write out the count table.......")
+    }
     write.table(asv_count,paste0(outpath, "/ASVs_counts.txt"), sep="\t", quote=F)
-    cat("assign taxonomy.......\n")
+    if(isTRUE(verbose)){
+        message("Assign taxonomy........")
+    }
     if(is.null(train_data)|is.null(train_species)){
         stop("Please specify the path for the sliva database......\n ")
     }else{
@@ -94,7 +114,9 @@ processSeq <- function(path=".",
     ### get sequence and do phylo anaylsis
     seqs <- getSequences(seqtab.nochim)
     names(seqs) <- seqs # This propagates to the tip labels of the tree
-    cat("write out sequence and taxonomy results\n")
+    if(isTRUE(verbose)){
+        message("write out sequence and taxonomy results")
+    }
     # fasta:
     asv_fasta <- c(rbind(asv_headers, asv_seqs))
     write(asv_fasta,paste0(outpath, "/ASVs.fa"))
@@ -102,8 +124,10 @@ processSeq <- function(path=".",
     asv_taxa <- taxa
     row.names(asv_taxa) <- sub(">", "", asv_headers)
     write.table(asv_taxa, paste0(outpath,"/ASVs_taxonomy.txt"), sep="\t", quote=F)
+    }    
+    if(isTRUE(verbose)){
+        message("creating phyloseq object......")
     }
-    cat("creating phyloseq object......\n")
     if(!is.null(sample_info)){
         if(is.character(sample_info)){
             ext<-.checkfile(sample_info)
