@@ -340,7 +340,7 @@ plotmarker<-function(x,level="Genus",top=30,rotate=FALSE,dot.size=8,label.color=
                   add.params = list(color = "#00AFBB", size = 1.5),
                label=round(x$Value,2),font.label = list(color = label.color, size = label.size,vjust=0.2))
     if(isTRUE(rotate)){
-        p<-p+xlab(level)+ylab("Mean Decrease Accuracy")
+        p<-p+ylab(level)+xlab("Mean Decrease Accuracy")
     }else{
         p<-p+ylab(level)+xlab("Mean Decrease Accuracy")
     }
