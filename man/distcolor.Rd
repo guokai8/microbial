@@ -5,7 +5,7 @@
 \alias{distcolor}
 \title{distinguish colors for making figures}
 \format{
-An object of class \code{character} of length 22.
+An object of class \code{character} of length 41.
 }
 \usage{
 distcolor

@@ -7,6 +7,7 @@
 difftest(
   physeq,
   group,
+  ref = NULL,
   pvalue = 0.05,
   padj = NULL,
   log2FC = 0,
@@ -21,6 +22,8 @@ taxonomic assignment, sample data including the measured variables and categoric
 of the samples, and / or phylogenetic tree if available.}
 
 \item{group}{group (DESeq2). A character string specifying the name of a categorical variable containing  grouping information.}
+
+\item{ref}{reference group}
 
 \item{pvalue}{pvalue threshold for significant results}
 
