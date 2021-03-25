@@ -40,7 +40,7 @@ plotbeta<-function(physeq,group,shape=NULL,distance="bray",method="PCoA",color=N
     df <- cbind(df[,1:4],tab[rownames(df),])
     df$group<-tab[,group]
     if(is.null(color)){
-        color<-lightcolor[1:length(unique(df$group))]
+        color<-distcolor[1:length(unique(df$group))]
     }
     if(!is.null(shape)){
         df$shape<-tab[,shape]
@@ -132,7 +132,7 @@ plotalpha<-function(physeq,group,method=c("Observed","Simpson", "Shannon"),color
         res$p.adj.signif<-res$p.adj
     }
     if(is.null(color)){
-        color<-lightcolor[1:length(unique(rich$group))]
+        color<-distcolor[1:length(unique(rich$group))]
     }
     p<-facet(p,facet.by = "type",scales = "free_y",ncol = length(method))
     if(!is.null(padj)){
@@ -186,7 +186,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,group=NULL,top=5,fontsize.x =
     pm <- psmelt(physeq)
     if(is.null(color)){
         len<-length(unique(pm[,level]))
-        color<-lightcolor[1:len]
+        color<-distcolor[1:len]
     }
     if(is.null(group)){
         group_var<-c("Sample",level)
@@ -250,7 +250,7 @@ plotdiff<-function(res,level="Genus",color=NULL,pvalue=0.05,padj=NULL,log2FC=0,s
     sigtab$Phylum <- factor(as.character(sigtab$Phylum), levels=names(x))
     if(is.null(color)){
         len<-length(unique(sigtab$Phylum))
-        color<-lightcolor[1:len]
+        color<-distcolor[1:len]
     }
     # Genus order
     sigtab$name<-paste0(sigtab[,level],"(",rownames(sigtab),")")
@@ -306,7 +306,7 @@ plotLDA<-function(x,group,lda=2,pvalue=0.05,padj=NULL,color=NULL,fontsize.x=4,fo
         theme_light()+theme(axis.text.x = element_text(size=fontsize.x),
                             axis.text.y = element_text(size=fontsize.y))
     if(is.null(color)){
-        color <- lightcolor[1:2]
+        color <- distcolor[1:2]
     }
     p<-p+scale_fill_manual(values=color)+xlab("")
     p

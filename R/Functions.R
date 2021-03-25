@@ -279,13 +279,14 @@ normalize<-function(physeq,group,method="relative",table=FALSE){
 #'      taxonomic assignment, sample data including the measured variables and categorical information
 #'      of the samples, and / or phylogenetic tree if available.
 #' @param group group (DESeq2). A character string specifying the name of a categorical variable containing  grouping information.
+#' @param ref reference group
 #' @param pvalue pvalue threshold for significant results
 #' @param padj adjust p value threshold for significant results
 #' @param log2FC log2 Fold Change threshold
 #' @param gm_mean TRUE/FALSE calculate geometric means prior to estimate size factors
 #' @param fitType either "parametric", "local", or "mean" for the type of fitting of dispersions to the mean intensity.
 #' @param quiet whether to print messages at each step
-#' @examples 
+#' @examples
 #'  \donttest{
 #' data("Physeq")
 #' res <- difftest(physeq,group="group")
@@ -294,7 +295,7 @@ normalize<-function(physeq,group,method="relative",table=FALSE){
 #' @author Kai Guo
 #' @export
 #'
-difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=TRUE,fitType="local",quiet=FALSE){
+difftest<-function(physeq,group,ref=NULL,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=TRUE,fitType="local",quiet=FALSE){
     if(!taxa_are_rows(physeq)){
         physeq<-t(physeq)
     }
@@ -303,6 +304,9 @@ difftest<-function(physeq,group,pvalue=0.05,padj=NULL,log2FC=0,gm_mean=TRUE,fitT
     colData<-as(sample_data(physeq),"data.frame")
     colData$condition<-colData[,group]
     contrasts<-levels(factor(unique(colData$condition)))
+    if(!is.null(ref)){
+      contrasts <- c(setdiff(contrasts,ref),ref)
+    }
     if(isTRUE(gm_mean)){
         countData<-round(otu, digits = 0)
     }else{
