@@ -35,7 +35,8 @@ Imports:
     MASS,
     randomForest,
     edgeR,
-    knitr
+    knitr,
+    testthat
 Encoding: UTF-8
 LazyData: true
 Suggests: markdown, rmarkdown
