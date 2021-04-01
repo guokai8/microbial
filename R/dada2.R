@@ -42,7 +42,10 @@ processSeq <- function(path=".",
     }
     fnFs <- sort(list.files(path, pattern="R1|F*fq|fastq", full.names = TRUE))
     fnRs <- sort(list.files(path, pattern="R2|R*fq|fastq", full.names = TRUE))
-    sample.names <- sapply(strsplit(basename(fnFs), "_|\\."), `[`, 1)
+    sample.names <-sub('@@@@.*','',sub('(\\.|_)R|F','@@@@',basename(fnFs)))
+    if(sum(duplicated(sample.names))>=1){
+        stop('The fastq filenames are not unique!\n')
+    } 
     #filter and trim;
     if(isTRUE(verbose)){
     message("Filtering......");
