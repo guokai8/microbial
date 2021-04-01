@@ -40,8 +40,8 @@ processSeq <- function(path=".",
     }else{
         multithread<-TRUE
     }
-    fnFs <- sort(list.files(path, pattern="R1|F*fq|fastq", full.names = TRUE))
-    fnRs <- sort(list.files(path, pattern="R2|R*fq|fastq", full.names = TRUE))
+    fnFs <- sort(list.files(path, pattern="R1", full.names = TRUE))
+    fnRs <- sort(list.files(path, pattern="R2", full.names = TRUE))
     message("check the filename ......")
     if(any(grepl('R1|R2',fnFs)==FALSE)){
         stop("All fastq name should be either contain R1 or R2 \n")
