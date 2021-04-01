@@ -15,6 +15,7 @@ processSeq(
   train_data = "silva_nr99_v138_train_set.fa.gz",
   train_species = "silva_species_assignment_v138.fa.gz",
   outpath = NULL,
+  saveobj = FALSE,
   buildtree = FALSE,
   verbose = TRUE
 )
@@ -40,6 +41,8 @@ If both truncLen and trimRight are provided, truncation will be performed after 
 \item{train_species}{(Required). species database}
 
 \item{outpath}{(Optional).the path for the filtered reads and th out table}
+
+\item{saveobj}{(Optional).Default FALSE. save the phyloseq object output.}
 
 \item{buildtree}{build phylogenetic tree or not(default: FALSE)}
 
