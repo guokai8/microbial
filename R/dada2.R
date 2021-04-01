@@ -40,9 +40,9 @@ processSeq <- function(path=".",
     }else{
         multithread<-TRUE
     }
-    fnFs <- sort(list.files(path, pattern="R1*fq|fastq", full.names = TRUE))
-    fnRs <- sort(list.files(path, pattern="R2*fq|fastq", full.names = TRUE))
-    sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
+    fnFs <- sort(list.files(path, pattern="R1|F*fq|fastq", full.names = TRUE))
+    fnRs <- sort(list.files(path, pattern="R2|R*fq|fastq", full.names = TRUE))
+    sample.names <- sapply(strsplit(basename(fnFs), "_|\\."), `[`, 1)
     #filter and trim;
     if(isTRUE(verbose)){
     message("Filtering......");
