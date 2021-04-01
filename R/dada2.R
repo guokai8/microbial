@@ -42,7 +42,11 @@ processSeq <- function(path=".",
     }
     fnFs <- sort(list.files(path, pattern="R1|F*fq|fastq", full.names = TRUE))
     fnRs <- sort(list.files(path, pattern="R2|R*fq|fastq", full.names = TRUE))
-    sample.names <-sub('@@@@.*','',sub('(\\.|_)R|F','@@@@',basename(fnFs)))
+    messgae("check the filename ......")
+    if(any(grepl('R1|R2',fnFs)==FALSE)){
+        stop("All fastq name should be either contain R1 or R2 \n")
+    }
+    sample.names <-sub('@@@@.*','',sub('(\\.|_)R(1|2)','@@@@',basename(fnFs)))
     if(sum(duplicated(sample.names))>=1){
         stop('The fastq filenames are not unique!\n')
     } 
