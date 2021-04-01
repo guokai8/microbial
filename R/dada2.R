@@ -22,7 +22,7 @@
 #' @return list include count table, summary table, taxonomy information and phyloseq object
 #' @export
 processSeq <- function(path=".",
-                       truncLen = c(240, 160),
+                       truncLen = c(0, 0),
                        trimLeft=0,
                        trimRight=0,
                        minLen=20,
