@@ -2,7 +2,7 @@
 <a href="https://cran.r-project.org/web/packages/microbial/index.html"><img border="0" src="http://www.r-pkg.org/badges/version/microbial" alt="CRAN version"></a>
 <a href="https://travis-ci.org/guokai8/microbial"><img src="https://travis-ci.org/guokai8/microbial.svg" alt="Build status"></a> 
 [![Project Status:](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![](https://img.shields.io/badge/devel%20version-0.0.18-green.svg)](https://github.com/guokai8/microbial)![Code Size:](https://img.shields.io/github/languages/code-size/guokai8/microbial)
+[![](https://img.shields.io/badge/devel%20version-0.0.19-green.svg)](https://github.com/guokai8/microbial)![Code Size:](https://img.shields.io/github/languages/code-size/guokai8/microbial)
 
 An R package for microbial community analysis with dada2 and phyloseq
 
