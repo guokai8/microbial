@@ -379,6 +379,7 @@ biomarker<-function(physeq,group,ntree=500,pvalue=0.05,normalize=TRUE,method="re
     data$group<-tab$group
     data$group<-factor(data$group)
     val<-randomForest(group ~ ., data=data, importance=TRUE, proximity=TRUE,ntree=ntree)
+    print(val)
     imp<- importance(val)
     res<-data.frame(row.names=NULL,OTU=sub('X','',rownames(imp)),
                     Value=abs(as.numeric(imp[,"MeanDecreaseAccuracy"])),
