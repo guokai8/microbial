@@ -306,7 +306,7 @@ plotLDA<-function(x,group,lda=2,pvalue=0.05,padj=NULL,color=NULL,fontsize.x=4,fo
         theme_light()+theme(axis.text.x = element_text(size=fontsize.x),
                             axis.text.y = element_text(size=fontsize.y))
     if(is.null(color)){
-        color <- distcolor[1:2]
+        color <- distcolor[c(2:3)]
     }
     p<-p+scale_fill_manual(values=color)+xlab("")
     p
