@@ -1,6 +1,6 @@
 # microbial
 <a href="https://cran.r-project.org/web/packages/microbial/index.html"><img border="0" src="http://www.r-pkg.org/badges/version/microbial" alt="CRAN version"></a>
-<a href="https://travis-ci.com/guokai8/microbial"><img src="https://travis-ci.com/guokai8/microbial.svg" alt="Build status"></a> 
+[![DOI](https://zenodo.org/badge/298122205.svg)](https://zenodo.org/badge/latestdoi/298122205)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/microbial?color=green)
 [![Project Status:](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![](https://img.shields.io/badge/devel%20version-0.0.20-green.svg)](https://github.com/guokai8/microbial)![Code Size:](https://img.shields.io/github/languages/code-size/guokai8/microbial)
