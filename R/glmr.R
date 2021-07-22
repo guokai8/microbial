@@ -8,7 +8,7 @@
 #' @export
 #' @author Kai Guo
 
-glmr<-function(physeq,group,factors=NULL,family=binomial()){
+glmr<-function(physeq,group,factors=NULL,family=binomial(link = "logit")){
      library(phyloseq)
      library(broom)
       if (!taxa_are_rows(physeq)) {
@@ -25,7 +25,7 @@ glmr<-function(physeq,group,factors=NULL,family=binomial()){
       cat('Do the generalized linear model regression with ',factors,'adjusted',"\n")
       cat(paste0(group,"~",paste(factors,"x",sep="+")),"\n")
       cat('##########################################\n')
-      rr<-lapply(names(otu),function(x)tidy(glm(as.formula(paste0("group~",paste(factors,x,sep="+"))),data=dd,family=binomial())))
+      rr<-lapply(names(otu),function(x)tidy(glm(as.formula(paste0("group~",paste(factors,x,sep="+"))),data=dd,family=family)))
       names(rr)<- sub('ASV_','',names(otu))
       res <- do.call(rbind,rr)
       res <- res[grep('ASV_',res$term),]
