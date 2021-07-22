@@ -214,7 +214,7 @@ plotbar<-function(physeq,level="Phylum",color=NULL,group=NULL,top=5,return=FALSE
               panel.background = element_blank(),axis.ticks.x = element_blank())+
         xlab("")+ylab("")
     if(isTRUE(return)){
-        return(d)
+        return(pm)
     }else{
         return(p)
     }
