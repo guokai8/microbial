@@ -212,7 +212,11 @@ plotbar<-function(physeq,level="Phylum",color=NULL,group=NULL,top=5,fontsize.x =
               axis.text.y=element_text(size=fontsize.y),
               panel.background = element_blank(),axis.ticks.x = element_blank())+
         xlab("")+ylab("")
-    p
+    if(isTRUE(return)){
+        return(d)
+    }else{
+        return(p)
+    }
 }
 
 #' @title plot differential results
