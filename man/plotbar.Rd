@@ -10,6 +10,7 @@ plotbar(
   color = NULL,
   group = NULL,
   top = 5,
+  return = FALSE,
   fontsize.x = 5,
   fontsize.y = 12
 )
@@ -26,6 +27,8 @@ of the samples, and / or phylogenetic tree if available.}
 \item{group}{group (Optional). A character string specifying the name of a categorical variable containing  grouping information.}
 
 \item{top}{the number of most abundance bacteria to display}
+
+\item{return}{return the data with the relative abundance}
 
 \item{fontsize.x}{the size of x axis label}
 
