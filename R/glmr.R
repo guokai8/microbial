@@ -9,8 +9,6 @@
 #' @author Kai Guo
 
 glmr<-function(physeq,group,factors=NULL,family=binomial(link = "logit")){
-     library(phyloseq)
-     library(broom)
       if (!taxa_are_rows(physeq)) {
             physeq <- t(physeq)
       }
