@@ -3,7 +3,7 @@
 [![DOI](https://zenodo.org/badge/298122205.svg)](https://zenodo.org/badge/latestdoi/298122205)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/microbial?color=green)
 [![Project Status:](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![](https://img.shields.io/badge/devel%20version-0.0.20-green.svg)](https://github.com/guokai8/microbial)![Code Size:](https://img.shields.io/github/languages/code-size/guokai8/microbial)
+[![](https://img.shields.io/badge/devel%20version-0.0.21-green.svg)](https://github.com/guokai8/microbial)![Code Size:](https://img.shields.io/github/languages/code-size/guokai8/microbial)
 
 An R package for microbial community analysis with dada2 and phyloseq
 
