@@ -171,6 +171,7 @@ plotalpha<-function(physeq,group,method=c("Observed","Simpson", "Shannon"),color
 #' @param color A vector of character use specifying the color
 #' @param group group (Optional). A character string specifying the name of a categorical variable containing  grouping information.
 #' @param top the number of most abundance bacteria to display
+#' @param return return the data with the relative abundance
 #' @param fontsize.x the size of x axis label
 #' @param fontsize.y the size of y axis label
 #' @examples
@@ -182,7 +183,7 @@ plotalpha<-function(physeq,group,method=c("Observed","Simpson", "Shannon"),color
 #' @return Returns a ggplot object. This can further be manipulated as preferred by user.
 #' @author Kai Guo
 #' @export
-plotbar<-function(physeq,level="Phylum",color=NULL,group=NULL,top=5,fontsize.x = 5, fontsize.y = 12){
+plotbar<-function(physeq,level="Phylum",color=NULL,group=NULL,top=5,return=FALSE,fontsize.x = 5, fontsize.y = 12){
     pm <- psmelt(physeq)
     if(is.null(color)){
         len<-length(unique(pm[,level]))
