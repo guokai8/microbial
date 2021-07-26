@@ -15,19 +15,19 @@ glmr<-function(physeq,group,factors=NULL,family=binomial(link = "logit")){
       otu <- as(otu_table(physeq), "matrix")
       otu <- as.data.frame(t(otu))
       colnames(otu)<-paste0('ASV_',colnames(otu))
-      samx <- as(sample_data(physeq)[,c(group,factors)],"matrix")
-      samd <- as.data.frame(samx)
+      samd <- sample_data(physeq)[,c(group,factors)]
       dd <- cbind(samd[rownames(otu),],otu)
       dd[,group]<-as.factor(dd[,group])
       cat('##########################################\n')
       cat('Do the generalized linear model regression with ',factors,'adjusted',"\n")
       cat(paste0(group,"~",paste0(factors,collapse="+"),"+x"),"\n")
       cat('##########################################\n')
-      rr<-lapply(names(otu),function(x)tidy(glm(as.formula(paste0(group,"~",paste0(factors,collapse="+"),"+",x)),data=dd,family=family)))
-      names(rr)<- sub('ASV_','',names(otu))
+      rr<-lapply(colnames(otu)[1:50],function(x)tidy(glm(as.formula(paste0(group,"~",paste0(factors,collapse="+"),"+",x)),data=dd,family=family)))
+      names(rr)<- sub('ASV_','',colnames(otu)[1:50])
       res <- do.call(rbind,rr)
       res <- res[grep('ASV_',res$term),]
       res$term<-sub('ASV_','',res$term)
       res$padj <- p.adjust(res$p.value,method="BH")
+      res <- res[order(res$padj),]
       return(res)
 }
