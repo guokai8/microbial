@@ -21,9 +21,9 @@ glmr<-function(physeq,group,factors=NULL,family=binomial(link = "logit")){
       dd[,group]<-as.factor(dd[,group])
       cat('##########################################\n')
       cat('Do the generalized linear model regression with ',factors,'adjusted',"\n")
-      cat(paste0(group,"~",paste(factors,"x",sep="+")),"\n")
+      cat(paste0(group,"~",paste0(factors,collapse="+"),"+x"),"\n")
       cat('##########################################\n')
-      rr<-lapply(names(otu),function(x)tidy(glm(as.formula(paste(paste0(factors,collapse="+"),x,sep="+")),data=dd,family=family)))
+      rr<-lapply(names(otu),function(x)tidy(glm(as.formula(paste0(group,"~",paste0(factors,collapse="+"),"+",x)),data=dd,family=family)))
       names(rr)<- sub('ASV_','',names(otu))
       res <- do.call(rbind,rr)
       res <- res[grep('ASV_',res$term),]
