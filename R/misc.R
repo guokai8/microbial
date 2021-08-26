@@ -215,7 +215,15 @@ subset_taxa<-function(physeq,...){
     phyloseq::subset_taxa(physeq,...)
 }
 
-
+#' Melt phyloseq data object into large data.frame
+#' @param physeq A sample_data-class, or a phyloseq-class object with a sample_data.
+#' If the sample_data slot is missing in physeq, then physeq will be returned as-is,
+#' and a warning will be printed to screen.
+#' @param ... parameters for the subset_samples function in phyloseq package
+#' @export
+psmelt<-function(physeq,...){
+    phyloseq::psmelt(physeq,...)
+}
 
 
 
