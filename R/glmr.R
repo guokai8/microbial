@@ -4,11 +4,12 @@
 #' @param physeq phyloseq object
 #' @param group the group factor to regression
 #' @param factors  a vector to indicate adjuested factors
+#' @param ref the reference group
 #' @param family binomial() or gaussian()
 #' @export
 #' @author Kai Guo
 
-glmr<-function(physeq,group,factors=NULL,family=binomial(link = "logit")){
+glmr<-function(physeq,group,factors=NULL,ref=NULL,family=binomial(link = "logit")){
       if (!taxa_are_rows(physeq)) {
             physeq <- t(physeq)
       }
@@ -17,7 +18,13 @@ glmr<-function(physeq,group,factors=NULL,family=binomial(link = "logit")){
       colnames(otu)<-paste0('ASV_',colnames(otu))
       samd <- sample_data(physeq)[,c(group,factors)]
       dd <- cbind(samd[rownames(otu),],otu)
-      dd[,group]<-as.factor(dd[,group])
+      if(!is.null(ref)){
+         level <- unique(dd[,group])
+         level <- c(ref,setdiff(level,ref))
+      }else{
+         level <- unique(dd[,group])
+      }
+      dd[,group]<-factor(dd[,group],levels = level)
       cat('##########################################\n')
       cat('Do the generalized linear model regression with ',factors,'adjusted',"\n")
       cat(paste0(group,"~",paste0(factors,collapse="+"),"+x"),"\n")
