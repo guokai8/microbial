@@ -4,7 +4,13 @@
 \alias{glmr}
 \title{Do the generalized linear model regression}
 \usage{
-glmr(physeq, group, factors = NULL, family = binomial(link = "logit"))
+glmr(
+  physeq,
+  group,
+  factors = NULL,
+  ref = NULL,
+  family = binomial(link = "logit")
+)
 }
 \arguments{
 \item{physeq}{phyloseq object}
@@ -12,6 +18,8 @@ glmr(physeq, group, factors = NULL, family = binomial(link = "logit"))
 \item{group}{the group factor to regression}
 
 \item{factors}{a vector to indicate adjuested factors}
+
+\item{ref}{the reference group}
 
 \item{family}{binomial() or gaussian()}
 }
