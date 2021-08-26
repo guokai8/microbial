@@ -1,7 +1,7 @@
 Package: microbial
 Type: Package  
 Title: Do 16s Data Analysis and Generate Figures
-Version: 0.0.21
+Version: 0.0.22
 Authors@R: c(person("Kai","Guo",email = "guokai8@gmail.com",
            role = c("aut", "cre")
           ),
