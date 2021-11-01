@@ -1,6 +1,7 @@
 #' @title Do the generalized linear model regression
 #' @importFrom phyloseq taxa_are_rows otu_table sample_data
 #' @importFrom broom tidy
+#' @importFrom stats glm binomial
 #' @param physeq phyloseq object
 #' @param group the group factor to regression
 #' @param factors  a vector to indicate adjuested factors
