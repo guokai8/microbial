@@ -1,12 +1,18 @@
 #' @title Do the generalized linear model regression
 #' @importFrom phyloseq taxa_are_rows otu_table sample_data
 #' @importFrom broom tidy
-#' @importFrom stats glm binomial
+#' @importFrom stats binomial glm
 #' @param physeq phyloseq object
 #' @param group the group factor to regression
 #' @param factors  a vector to indicate adjuested factors
 #' @param ref the reference group
 #' @param family binomial() or gaussian()
+#' @examples
+#' \donttest{
+#' data("Physeq")
+#' phy<-normalize(physeq)
+#' fit <-glmr(phy,group="SampleType")
+#' }
 #' @export
 #' @author Kai Guo
 

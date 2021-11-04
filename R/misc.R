@@ -128,12 +128,11 @@ gm_mean = function(x, na.rm=TRUE){
 }
 
 #' LEfse function
-#' @importFrom MASS lda
 #' @param df a dataframe with groups and bacteria abundance
 .lda.fun<-function(df){
      # modified from https://github.com/xia-lab/MicrobiomeAnalystR/blob/
     # 0a8d81afeb3b637122c97c2d17146a44fa978c4f/R/general_anal.R
-    ldares <- lda(group~seqs,df,tol = 1.0e-10);
+    ldares <- MASS::lda(group~seqs,df,tol = 1.0e-10);
     ldamean <- as.data.frame(t(ldares$means));
     class_no <- length(unique(df$group));
     ldamean$max <- apply(ldamean[,1:class_no],1,max);
@@ -145,8 +144,6 @@ gm_mean = function(x, na.rm=TRUE){
 }
 
 #' contruction of plylogenetic tree (extreme slow)
-#' @importFrom DECIPHER AlignSeqs
-#' @importFrom Biostrings DNAStringSet
 #' @importFrom phangorn phyDat dist.ml NJ pml optim.pml pml.control
 #' @importFrom stats update
 #' @param seqs DNA sequences
@@ -154,7 +151,7 @@ gm_mean = function(x, na.rm=TRUE){
 #' @return tree object
 #' @export
 buildTree<-function(seqs){
-    alignment <- AlignSeqs(DNAStringSet(seqs), anchor=NA,verbose=T)
+    alignment <- DECIPHER::AlignSeqs(Biostrings::DNAStringSet(seqs), anchor=NA,verbose=T)
     phangAlign <- phyDat(as(alignment, "matrix"), type="DNA")
     dm <- dist.ml(phangAlign)
     treeNJ <- NJ(dm) # Note, tip order != sequence order

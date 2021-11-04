@@ -1,7 +1,4 @@
 #' Perform dada2 analysis
-#' @importFrom dada2 filterAndTrim learnErrors derepFastq dada mergePairs
-#' @importFrom dada2 makeSequenceTable removeBimeraDenovo assignTaxonomy
-#' @importFrom dada2 addSpecies getSequences getUniques
 #' @importFrom phyloseq phyloseq otu_table sample_data tax_table
 #' @importFrom utils read.delim write.table
 #' @param path working dir for the input reads
@@ -49,7 +46,7 @@ processSeq <- function(path=".",
     sample.names <-sub('@@@@.*','',sub('(\\.|_)R(1|2)','@@@@',basename(fnFs)))
     if(sum(duplicated(sample.names))>=1){
         stop('The fastq filenames are not unique!\n')
-    } 
+    }
     #filter and trim;
     if(isTRUE(verbose)){
     message("Filtering......");
@@ -60,45 +57,45 @@ processSeq <- function(path=".",
     ifelse(!dir.exists(paste0(outpath,"/filtered")),dir.create(file.path(outpath,"filtered"),recursive=TRUE),FALSE);
     filtFs <- file.path(outpath, "filtered", paste0(sample.names, "_F_filt.fastq.gz"))
     filtRs <- file.path(outpath, "filtered", paste0(sample.names, "_R_filt.fastq.gz"))
-    out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=truncLen,trimLeft=trimLeft,trimRight=trimRight,
+    out <- dada2::filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=truncLen,trimLeft=trimLeft,trimRight=trimRight,
                          maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,minLen=minLen,maxLen = maxLen,
                          compress=TRUE, multithread=multithread) # On Windows set multithread=FALSE
     if(isTRUE(verbose)){
         message("Learning error......")
     }
-    errF <- learnErrors(filtFs, multithread=multithread)
-    errR <- learnErrors(filtRs, multithread=multithread)
+    errF <- dada2::learnErrors(filtFs, multithread=multithread)
+    errR <- dada2::learnErrors(filtRs, multithread=multithread)
     if(isTRUE(verbose)){
         message("Dereplicating......")
     }
-    derepFs <- derepFastq(filtFs, verbose=FALSE)
-    derepRs <- derepFastq(filtRs, verbose=FALSE)
+    derepFs <- dada2::derepFastq(filtFs, verbose=FALSE)
+    derepRs <- dada2::derepFastq(filtRs, verbose=FALSE)
     # Name the derep-class objects by the sample names
     names(derepFs) <- sample.names
     names(derepRs) <- sample.names
     if(isTRUE(verbose)){
         message("Error correction......")
     }
-    dadaFs <- dada(derepFs, err=errF, multithread=TRUE)
-    dadaRs <- dada(derepRs, err=errR, multithread=TRUE)
+    dadaFs <- dada2::dada(derepFs, err=errF, multithread=TRUE)
+    dadaRs <- dada2::dada(derepRs, err=errR, multithread=TRUE)
     if(isTRUE(verbose)){
         message("Mergering.......")
     }
-    mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=FALSE)
+    mergers <- dada2::mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=FALSE)
     if(isTRUE(verbose)){
         message("Making table.......")
     }
-    seqtab <- makeSequenceTable(mergers)
+    seqtab <- dada2::makeSequenceTable(mergers)
     if(isTRUE(verbose)){
         message("Remove chimeras.......")
     }
-    seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE, verbose=FALSE)
+    seqtab.nochim <- dada2::removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE, verbose=FALSE)
     asv_seqs <- colnames(seqtab.nochim)
     asv_headers <- vector(dim(seqtab.nochim)[2], mode="character")
     for (i in 1:dim(seqtab.nochim)[2]) {
         asv_headers[i] <- paste(">ASV", i, sep="_")
     }
-    getN <- function(x) sum(getUniques(x))
+    getN <- function(x) sum(dada2::getUniques(x))
     track <- cbind(out, sapply(dadaFs, getN), sapply(dadaRs, getN), sapply(mergers, getN), rowSums(seqtab.nochim))
     # If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)
     colnames(track) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", "nonchim")
@@ -117,12 +114,12 @@ processSeq <- function(path=".",
     if(is.null(train_data)|is.null(train_species)){
         stop("Please specify the path for the sliva database......\n ")
     }else{
-    taxa <- assignTaxonomy(seqtab.nochim, train_data, multithread=multithread)
-    taxa <- addSpecies(taxa, train_species)
+    taxa <- dada2::assignTaxonomy(seqtab.nochim, train_data, multithread=multithread)
+    taxa <- dada2::addSpecies(taxa, train_species)
     ###
     taxtab<-unname(taxa)
     ### get sequence and do phylo anaylsis
-    seqs <- getSequences(seqtab.nochim)
+    seqs <- dada2::getSequences(seqtab.nochim)
     names(seqs) <- seqs # This propagates to the tip labels of the tree
     if(isTRUE(verbose)){
         message("write out sequence and taxonomy results")
@@ -134,7 +131,7 @@ processSeq <- function(path=".",
     asv_taxa <- taxa
     row.names(asv_taxa) <- sub(">", "", asv_headers)
     write.table(asv_taxa, paste0(outpath,"/ASVs_taxonomy.txt"), sep="\t", quote=F)
-    }    
+    }
     if(isTRUE(verbose)){
         message("creating phyloseq object......")
     }

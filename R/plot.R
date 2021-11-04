@@ -353,7 +353,6 @@ plotmarker<-function(x,level="Genus",top=30,rotate=FALSE,dot.size=8,label.color=
 }
 
 #' plot the quality for the fastq file
-#' @importFrom dada2 plotQualityProfile
 #' @param file 	(Required). character. File path(s) to fastq or fastq.gz file(s).
 #' @param n	(Optional). Default 500,000. The number of records to sample from the fastq file.
 #' @param aggregate	(Optional). Default FALSE. If TRUE, compute an aggregate quality profile for all fastq files provided.
@@ -364,5 +363,5 @@ plotmarker<-function(x,level="Genus",top=30,rotate=FALSE,dot.size=8,label.color=
 #' @export
 #' @return figure
 plotquality<-function(file,n = 5e+05, aggregate = FALSE){
-    plotQualityProfile(file,n=n,aggregate = aggregate)
+    dada2::plotQualityProfile(file,n=n,aggregate = aggregate)
 }

@@ -26,12 +26,12 @@ preRef<-function(ref_db,path="."){
         message(paste0(path, "/rdp_species_assignment_16.fa.gz"))
     } else if (ref_db == "silva"){
             ifelse(!file.exists(paste0(path,"/silva_nr99_v138_train_set.fa.gz")),
-            download.file(url = "https://zenodo.org/record/3986799/files/silva_nr99_v138_train_set.fa.gz?download=1",
+            download.file(url = "https://zenodo.org/record/4587955/files/silva_nr99_v138.1_train_set.fa.gz?download=1",
                          destfile = file.path(paste0(path, "/silva_nr99_v138_train_set.fa.gz")),
                          method = "auto"),
            FALSE);
            ifelse(!file.exists(paste0(path,"/silva_species_assignment_v138.fa.gz?")),
-           download.file(url = 'https://zenodo.org/record/3986799/files/silva_species_assignment_v138.fa.gz?download=1',
+           download.file(url = 'https://zenodo.org/record/4587955/files/silva_species_assignment_v138.1.fa.gz?download=1',
                          destfile = file.path(paste0(path,"/silva_species_assignment_v138.fa.gz")),
                          method = 'auto'),
            FALSE);
