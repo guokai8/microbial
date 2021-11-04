@@ -26,6 +26,13 @@ glmr(
 \description{
 Do the generalized linear model regression
 }
+\examples{
+\donttest{
+data("Physeq")
+phy<-normalize(physeq)
+fit <-glmr(phy,group="SampleType")
+}
+}
 \author{
 Kai Guo
 }
