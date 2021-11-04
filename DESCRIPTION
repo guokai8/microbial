@@ -23,21 +23,17 @@ Imports:
     ggplot2,
     ggpubr,
     DESeq2,
-    dada2,
     SummarizedExperiment,
     S4Vectors,
-    Biostrings,
     rstatix,
     tidyr,
-    DECIPHER,
     phangorn,
-    MASS,
     randomForest,
     edgeR,
     testthat
 Encoding: UTF-8
 LazyData: true
-Suggests: markdown, rmarkdown,knitr,tools
+Suggests: markdown,dada2,rmarkdown,knitr,tools,Biostrings, DECIPHER, MASS
 VignetteBuilder: knitr
 biocViews: Software,GraphAndNetwork
 RoxygenNote: 7.1.1
