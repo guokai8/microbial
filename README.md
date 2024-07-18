@@ -1,5 +1,5 @@
 # microbial
-<a href="https://cran.r-project.org/web/packages/microbial/index.html"><img border="0" src="http://www.r-pkg.org/badges/version/microbial" alt="CRAN version"></a>
+<a href="https://cran.r-project.org/web/packages/microbial/index.html"><img border="0" src="https://www.r-pkg.org/badges/version/microbial" alt="CRAN version"></a>
 [![DOI](https://zenodo.org/badge/298122205.svg)](https://zenodo.org/badge/latestdoi/298122205)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/microbial?color=green)
 [![Project Status:](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
