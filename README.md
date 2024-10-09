@@ -5,6 +5,7 @@
 [![Project Status:](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![](https://img.shields.io/badge/devel%20version-0.0.22-green.svg)](https://github.com/guokai8/microbial)![Code Size:](https://img.shields.io/github/languages/code-size/guokai8/microbial)
 [![](https://cranlogs.r-pkg.org/badges/microbial)](https://cran.r-project.org/package=microbial)
+<img src="https://cranlogs.r-pkg.org/badges/grand-total/microbial" alt="">
 
 An R package for microbial community analysis with dada2 and phyloseq
 
